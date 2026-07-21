@@ -52,7 +52,9 @@ def model_run(X_train, X_test, y_train, y_test, data_key, args):
     from qbiocode.learning.compute_nb import compute_nb, compute_nb_opt
     from qbiocode.learning.compute_svc import compute_svc, compute_svc_opt
     from qbiocode.learning.compute_vqc import compute_vqc
-    
+    from qbiocode.learning.compute_mmelon import compute_mmelon
+    from qbiocode.learning.compute_qensemble import compute_qensemble
+
     # Build model dictionary
     compute_ml_dict = {
         "svc_opt": compute_svc_opt,
@@ -74,11 +76,12 @@ def model_run(X_train, X_test, y_train, y_test, data_key, args):
         "qnn": compute_qnn,
         "pqk": compute_pqk,
         "qpl": compute_qpl,
-
+        "mmelon": compute_mmelon,
+        "qensemble": compute_qensemble,
     }
 
-    # Quantum models don't have _opt versions (use separate configs for hyperparameter tuning)
-    quantum_models = {"qsvc", "qnn", "vqc", "pqk", "qpl"}
+    # Quantum models and foundation models don't have _opt versions
+    quantum_models = {"qsvc", "qnn", "vqc", "pqk", "qpl", "mmelon", "qensemble"}
 
     # Run classical and quantum models
     n_jobs = len(args["model"])

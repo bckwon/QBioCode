@@ -425,9 +425,22 @@ def execute_circuit(qc, n_shots: int = 8192, device: str = 'CPU'):
     """
     from qiskit.compiler import transpile
     from qiskit_aer import AerSimulator
-    
-    backend = AerSimulator(method='statevector', device=device, 
-                          statevector_parallel_threshold=50)
+
+    # Fall back to CPU gracefully if GPU is requested but unavailable
+    _device = device
+    if _device == "GPU":
+        try:
+            _backend_test = AerSimulator(method="statevector", device="GPU")
+            _backend_test.configuration()  # triggers capability check
+        except Exception:
+            import logging as _logging
+            _logging.getLogger(__name__).warning(
+                "execute_circuit: GPU requested but not available — falling back to CPU"
+            )
+            _device = "CPU"
+
+    backend = AerSimulator(method='statevector', device=_device,
+                           statevector_parallel_threshold=50)
     tqc = transpile(qc, backend, optimization_level=3)
     result = backend.run([tqc], shots=n_shots).result()
     return result.get_counts(tqc)

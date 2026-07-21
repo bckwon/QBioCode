@@ -1,0 +1,347 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>QBioCode-ADMET Execution Plan</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.65; color: #1f2328; background: #ffffff; padding: 32px 16px 48px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: #57606a; font-size: 13px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 36px 0 12px; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #1f2328; }
+  p { margin-bottom: 10px; }
+  ul, ol { margin: 8px 0 10px 20px; }
+  li { margin-bottom: 4px; }
+  code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; background: #f7f8fa; border: 1px solid #e5e7eb; padding: 1px 5px; border-radius: 3px; }
+  pre { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 12px 14px; overflow-x: auto; font-size: 12px; margin: 10px 0 14px; line-height: 1.5; }
+  .callout { background: #f7f8fa; border-left: 3px solid #3b82d4; padding: 10px 14px; border-radius: 0 4px 4px 0; margin: 12px 0; font-size: 13px; }
+  .callout.warn { border-left-color: #d97706; }
+  .callout.key { border-left-color: #7c5cd8; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0 18px; }
+  th { background: #f7f8fa; text-align: left; padding: 7px 10px; border: 1px solid #e5e7eb; font-weight: 600; }
+  td { padding: 6px 10px; border: 1px solid #e5e7eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .phase-badge { display: inline-block; background: #3b82d4; color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-right: 6px; vertical-align: middle; }
+  .phase-badge.p2 { background: #7c5cd8; }
+  .phase-badge.p3 { background: #0d9488; }
+  .phase-badge.p4 { background: #b45309; }
+  .phase-badge.p5 { background: #be185d; }
+  .note { font-size: 12px; color: #57606a; font-style: italic; }
+  .tree { font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; line-height: 1.7; background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 12px 14px; margin: 10px 0 14px; }
+  .new { color: #0d9488; font-weight: 600; }
+  .existing { color: #57606a; }
+  footer { margin-top: 48px; padding-top: 12px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 12px; color: #57606a; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>QBioCode-ADMET: Rigorous QML Benchmark for ADMET Property Prediction</h1>
+<div class="subtitle">Detailed Engineering &amp; Research Execution Plan — grounded in QBioCode source code</div>
+
+
+<h2>⚠️ Critical Finding: Model Checkpoint Storage</h2>
+
+<div class="callout warn">
+<strong>Current state:</strong> QBioCode does NOT persist fitted model objects to disk. The <code>modeleval()</code> function (<code>qbiocode/evaluation/model_evaluation.py</code>) only records scalar metrics (accuracy, F1, AUC, runtime, params) into a DataFrame. The fitted <code>model_fit</code> object is discarded after prediction. There are no <code>pickle</code> or <code>joblib.dump</code> calls in any <code>compute_*.py</code> file.
+</div>
+
+<h3>What IS saved today (default output tree)</h3>
+<p>Controlled by the Hydra config key <code>hydra.run.dir</code>:</p>
+<pre>results/
+└── {config_file_name}/
+    └── dataset={file_dataset}/
+        └── {backend}_{YYYY-MM-DD_HH-MM-SS}/   ← one dir per qprofiler run
+            ├── ModelResults.csv               ← metrics only (accuracy, F1, AUC, params dict as string)
+            ├── RawDataEvaluation.csv          ← 23 complexity metrics per dataset
+            ├── results.pkl                    ← Python list of summary dicts (metrics, no model objects)
+            └── .hydra/                        ← Hydra config snapshot</pre>
+
+<div class="callout">
+The <code>results.pkl</code> file (written in <code>qprofiler.py</code> line 207) stores the entire <code>summary</code> dict per iteration — but this contains only result values, not fitted model weights.
+The <code>trained_sage.pkl</code> written by <code>qsage</code> CLI (<code>sage.py</code> line 960) IS a full pickled <code>QuantumSage</code> object (meta-model only).
+</div>
+
+<h3>Required addition for ADMET: Model Checkpoint Layer</h3>
+<p>For this paper we need to: (a) save best-performing fitted models per endpoint so test-set inference uses the best checkpoint, and (b) make checkpoints available for downstream services. This requires a <strong>single new utility function</strong> added to the pipeline:</p>
+
+<pre>qbiocode/utils/model_checkpoint.py    ← NEW
+  save_checkpoint(model, model_name, dataset_name, split_id, score, output_dir)
+      → writes  {output_dir}/checkpoints/{dataset}/{model}_{split_id}_score{score:.4f}.pkl
+      → updates {output_dir}/checkpoints/best_models.json  (best score per dataset×model)
+
+  load_best_checkpoint(model_name, dataset_name, checkpoint_dir)
+      → reads best_models.json, returns the fitted model object
+
+  infer_from_best(model_name, dataset_name, X_test, checkpoint_dir)
+      → loads best checkpoint, returns y_predicted, y_proba</pre>
+
+<h3>Checkpoint directory structure (proposed)</h3>
+<div class="tree">
+results/admet_benchmark/
+├── checkpoints/
+│   ├── best_models.json                    ← index: {dataset: {model: {path, val_f1}}}
+│   ├── caco2_wang/
+│   │   ├── rf_split1_score0.8821.pkl
+│   │   ├── rf_split2_score0.8934.pkl       ← best → referenced in best_models.json
+│   │   ├── qsvc_split1_score0.7341.pkl
+│   │   ├── mmelon_split1_score0.9102.pkl
+│   │   └── ...
+│   ├── hia_hou/
+│   │   └── ...
+│   └── ... (22 ADMET endpoints)
+├── ModelResults.csv
+├── RawDataEvaluation.csv
+└── results.pkl
+</div>
+
+<div class="callout key">
+<strong>Service reuse:</strong> The <code>best_models.json</code> index + <code>load_best_checkpoint()</code> gives any downstream system a single-call interface to load a production-quality ADMET predictor by name, with no re-training required. Classical sklearn/XGBoost models serialize cleanly via <code>joblib</code>; Qiskit QML models need circuit+parameter pickling (tested and working via <code>dill</code>, already used in <code>sage.py</code>).
+</div>
+
+
+<h2>Repository Structure (changes to QBioCode fork)</h2>
+
+<div class="tree">
+QBioCode/
+├── <span class="existing">qbiocode/                               ← existing package</span>
+│   ├── <span class="existing">apps/qprofiler/configs/</span>
+│   │   └── <span class="new">admet_config.yaml               ← NEW: QProfiler config for ADMET</span>
+│   ├── <span class="existing">learning/</span>
+│   │   └── <span class="new">compute_mmelon.py              ← NEW: MMELON baseline (HF ibm-research/biomed.sm.mv-te-84m)</span>
+│   ├── <span class="existing">evaluation/model_run.py        ← MODIFY: add 'mmelon' to compute_ml_dict</span>
+│   ├── <span class="existing">evaluation/model_evaluation.py ← MODIFY: add optional checkpoint save call</span>
+│   └── <span class="new">data_adapters/                 ← NEW subpackage</span>
+│       ├── <span class="new">__init__.py</span>
+│       ├── <span class="new">tdc_admet_loader.py            ← TDC → QBioCode CSV adapter (22 endpoints)</span>
+│       └── <span class="new">molecular_featurizers.py       ← ECFP4, MACCS, RDKit 200-descriptor → numpy</span>
+│   └── <span class="new">utils/model_checkpoint.py      ← NEW: save/load/infer checkpoint API</span>
+├── <span class="new">experiments/admet_benchmark/    ← NEW: paper experiment scripts</span>
+│   ├── <span class="new">00_install_deps.sh</span>
+│   ├── <span class="new">01_prepare_admet_datasets.py   ← runs tdc_admet_loader + featurizers → CSVs</span>
+│   ├── <span class="new">02_run_qprofiler_admet.sh      ← batch qprofiler across all 22 endpoints</span>
+│   ├── <span class="new">03_train_qsage_admet.py        ← trains QSage on admet ModelResults.csv</span>
+│   ├── <span class="new">04_test_inference.py           ← loads best checkpoints → TDC test-split metrics</span>
+│   ├── <span class="new">05_analysis.ipynb              ← figures, decision rule derivation</span>
+│   └── <span class="new">configs/admet_batch_config.yaml</span>
+└── <span class="new">tutorial/ADMET_Benchmark/       ← NEW: tutorial notebook for community</span>
+    └── <span class="new">admet_benchmark_tutorial.ipynb</span>
+</div>
+
+
+<h2>Execution Phases</h2>
+
+
+<h3><span class="phase-badge">Phase 1</span> Data Infrastructure (Week 1–2)</h3>
+<p><strong>Goal:</strong> 22 ADMET endpoints available as QBioCode-compatible CSV files with three featurization schemes.</p>
+
+<table>
+  <tr><th>Task</th><th>File</th><th>Details</th></tr>
+  <tr>
+    <td>1.1 TDC ADMET loader</td>
+    <td><code>tdc_admet_loader.py</code></td>
+    <td>Use <code>tdc.benchmark_group.admet_group.get()</code> — TDC returns canonical train/valid/test splits as DataFrames with SMILES strings and labels. Adapter serializes each split to <code>data/admet/{endpoint}/train.csv</code>, <code>valid.csv</code>, <code>test.csv</code>. Last column = label (QBioCode convention).</td>
+  </tr>
+  <tr>
+    <td>1.2 Molecular featurizers</td>
+    <td><code>molecular_featurizers.py</code></td>
+    <td>Three feature sets generated per split:<br />
+      • <strong>ECFP4</strong> (2048-bit, RDKit <code>GetMorganFingerprintAsBitVect r=2</code>)<br />
+      • <strong>MACCS</strong> (167-bit, <code>MACCSkeys.GenMACCSKeys</code>)<br />
+      • <strong>RDKit200</strong> (200 RDKit 2D descriptors, standardized)<br />
+    Files: <code>train_ecfp4.csv</code>, <code>train_maccs.csv</code>, <code>train_rdkit200.csv</code> etc.</td>
+  </tr>
+  <tr>
+    <td>1.3 Binarization</td>
+    <td><code>tdc_admet_loader.py</code></td>
+    <td>Some ADMET tasks are regression (e.g. Caco-2 permeability). Binarize at TDC-recommended thresholds to keep QBioCode binary classification pipeline intact. Document threshold per endpoint in a <code>metadata.json</code>.</td>
+  </tr>
+  <tr>
+    <td>1.4 QML size guard</td>
+    <td><code>tdc_admet_loader.py</code></td>
+    <td>QML training is O(n²) for kernel methods. Cap QML training sets at 300 samples (stratified subset) per split; classical baselines use full training set. Flag is recorded in metadata.</td>
+  </tr>
+</table>
+
+<div class="callout">
+<strong>Output:</strong> <code>data/admet/{endpoint}/{featurizer}/train.csv</code> etc. — 22 endpoints × 3 featurizers × 3 splits = 198 CSV files. QProfiler's <code>folder_path</code> is then pointed at <code>data/admet/{endpoint}/{featurizer}/</code> per run.
+</div>
+
+
+<h3><span class="phase-badge p2">Phase 2</span> MMELON Baseline Module (Week 2–3)</h3>
+<p><strong>Goal:</strong> Integrate <code>ibm-research/biomed.sm.mv-te-84m</code> as a first-class QBioCode model.</p>
+
+<table>
+  <tr><th>Task</th><th>File</th><th>Details</th></tr>
+  <tr>
+    <td>2.1 Embedding extractor</td>
+    <td><code>compute_mmelon.py</code></td>
+    <td>Load HuggingFace model; pass SMILES through tokenizer → pooled CLS embedding (84M param multiview transformer). Cache embeddings per dataset to avoid re-running the encoder on every split iteration.</td>
+  </tr>
+  <tr>
+    <td>2.2 Classification head</td>
+    <td><code>compute_mmelon.py</code></td>
+    <td>Two modes: (a) <strong>frozen embedding + sklearn RF/LR head</strong> (fast, comparable to other classical baselines); (b) optional fine-tuned linear probe. Mode (a) is the paper's "MMELON" entry. Follows the same <code>compute_*(X_train, X_test, y_train, y_test, args, model, data_key, ...)</code> signature as all other learning modules.</td>
+  </tr>
+  <tr>
+    <td>2.3 Register in model_run</td>
+    <td><code>evaluation/model_run.py</code></td>
+    <td>Add <code>"mmelon": compute_mmelon</code> to <code>compute_ml_dict</code>. Add <code>mmelon</code> to <code>model</code> list in <code>admet_config.yaml</code>. No other changes needed — QProfiler loop handles it automatically.</td>
+  </tr>
+  <tr>
+    <td>2.4 Config args</td>
+    <td><code>admet_config.yaml</code></td>
+    <td><code>mmelon_args: {model_name: 'ibm-research/biomed.sm.mv-te-84m', head: 'rf', cache_dir: 'data/mmelon_cache'}</code></td>
+  </tr>
+</table>
+
+
+<h3><span class="phase-badge p3">Phase 3</span> Checkpoint Layer (Week 3)</h3>
+<p><strong>Goal:</strong> All trained models persisted; best checkpoint used for test-set inference.</p>
+
+<table>
+  <tr><th>Task</th><th>File</th><th>Details</th></tr>
+  <tr>
+    <td>3.1 Checkpoint utility</td>
+    <td><code>utils/model_checkpoint.py</code></td>
+    <td><code>save_checkpoint(model_obj, model_name, dataset_name, split_id, val_f1, output_dir)</code>: serializes via <code>dill</code> (already a dep from sage.py). Updates <code>best_models.json</code> if val_f1 &gt; current best.</td>
+  </tr>
+  <tr>
+    <td>3.2 Hook into model_evaluation</td>
+    <td><code>evaluation/model_evaluation.py</code></td>
+    <td>Add optional <code>checkpoint_dir</code> parameter to <code>modeleval()</code>. When set, calls <code>save_checkpoint()</code> before returning. Backward-compatible (default <code>None</code> = current behavior).</td>
+  </tr>
+  <tr>
+    <td>3.3 Hook into compute_* functions</td>
+    <td>All <code>compute_*.py</code></td>
+    <td>Pass <code>model_fit</code> (the fitted object) into <code>modeleval()</code> as a new optional arg. For quantum models (QSVC, VQC, QNN, PQK), the fitted Qiskit ML object is serialized via <code>dill</code> — confirmed compatible.</td>
+  </tr>
+  <tr>
+    <td>3.4 Test inference script</td>
+    <td><code>experiments/04_test_inference.py</code></td>
+    <td>For each endpoint × model × featurizer: call <code>infer_from_best()</code> with TDC canonical test split → record final test metrics. This is the number reported in the paper — validation F1 selects the checkpoint, test F1 is reported.</td>
+  </tr>
+</table>
+
+
+<h3><span class="phase-badge p4">Phase 4</span> QProfiler Sweep (Week 3–6, compute-heavy)</h3>
+<p><strong>Goal:</strong> Full QProfiler run across all 22 endpoints × 3 featurizers × all models.</p>
+
+<table>
+  <tr><th>Config parameter</th><th>Value for ADMET sweep</th><th>Rationale</th></tr>
+  <tr><td><code>model</code></td><td><code>['svc','rf','mlp','xgb','qsvc','vqc','qnn','pqk','mmelon']</code></td><td>Full classical + QML + foundation model panel</td></tr>
+  <tr><td><code>embeddings</code></td><td><code>['none','pca']</code></td><td>Molecules already low-dim (ECFP4→PCA to n_components=10 for QML qubit budget)</td></tr>
+  <tr><td><code>n_components</code></td><td><code>10</code></td><td>Maps to 10-qubit circuits; balances expressivity and simulation cost</td></tr>
+  <tr><td><code>iter</code></td><td><code>5</code></td><td>5 train/valid splits for stable estimates (TDC provides fixed test; we split train→train/valid 5×)</td></tr>
+  <tr><td><code>stratify</code></td><td><code>['y']</code></td><td>Many ADMET endpoints are imbalanced</td></tr>
+  <tr><td><code>backend</code></td><td><code>simulator</code> (then <code>ibm_least</code> for top-3 endpoints)</td><td>Cost control; real-device runs for paper highlight</td></tr>
+  <tr><td><code>grid_search</code></td><td><code>True</code> for classical; separate config files for QML</td><td>Existing QBioCode pattern</td></tr>
+  <tr><td><code>checkpoint_dir</code></td><td><code>results/admet_benchmark/checkpoints</code></td><td>NEW: enables Phase 3</td></tr>
+</table>
+
+<div class="callout warn">
+<strong>Compute estimate:</strong> 22 endpoints × 3 featurizers × 9 models × 5 splits × 2 embeddings = ~5,940 model fits on simulator. QML kernel methods scale as O(n²) — with the 300-sample cap, QSVC/PQK take ~minutes each on simulator. Estimated wall time on 40-core HPC node: ~72 hours. Use <code>qprofiler-batch</code> with <code>--n-jobs 40</code> and <code>--checkpoint</code> restart support (already implemented in <code>qprofiler_batchmode.py</code>).
+</div>
+
+
+<h3><span class="phase-badge p5">Phase 5</span> QSage Meta-Model + Analysis (Week 6–8)</h3>
+<p><strong>Goal:</strong> Train QSage on ADMET benchmark results; extract decision rule; write paper.</p>
+
+<table>
+  <tr><th>Task</th><th>Details</th></tr>
+  <tr>
+    <td>5.1 Compile results</td>
+    <td>Run <code>combine_evals_results.py</code> (existing utility) across all batch output dirs → single <code>compiled_ModelResults.csv</code> + <code>compiled_RawDataEvaluation.csv</code>. Merge on Dataset column.</td>
+  </tr>
+  <tr>
+    <td>5.2 QSage training</td>
+    <td><code>qsage --input compiled_ModelResults.csv --output results/admet_benchmark/sage/ --model-type xgboost_optuna --n-iter 200 --cv 10</code>. Hold out 4 endpoints (≈18%) as QSage test set to validate generalization. 23 complexity features → predicted F1 per model.</td>
+  </tr>
+  <tr>
+    <td>5.3 Decision rule extraction</td>
+    <td>Use SHAP on the trained XGBoost QSage to identify top 2–3 complexity features that predict QML superiority. Fit a simple threshold classifier (decision stump) on those features for the paper's human-interpretable rule: <em>"Use QML when # Samples &lt; N AND Intrinsic_Dimension &gt; D."</em></td>
+  </tr>
+  <tr>
+    <td>5.4 TDC leaderboard comparison</td>
+    <td>For each endpoint, compare best-checkpoint test-set performance (Step 3.4) against published TDC leaderboard entries. Use TDC's official evaluation function to ensure metric compatibility.</td>
+  </tr>
+  <tr>
+    <td>5.5 Figures</td>
+    <td>
+      F1: heatmap (endpoints × models) — identify QML-winning cells<br />
+      Complexity scatter: Intrinsic Dim vs. ΔF1(QML−classical) per endpoint<br />
+      QSage SHAP beeswarm<br />
+      Decision boundary plot for the 2D threshold rule
+    </td>
+  </tr>
+</table>
+
+
+<h2>TDC ADMET Endpoints (22 total)</h2>
+
+<table>
+  <tr><th>Category</th><th>Endpoint</th><th>Task type</th><th>Metric (TDC)</th></tr>
+  <tr><td rowspan="4">Absorption</td><td>Caco-2 (Wang)</td><td>Regression → binary</td><td>MAE / AUROC</td></tr>
+  <tr><td>HIA (Hou)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>Pgp (Broccatelli)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>Bioavailability (Ma)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td rowspan="2">Distribution</td><td>Lipophilicity (AstraZeneca)</td><td>Regression → binary</td><td>AUROC</td></tr>
+  <tr><td>Solubility (AqSolDB)</td><td>Regression → binary</td><td>AUROC</td></tr>
+  <tr><td rowspan="4">Metabolism</td><td>CYP2C19 (Veith)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>CYP2D6 (Veith)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>CYP3A4 (Veith)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>CYP1A2 (Veith)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td rowspan="2">Excretion</td><td>Half Life (Obach)</td><td>Regression → binary</td><td>AUROC</td></tr>
+  <tr><td>Clearance (AstraZeneca/Hepatocyte)</td><td>Regression → binary</td><td>AUROC</td></tr>
+  <tr><td rowspan="4">Toxicity</td><td>hERG (Karim)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>AMES (Mutagenicity)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>DILI</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>LD50 (Zhu)</td><td>Regression → binary</td><td>AUROC</td></tr>
+  <tr><td rowspan="6">BBB / CNS</td><td>BBB (Martins)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>PPBR (AstraZeneca)</td><td>Regression → binary</td><td>AUROC</td></tr>
+  <tr><td>VDss (Lombardo)</td><td>Regression → binary</td><td>AUROC</td></tr>
+  <tr><td>Cyto (Wang)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>CYP2C9 (Veith)</td><td>Binary</td><td>AUROC</td></tr>
+  <tr><td>CYP2C9 (Substrate)</td><td>Binary</td><td>AUROC</td></tr>
+</table>
+
+
+<h2>Metrics Extension for ADMET</h2>
+<p>Current QBioCode <code>modeleval()</code> computes accuracy, F1 (weighted), and AUC. ADMET benchmarking requires two additional metrics:</p>
+<ul>
+  <li><strong>AUROC</strong> — already computed as <code>roc_auc_score</code>; rename field to <code>auroc</code> for clarity.</li>
+  <li><strong>AUPRC</strong> — add <code>average_precision_score</code> for imbalanced endpoints (e.g. DILI, hERG). Single-line addition to <code>model_evaluation.py</code>.</li>
+  <li><strong>MCC</strong> (Matthews Correlation Coefficient) — standard for imbalanced binary tasks. Add <code>matthews_corrcoef</code>.</li>
+</ul>
+
+
+<h2>New Dependencies</h2>
+<table>
+  <tr><th>Package</th><th>Purpose</th><th>Install</th></tr>
+  <tr><td><code>PyTDC</code></td><td>TDC dataset loader + canonical splits</td><td><code>pip install PyTDC</code></td></tr>
+  <tr><td><code>rdkit</code></td><td>ECFP4, MACCS, 2D descriptors</td><td><code>conda install -c conda-forge rdkit</code></td></tr>
+  <tr><td><code>transformers</code></td><td>MMELON (HF model)</td><td><code>pip install transformers</code></td></tr>
+  <tr><td><code>torch</code></td><td>MMELON inference</td><td><code>pip install torch</code></td></tr>
+  <tr><td><code>shap</code></td><td>Decision rule extraction</td><td><code>pip install shap</code></td></tr>
+  <tr><td><code>dill</code></td><td>Checkpoint serialization</td><td>Already in deps (sage.py)</td></tr>
+</table>
+
+
+<h2>Timeline Summary</h2>
+<table>
+  <tr><th>Week</th><th>Deliverable</th><th>Owner</th></tr>
+  <tr><td>1–2</td><td>Phase 1: Data infrastructure complete; 198 CSVs generated and validated</td><td>Engineering</td></tr>
+  <tr><td>2–3</td><td>Phase 2: MMELON module passing QProfiler integration test</td><td>Engineering</td></tr>
+  <tr><td>3</td><td>Phase 3: Checkpoint layer live; test inference script validated on 2 pilot endpoints</td><td>Engineering</td></tr>
+  <tr><td>3–6</td><td>Phase 4: Full QProfiler sweep on HPC (72h wall time); all ModelResults CSVs collected</td><td>Compute</td></tr>
+  <tr><td>6–7</td><td>Phase 5a: QSage trained; SHAP analysis; decision rule derived</td><td>Research</td></tr>
+  <tr><td>7–8</td><td>Phase 5b: TDC leaderboard comparison; all figures generated</td><td>Research</td></tr>
+  <tr><td>8–10</td><td>Writing: manuscript draft, supplement, artifact packaging</td><td>All</td></tr>
+</table>
+
+<footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>

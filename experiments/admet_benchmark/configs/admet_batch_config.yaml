@@ -1,0 +1,103 @@
+# admet_batch_config.yaml
+# ========================
+# Configuration for qprofiler-batch when running the ADMET sweep.
+# Used by job_02_qprofiler_array.sh via --config.
+#
+# This file extends the base admet_config.yaml with batch-mode overrides:
+#   - file_dataset is set dynamically per-job by qprofiler-batch
+#   - folder_path is overridden on the CLI via --input-dir
+#   - data_type and timestamp are injected by the batch runner
+#
+# To run manually for one endpoint:
+#   cd /dccstor/cardiac/QBioCode
+#   qprofiler-batch \
+#     --input-dir data/admet/hERG/ecfp4 \
+#     --config experiments/admet_benchmark/configs/admet_batch_config.yaml \
+#     --data-type hERG_ecfp4 \
+#     --n-jobs 10
+
+config_file_name: 'admet_batch'
+
+# folder_path is overridden by --input-dir in qprofiler-batch
+folder_path: 'data/admet'
+file_dataset: 'ALL'
+index_col: False
+
+# Backend — use simulator for full sweep
+backend: 'simulator'
+qiskit_json_path: '~/.qiskit/qiskit-ibm.json'
+
+# Parallelism
+n_jobs: 10
+
+# Embeddings: 'none' uses fingerprint features directly;
+# 'pca' reduces to n_components for QML qubit budget
+embeddings: ['none', 'pca']
+n_components: 10
+
+# Full model panel
+model: ['svc', 'rf', 'mlp', 'xgb', 'lr', 'qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']
+
+# Evaluation
+average: 'weighted'
+multi_class: 'raise'
+admet_metrics: True
+
+# Seeds
+seed: 42
+q_seed: 42
+shots: 1024
+resil_level: 1
+
+# Splits
+test_size: 0.2
+stratify: ['y']
+scaling: ['True']
+grid_search: False
+cross_validation: 5
+NN_depth: 1
+iter: 5
+
+# Checkpointing
+checkpoint_dir: 'results/admet_benchmark/checkpoints'
+
+# MMELON
+mmelon_args:
+  model_name: 'ibm-research/biomed.sm.mv-te-84m'
+  head: 'rf'
+  cache_dir: 'data/mmelon_cache'
+  batch_size: 32
+  max_length: 128
+
+# Classical model parameters
+svc_args:  {'C': 0.01, 'gamma': 0.1, kernel: 'linear'}
+gridsearch_svc_args: {'C': [0.1, 1, 10, 100], 'gamma': [0.001, 0.01, 0.1, 1], 'kernel': ['linear', 'rbf', 'poly', 'sigmoid']}
+
+dt_args:   {'criterion': 'gini', 'max_depth': null, 'min_samples_split': 2, 'min_samples_leaf': 1, 'max_features': null}
+gridsearch_dt_args: {'criterion': ['gini', 'entropy'], 'max_depth': [null, 5, 10, 20], 'min_samples_split': [2, 5, 10], 'min_samples_leaf': [1, 2, 4], 'max_features': [null, 'sqrt', 'log2']}
+
+nb_args:   {'var_smoothing': 1.e-09}
+gridsearch_nb_args: {'var_smoothing': [1.e-09, 1.e-08, 1.e-07, 1.e-06, 1.e-05]}
+
+lr_args:   {'penalty': 'l2', 'C': 1.0, 'solver': 'saga', 'max_iter': 10000}
+gridsearch_lr_args: {'penalty': ['l1', 'l2'], 'C': [1.e-03, 1.e-02, 1.e-01, 1.e+00, 1.e+01, 1.e+02], 'solver': ['liblinear', 'saga'], 'max_iter': [5000, 10000]}
+
+rf_args:   {'n_estimators': 200, 'max_features': 'sqrt', 'max_depth': null, 'min_samples_split': 2, 'min_samples_leaf': 1, 'bootstrap': True}
+gridsearch_rf_args: {'n_estimators': [100, 200, 500], 'max_features': ['sqrt', 'log2'], 'max_depth': [10, 20, null], 'min_samples_split': [2, 5], 'min_samples_leaf': [1, 2], 'bootstrap': [True, False]}
+
+mlp_args:  {'hidden_layer_sizes': 100, 'activation': 'relu', 'max_iter': 10000, 'solver': 'adam', 'alpha': 0.0001, 'learning_rate': 'constant'}
+gridsearch_mlp_args: {'hidden_layer_sizes': [[50,], [100,], [100, 50]], 'activation': ['tanh', 'relu'], 'max_iter': [5000, 10000], 'solver': ['adam'], 'alpha': [0.0001, 0.001], 'learning_rate': ['constant', 'adaptive']}
+
+# QML parameters
+qnn_args:  {'primitive': 'estimator', 'local_optimizer': 'COBYLA', 'encoding': ZZ, 'entanglement': 'linear', 'reps': 2, 'maxiter': 100, 'ansatz_type': 'amp'}
+qsvc_args: {'C': 0.01, 'pegasos': False, 'encoding': ZZ, 'entanglement': 'linear', 'reps': 2, 'primitive': 'sampler'}
+vqc_args:  {'primitive': 'sampler', 'local_optimizer': 'COBYLA', 'maxiter': 100, 'encoding': ZZ, 'entanglement': 'linear', 'reps': 2, 'ansatz_type': 'amp'}
+pqk_args:  {'encoding': ZZ, 'entanglement': 'pairwise', 'primitive': 'estimator', 'reps': 4}
+
+qensemble_args: {'n_train': 4, 'n_swap': 1, 'd': 2, 'mode': 'balanced',
+                 'ensemble_method': 'swap', 'n_shots': 8192, 'device': 'CPU'}
+
+# Hydra output directory
+hydra:
+  run:
+    dir: results/${config_file_name}/dataset=${file_dataset}/${backend}_${now:%Y-%m-%d_%H-%M-%S}

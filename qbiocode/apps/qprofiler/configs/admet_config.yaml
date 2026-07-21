@@ -1,0 +1,185 @@
+## QBioCode ADMET Benchmark Configuration
+## ==========================================
+## Used with QProfiler to sweep all 22 TDC ADMET endpoints × all models.
+## Run from the repo root:
+##
+##   qprofiler --config-dir=qbiocode/apps/qprofiler/configs --config-name=admet_config
+##
+## Or via batch mode:
+##   qprofiler-batch --input-dir data/admet/{endpoint}/{featurizer} \
+##                   --config qbiocode/apps/qprofiler/configs/admet_config.yaml \
+##                   --data-type admet --n-jobs 40
+
+config_file_name: 'admet_config'
+
+# Path to input data (set per-endpoint/featurizer in batch mode)
+folder_path: 'data/admet'
+file_dataset: 'ALL'
+
+# First column is NOT a row-name index (features + last col = label)
+index_col: False
+
+# ── Backend ─────────────────────────────────────────────────────────────────
+# Use simulator for full sweep; switch to 'ibm_least' for top-3 endpoints
+backend: 'simulator'
+qiskit_json_path: '~/.qiskit/qiskit-ibm.json'
+
+# ── Parallelism ──────────────────────────────────────────────────────────────
+n_jobs: 10
+
+# ── Embeddings ───────────────────────────────────────────────────────────────
+# 'none': use featurizer output directly
+# 'pca': reduce to n_components for QML qubit budget
+embeddings: ['none', 'pca']
+
+# 10-qubit budget (ECFP4 2048-bit → PCA → 10 features)
+n_components: 10
+
+# ── Models ───────────────────────────────────────────────────────────────────
+# Full panel: standard classical + QML + MMELON foundation model baseline
+model: ['svc', 'rf', 'mlp', 'xgb', 'lr', 'qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']
+
+# ── Evaluation ───────────────────────────────────────────────────────────────
+average: 'weighted'
+multi_class: 'raise'
+
+# Enable ADMET-specific extended metrics (AUPRC, MCC)
+admet_metrics: True
+
+# ── Seeds ────────────────────────────────────────────────────────────────────
+seed: 42
+q_seed: 42
+shots: 1024
+resil_level: 1
+
+# ── Splits ───────────────────────────────────────────────────────────────────
+test_size: 0.2
+# Stratified sampling is critical — ADMET endpoints are often imbalanced
+stratify: ['y']
+scaling: ['True']
+grid_search: False
+cross_validation: 5
+NN_depth: 1
+# 3 train/valid splits — balances statistical robustness vs wall-time
+# (reduced from 5 to fit within the night queue's 08:30 cutoff)
+iter: 3
+
+# ── Checkpointing ────────────────────────────────────────────────────────────
+# Fitted model objects are saved here; best_models.json tracks the best per
+# (endpoint × model) pair for downstream test-set inference.
+checkpoint_dir: 'results/admet_benchmark/checkpoints'
+
+# ── MMELON ───────────────────────────────────────────────────────────────────
+mmelon_args:
+  model_name: 'ibm-research/biomed.sm.mv-te-84m'
+  head: 'rf'
+  cache_dir: 'data/mmelon_cache'
+  batch_size: 32
+  max_length: 128
+
+# ── Classical model parameters ───────────────────────────────────────────────
+svc_args: {'C': 0.01, 'gamma': 0.1, kernel: 'linear'}
+
+gridsearch_svc_args: {'C': [0.1, 1, 10, 100],
+                      'gamma': [0.001, 0.01, 0.1, 1],
+                      'kernel': ['linear', 'rbf', 'poly', 'sigmoid']}
+
+dt_args: {'criterion': 'gini',
+          'max_depth': null,
+          'min_samples_split': 2,
+          'min_samples_leaf': 1,
+          'max_features': null}
+
+gridsearch_dt_args: {'criterion': ['gini', 'entropy'],
+                     'max_depth': [null, 5, 10, 20],
+                     'min_samples_split': [2, 5, 10],
+                     'min_samples_leaf': [1, 2, 4],
+                     'max_features': [null, 'sqrt', 'log2']}
+
+nb_args: {'var_smoothing': 1.e-09}
+
+gridsearch_nb_args: {'var_smoothing': [1.e-09, 1.e-08, 1.e-07, 1.e-06, 1.e-05]}
+
+lr_args: {'penalty': 'l2',
+          'C': 1.0,
+          'solver': 'saga',
+          'max_iter': 10000}
+
+gridsearch_lr_args: {'penalty': ['l1', 'l2'],
+                     'C': [1.e-03, 1.e-02, 1.e-01, 1.e+00, 1.e+01, 1.e+02],
+                     'solver': ['liblinear', 'saga'],
+                     'max_iter': [5000, 10000]}
+
+rf_args: {'n_estimators': 200,
+          'max_features': 'sqrt',
+          'max_depth': null,
+          'min_samples_split': 2,
+          'min_samples_leaf': 1,
+          'bootstrap': True}
+
+gridsearch_rf_args: {'n_estimators': [100, 200, 500],
+                     'max_features': ['sqrt', 'log2'],
+                     'max_depth': [10, 20, null],
+                     'min_samples_split': [2, 5],
+                     'min_samples_leaf': [1, 2],
+                     'bootstrap': [True, False]}
+
+mlp_args: {'hidden_layer_sizes': 100,
+           'activation': 'relu',
+           'max_iter': 10000,
+           'solver': 'adam',
+           'alpha': 0.0001,
+           'learning_rate': 'constant'}
+
+gridsearch_mlp_args: {'hidden_layer_sizes': [[50,], [100,], [100, 50]],
+                      'activation': ['tanh', 'relu'],
+                      'max_iter': [5000, 10000],
+                      'solver': ['adam'],
+                      'alpha': [0.0001, 0.001],
+                      'learning_rate': ['constant', 'adaptive']}
+
+# ── QML parameters ───────────────────────────────────────────────────────────
+qnn_args: {'primitive': 'estimator',
+           'local_optimizer': 'COBYLA',
+           'encoding': ZZ,
+           'entanglement': 'linear',
+           'reps': 2,
+           'maxiter': 100,
+           'ansatz_type': 'amp'}
+
+qsvc_args: {'C': 0.01,
+            'pegasos': False,
+            'encoding': ZZ,
+            'entanglement': 'linear',
+            'reps': 2,
+            'primitive': 'sampler'}
+
+vqc_args: {'primitive': 'sampler',
+           'local_optimizer': 'COBYLA',
+           'maxiter': 100,
+           'encoding': ZZ,
+           'entanglement': 'linear',
+           'reps': 2,
+           'ansatz_type': 'amp'}
+
+pqk_args:  {'encoding': ZZ,
+           'entanglement': 'pairwise',
+           'primitive': 'estimator',
+           'reps': 4}
+
+# Begin QEnsemble arguments
+# n_train must be even; circuit qubits grow quickly — keep small for simulation
+# device: 'GPU' uses qiskit-aer GPU backend (A100 on cluster); falls back to CPU
+# if no GPU is present (execute_circuit handles this via AerSimulator device param)
+qensemble_args: {'n_train': 4,
+                 'n_swap': 1,
+                 'd': 2,
+                 'mode': 'balanced',
+                 'ensemble_method': 'swap',
+                 'n_shots': 8192,
+                 'device': 'GPU'}
+
+# ── Hydra output directory ────────────────────────────────────────────────────
+hydra:
+  run:
+    dir: results/${config_file_name}/dataset=${file_dataset}/${backend}_${now:%Y-%m-%d_%H-%M-%S}

@@ -92,6 +92,10 @@ dev = [
 all = [
     "hydra-core",
     "joblib",
+    "rdkit>=2023.3",
+    "PyTDC>=0.4.1",
+    "transformers>=4.40",
+    "shap>=0.45",
     "sphinx",
     "sphinx-autodoc-typehints",
     "sphinx_rtd_theme",
@@ -122,7 +126,7 @@ include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["qbiocode*", "apps*"]
+include = ["qbiocode*", "apps*", "experiments*"]
 exclude = ["tests*", "docs*", "archive*"]
 
 [tool.setuptools.dynamic]
@@ -132,6 +136,7 @@ dependencies = {file = ["requirements-base.txt"]}
 [tool.setuptools.package-data]
 qbiocode = ["py.typed"]
 "qbiocode.apps.qprofiler" = ["configs/*.yaml"]
+"qbiocode.data_adapters" = ["*.py"]
 
 [tool.black]
 line-length = 100

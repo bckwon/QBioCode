@@ -1,83 +1,136 @@
 # ====== Base class imports ======
 
 import time
-from typing import Literal
+from typing import Any, Literal, Optional
 import pandas as pd
 
 # ====== Scikit-learn imports ======
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
-from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
+from sklearn.metrics import (
+    f1_score,
+    accuracy_score,
+    roc_auc_score,
+    average_precision_score,
+    matthews_corrcoef,
+)
 
 from qbiocode.utils.helper_fn import print_results
 
 
 def modeleval(
-    y_test, y_predicted, beg_time, params, args, model: str, verbose=True, average="weighted"
+    y_test,
+    y_predicted,
+    beg_time,
+    params,
+    args,
+    model: str,
+    verbose: bool = True,
+    average: str = "weighted",
+    fitted_model: Optional[Any] = None,
+    checkpoint_dir: Optional[str] = None,
+    dataset_name: Optional[str] = None,
+    split_id: int = 0,
 ):
-    """
-    Evaluates the model performance using accuracy, F1 score, and AUC.
+    """Evaluate model performance and optionally persist the fitted model.
+
+    Computes accuracy, F1, AUC (and optionally AUPRC, MCC for ADMET tasks)
+    and returns a QBioCode-standard results DataFrame.
+
+    When ``fitted_model`` and ``checkpoint_dir`` are both provided, the
+    fitted model is serialized via :func:`qbiocode.utils.model_checkpoint.save_checkpoint`
+    and the best-model index is updated if this split's F1 is a new best.
 
     Args:
         y_test (array-like): True labels for the test set.
         y_predicted (array-like): Predicted labels by the model.
         beg_time (float): Start time for measuring execution time.
         params (dict): Model parameters used during training.
-        args (dict): Additional arguments, including grid search flag.
+        args (dict): Additional arguments, including ``grid_search`` flag.
+            Set ``args['admet_metrics'] = True`` to also compute AUPRC and MCC.
         model (str): Name of the model being evaluated.
         verbose (bool): If True, prints the evaluation results.
-        average (str): Type of averaging to use for F1 score calculation.
-            Default is 'weighted'.
+        average (str): Averaging strategy for F1 score.  Default ``'weighted'``.
+        fitted_model (object, optional): Fitted model object to checkpoint.
+            Only used when ``checkpoint_dir`` is also provided.
+        checkpoint_dir (str, optional): Root directory for model checkpoints.
+            When set together with ``fitted_model``, calls
+            :func:`~qbiocode.utils.model_checkpoint.save_checkpoint`.
+        dataset_name (str, optional): Dataset identifier used as checkpoint key.
+            Defaults to ``model`` if not provided.
+        split_id (int): Train/valid split iteration, used in checkpoint filename.
 
     Returns:
-        pd.DataFrame: DataFrame containing the evaluation results, including accuracy, F1 score, AUC, and model parameters.
+        pd.DataFrame: Results DataFrame with accuracy, F1, AUC, and model params.
+            Also contains ``auprc`` and ``mcc`` columns when
+            ``args.get('admet_metrics')`` is True.
     """
-    # Calculate evaluation metrics
+    # ── Core metrics ────────────────────────────────────────────────────────
     auc = roc_auc_score(y_test, y_predicted)
     accuracy = accuracy_score(y_test, y_predicted, normalize=True)
     f1 = f1_score(y_test, y_predicted, average=average)
     compile_time = time.time() - beg_time
-    params = params
-    if verbose == True:
+
+    # ── ADMET extended metrics (opt-in) ─────────────────────────────────────
+    admet_extras: dict = {}
+    if args.get("admet_metrics", False):
+        try:
+            admet_extras["auprc"] = average_precision_score(y_test, y_predicted)
+        except Exception:
+            admet_extras["auprc"] = float("nan")
+        try:
+            admet_extras["mcc"] = matthews_corrcoef(y_test, y_predicted)
+        except Exception:
+            admet_extras["mcc"] = float("nan")
+
+    if verbose:
         print_results(model, accuracy, f1, compile_time, params)
 
-    if args["grid_search"] == True:
-        return pd.DataFrame(
-            {
-                "y_test_" + model: [y_test],
-                "y_predicted_" + model: [y_predicted],
-                "results_"
-                + model: [
-                    {
-                        "model": model,
-                        "accuracy": accuracy,
-                        "f1_score": f1,
-                        "time": compile_time,
-                        "auc": auc,
-                        "BestParams_GridSearch": params,
-                    }
-                ],
-            }
-        )
+    # ── Optional checkpoint save ─────────────────────────────────────────────
+    if fitted_model is not None and checkpoint_dir is not None:
+        try:
+            from qbiocode.utils.model_checkpoint import save_checkpoint  # lazy import
+            ds_key = dataset_name or model
+            save_checkpoint(
+                fitted_model, model, ds_key, split_id, float(f1), checkpoint_dir
+            )
+        except Exception as exc:
+            # Non-fatal: log and continue
+            import logging
+            logging.getLogger(__name__).warning(
+                f"Checkpoint save failed for {model}/{dataset_name}: {exc}"
+            )
+
+    # ── Build results dict ───────────────────────────────────────────────────
+    if args.get("grid_search", False):
+        result_dict = {
+            "model": model,
+            "accuracy": accuracy,
+            "f1_score": f1,
+            "time": compile_time,
+            "auc": auc,
+            "BestParams_GridSearch": params,
+            **admet_extras,
+        }
     else:
-        return pd.DataFrame(
-            {
-                "y_test_" + model: [y_test],
-                "y_predicted_" + model: [y_predicted],
-                "results_"
-                + model: [
-                    {
-                        "model": model,
-                        "accuracy": accuracy,
-                        "f1_score": f1,
-                        "time": compile_time,
-                        "auc": auc,
-                        "Model_Parameters": params,
-                    }
-                ],
-            }
-        )
+        result_dict = {
+            "model": model,
+            "accuracy": accuracy,
+            "f1_score": f1,
+            "time": compile_time,
+            "auc": auc,
+            "Model_Parameters": params,
+            **admet_extras,
+        }
+
+    return pd.DataFrame(
+        {
+            "y_test_" + model: [y_test],
+            "y_predicted_" + model: [y_predicted],
+            "results_" + model: [result_dict],
+        }
+    )
 
 
 def evaluation_metrics(predictions, y_test, metrics=["accuracy", "brier"], save=False):

@@ -84,6 +84,9 @@ from .visualization.visualize_correlation import (
 # Apps are available as qbiocode.apps.qprofiler, qbiocode.apps.sage
 from . import apps  # noqa: F401
 
+# ====== Expose data_adapters subpackage (ADMET branch) ======
+from . import data_adapters  # noqa: F401
+
 __all__ = [
     # Version
     "__version__",
