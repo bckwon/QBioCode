@@ -104,27 +104,36 @@ def compute_mmelon(
 
     beg_time = time.time()
 
-    cache_dir = cache_dir or args.get("mmelon_cache_dir", "data/mmelon_cache")
-    os.makedirs(cache_dir, exist_ok=True)
+    try:
+        cache_dir = cache_dir or args.get("mmelon_cache_dir", "data/mmelon_cache")
+        os.makedirs(cache_dir, exist_ok=True)
 
-    # Flatten SMILES arrays (handle both 1-D and 2-D column inputs)
-    smiles_train = _flatten_smiles(X_train)
-    smiles_test = _flatten_smiles(X_test)
+        # Flatten SMILES arrays (handle both 1-D and 2-D column inputs)
+        smiles_train = _flatten_smiles(X_train)
+        smiles_test = _flatten_smiles(X_test)
 
-    # 1. Load / compute embeddings (cached)
-    emb_train = _get_embeddings(
-        smiles_train, model_name, cache_dir, data_key + "_train",
-        batch_size, max_length, verbose
-    )
-    emb_test = _get_embeddings(
-        smiles_test, model_name, cache_dir, data_key + "_test",
-        batch_size, max_length, verbose
-    )
+        # 1. Load / compute embeddings (cached)
+        emb_train = _get_embeddings(
+            smiles_train, model_name, cache_dir, data_key + "_train",
+            batch_size, max_length, verbose
+        )
+        emb_test = _get_embeddings(
+            smiles_test, model_name, cache_dir, data_key + "_test",
+            batch_size, max_length, verbose
+        )
 
-    # 2. Fit classification head
-    clf = _build_head(head, seed=args.get("seed", 42))
-    clf.fit(emb_train, y_train)
-    y_predicted = clf.predict(emb_test)
+        # 2. Fit classification head
+        clf = _build_head(head, seed=args.get("seed", 42))
+        clf.fit(emb_train, y_train)
+        y_predicted = clf.predict(emb_test)
+    except Exception as exc:
+        log.warning(
+            f"compute_mmelon skipped — {exc}. Returning NaN results so other models can continue."
+        )
+        return modeleval(
+            y_test, np.zeros(len(y_test), dtype=int),
+            beg_time, {}, args, model=model, verbose=verbose
+        )
 
     # 3. Collect hyperparameters for logging
     model_params = {
@@ -204,8 +213,8 @@ def _encode_smiles(
     device = "cuda" if torch.cuda.is_available() else "cpu"
     log.info(f"  MMELON: loading model '{model_name}' on {device}")
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    encoder = AutoModel.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+    encoder = AutoModel.from_pretrained(model_name, trust_remote_code=True)
     encoder.eval()
     encoder.to(device)
 

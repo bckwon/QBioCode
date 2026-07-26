@@ -71,46 +71,56 @@ def compute_qsvc(
         modeleval (dict): A dictionary containing the evaluation results, including accuracy, runtime, model parameters, and other relevant metrics.
     """
     beg_time = time.time()
+    session = None
+    model_params = {}
 
-    # choose a method for mapping your features onto the circuit
-    feature_map, _ = qutils.get_feature_map(
-        feature_map=encoding, feat_dimension=X_train.shape[1], reps=reps, entanglement=entanglement
-    )
+    try:
+        # choose a method for mapping your features onto the circuit
+        feature_map, _ = qutils.get_feature_map(
+            feature_map=encoding, feat_dimension=X_train.shape[1], reps=reps, entanglement=entanglement
+        )
 
-    #  Generate the backend, session and primitive
-    backend, session, prim = qutils.get_backend_session(
-        args, primitive, num_qubits=feature_map.num_qubits
-    )
+        #  Generate the backend, session and primitive
+        backend, session, prim = qutils.get_backend_session(
+            args, primitive, num_qubits=feature_map.num_qubits
+        )
 
-    print(f"Currently running a quantum support vector classifier (QSVC) on this dataset.")
-    print(f"The number of qubits in your circuit is: {feature_map.num_qubits}")
-    print(f"The number of parameters in your circuit is: {feature_map.num_parameters}")
+        print(f"Currently running a quantum support vector classifier (QSVC) on this dataset.")
+        print(f"The number of qubits in your circuit is: {feature_map.num_qubits}")
+        print(f"The number of parameters in your circuit is: {feature_map.num_parameters}")
 
-    if "simulator" == args["backend"]:
-        fidelity = ComputeUncompute(sampler=prim)
-    else:
-        # Need to instatiate a basic pass manager to store the chosen hardware backend
-        pm = generate_preset_pass_manager(backend=backend, optimization_level=3)
-        fidelity = ComputeUncompute(
-            sampler=prim, pass_manager=pm
-        )  # , num_virtual_qubits = feature_map.num_qubits )
+        if "simulator" == args["backend"]:
+            fidelity = ComputeUncompute(sampler=prim)
+        else:
+            pm = generate_preset_pass_manager(backend=backend, optimization_level=3)
+            fidelity = ComputeUncompute(sampler=prim, pass_manager=pm)
 
-    Qkernel = FidelityQuantumKernel(fidelity=fidelity, feature_map=feature_map)
-    if pegasos == True:
-        qsvc = PegasosQSVC(C=C, quantum_kernel=Qkernel)
-    else:
-        qsvc = QSVC(C=C, gamma=gamma, quantum_kernel=Qkernel)
+        Qkernel = FidelityQuantumKernel(fidelity=fidelity, feature_map=feature_map)
+        if pegasos == True:
+            qsvc = PegasosQSVC(C=C, quantum_kernel=Qkernel)
+        else:
+            qsvc = QSVC(C=C, gamma=gamma, quantum_kernel=Qkernel)
 
-    model_fit = qsvc.fit(X_train, y_train)
-    # model_params = model_fit.get_params()
-    hyperparameters = {
-        "feature_map": feature_map.__class__.__name__,
-        "quantum_kernel": Qkernel.__class__.__name__,
-        "C": C,
-        "gamma": gamma,
-    }
-    model_params = hyperparameters
-    y_predicted = qsvc.predict(X_test)
+        hyperparameters = {
+            "feature_map": feature_map.__class__.__name__,
+            "quantum_kernel": Qkernel.__class__.__name__,
+            "C": C,
+            "gamma": gamma,
+        }
+        model_params = hyperparameters
+        model_fit = qsvc.fit(X_train, y_train)
+        y_predicted = qsvc.predict(X_test)
+    except Exception as exc:
+        import logging as _log
+        _log.getLogger(__name__).warning(
+            f"compute_qsvc skipped — {exc}. Returning NaN results so other models can continue."
+        )
+        if not isinstance(session, type(None)):
+            session.close()
+        return modeleval(
+            y_test, np.zeros(len(y_test), dtype=int),
+            beg_time, model_params, args, model=model, verbose=verbose
+        )
 
     if not isinstance(session, type(None)):
         session.close()

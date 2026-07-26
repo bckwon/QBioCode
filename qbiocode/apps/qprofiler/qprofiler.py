@@ -118,12 +118,16 @@ def main(args):
 
         # call and run evaluation functions
         df_dataset = pd.DataFrame(X)
-        raw_data_eval = evaluate(df_dataset, y_encoded, file)
-        appended_raw_data_eval.append(raw_data_eval)
+        try:
+            raw_data_eval = evaluate(df_dataset, y_encoded, file)
+            appended_raw_data_eval.append(raw_data_eval)
+        except Exception as _eval_exc:
+            log.warning(f"Dataset evaluation skipped for '{file}' — {_eval_exc}")
 
         # create csv file storing the evaluation of the raw, unembedded data
-        all_raw_data_evaluation = pd.concat(appended_raw_data_eval)
-        all_raw_data_evaluation.to_csv('RawDataEvaluation.csv', index=False)
+        if appended_raw_data_eval:
+            all_raw_data_evaluation = pd.concat(appended_raw_data_eval)
+            all_raw_data_evaluation.to_csv('RawDataEvaluation.csv', index=False)
         
         # log info
         log.info(f"Started processing data set {file}")
@@ -162,7 +166,15 @@ def main(args):
                     log.info(f"No feature reduction (embedding) applied in this iteration")
                 else:
                     log.info(f"Feature reduction (embedding) applied with {embed}")    
-                X_train_emb, X_test_emb = get_embeddings(embed, X_train, X_test, n_components=args["n_components"], method=None)
+                X_train_emb, X_test_emb = get_embeddings(
+                    embed,
+                    X_train,
+                    X_test,
+                    n_components=args["n_components"],
+                    method=None,
+                    y_train=y_train,
+                    random_state=args.get("seed", 42),
+                )
                 summary.update({'embeddings': embed})
                 model_results.update({'embeddings': embed})
                 

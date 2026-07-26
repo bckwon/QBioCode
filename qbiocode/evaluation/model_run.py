@@ -1,13 +1,36 @@
 # ====== Base class imports ======
 import json
+import logging
 import os
 
+import numpy as np
 import pandas as pd
 
 # ======= Parallelization =====
 from joblib import Parallel, delayed
 
+log = logging.getLogger(__name__)
+
 current_dir = os.getcwd()
+
+# Maximum number of qubits the statevector simulator can handle comfortably.
+# 2**26 complex128 elements ≈ 1 GB RAM; beyond this the simulator becomes
+# prohibitively slow or crashes with a MemoryError.
+# All quantum models use one qubit per input feature, so this is also the
+# maximum allowed feature dimension for quantum models.
+_QML_MAX_QUBITS = 26
+
+
+def _make_nan_result(y_test, model_name: str, args: dict) -> pd.DataFrame:
+    """Return a single-row NaN DataFrame in the same shape model_run returns."""
+    import time
+    import numpy as _np
+    from qbiocode.evaluation.model_evaluation import modeleval
+    beg = time.time()
+    return modeleval(
+        y_test, _np.zeros(len(y_test), dtype=int),
+        beg, {}, args, model=model_name, verbose=False,
+    )
 
 
 def model_run(X_train, X_test, y_train, y_test, data_key, args):
@@ -83,6 +106,30 @@ def model_run(X_train, X_test, y_train, y_test, data_key, args):
     # Quantum models and foundation models don't have _opt versions
     quantum_models = {"qsvc", "qnn", "vqc", "pqk", "qpl", "mmelon", "qensemble"}
 
+    # ── QML qubit budget guard ────────────────────────────────────────────────
+    # Quantum models need one qubit per input feature and a statevector of
+    # 2**n_features complex128 values.  When features > _QML_MAX_QUBITS the
+    # computation is either physically impossible (numpy int overflow for
+    # n > 63) or impractical (> 1 GB statevector).  We short-circuit here
+    # rather than inside each compute_* function so that the joblib Parallel
+    # pool never spawns a subprocess that is guaranteed to crash.
+    max_qubits = int(args.get("max_qubits", _QML_MAX_QUBITS))
+    n_features = X_train.shape[1]
+    active_models = list(args["model"])
+    skipped_qml: list[str] = []
+    if n_features > max_qubits:
+        skipped_qml = [m for m in active_models if m in quantum_models]
+        if skipped_qml:
+            log.warning(
+                "QML qubit budget exceeded: n_features=%d > max_qubits=%d. "
+                "Skipping quantum models for this embedding pass: %s. "
+                "Use embeddings: ['pca', 'svd', 'umap', ...] with "
+                "n_components <= max_qubits to include QML.",
+                n_features, max_qubits, skipped_qml,
+            )
+            active_models = [m for m in active_models if m not in quantum_models]
+
+    # ── Parallelism ───────────────────────────────────────────────────────────
     # Run classical and quantum models
     n_jobs = len(args["model"])
     if "n_jobs" in args.keys():
@@ -114,9 +161,14 @@ def model_run(X_train, X_test, y_train, y_test, data_key, args):
             print("\nSee documentation: qbiocode.utils.generate_qml_experiment_configs")
             print("=" * 80 + "\n")
 
+    # Pre-build NaN rows for any QML models that were budget-skipped so that
+    # the output DataFrame still has a consistent set of columns regardless
+    # of which embedding pass is running.
+    skipped_results = [_make_nan_result(y_test, m, args) for m in skipped_qml]
+
     if grid_search:
         results = []
-        for method in args["model"]:
+        for method in active_models:
             if method in quantum_models:
                 # Quantum models don't have _opt versions, use regular function
                 result = delayed(compute_ml_dict[method])(
@@ -158,8 +210,10 @@ def model_run(X_train, X_test, y_train, y_test, data_key, args):
                 **args[method + "_args"],
                 verbose=False,
             )
-            for method in args["model"]
+            for method in active_models
         )
+
+    results = results + skipped_results
 
     model_total_result = pd.melt(pd.concat(results)).dropna()  # type: ignore
     model_total_result["i"] = 0

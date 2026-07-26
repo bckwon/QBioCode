@@ -1,0 +1,417 @@
+======================================================
+Job ID       : 40065[1]
+Host         : zu-a100-b05-02
+Start time   : Fri Jul 24 07:08:25 AM CEST 2026
+Endpoint     : Caco2_Wang
+Featurizer   : ecfp4
+Input dir    : /proj/bmfm/users/bckwon/projects/QBioCode/data/admet/Caco2_Wang/ecfp4
+======================================================
+2026-07-24 07:08:37.804009: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+QProfiler Batch Mode
+============================================================
+Input directory: /proj/bmfm/users/bckwon/projects/QBioCode/data/admet/Caco2_Wang/ecfp4
+Config file: /proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/apps/qprofiler/configs/admet_config.yaml
+Data type: Caco2_Wang_ecfp4
+Parallel jobs: 10
+Output timestamp: 2026-07-24_05_08_42_048444
+============================================================
+2026-07-24 07:08:59.653585: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:08:59.665197: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:08:59.981764: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:08:59.981905: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:18.942968: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:18.991814: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:19.150677: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:19.416697: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-07-24 07:09:24,489][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-24 07:09:24,489][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-24 07:09:24,489][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-24 07:09:24,595][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-24 07:09:24,596][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-24 07:09:24,596][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-24 07:09:24,894][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-24 07:09:24,894][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-24 07:09:24,894][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-24 07:09:25,073][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-24 07:09:25,073][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-24 07:09:25,073][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+Processing file: valid.csv
+[2026-07-24 07:09:30,378][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set valid.csv
+[2026-07-24 07:09:30,378][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-24 07:09:30,380][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-24 07:09:30,382][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+Processing file: test.csv
+[2026-07-24 07:09:31,211][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set test.csv
+[2026-07-24 07:09:31,211][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-24 07:09:31,213][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-24 07:09:31,216][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+Processing file: train_qml.csv
+[2026-07-24 07:09:32,874][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set train_qml.csv
+[2026-07-24 07:09:32,874][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-24 07:09:32,877][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-24 07:09:32,881][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+[2026-07-24 07:09:34,771][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=2048 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+[2026-07-24 07:09:36,809][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=2048 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+Processing file: train.csv
+[2026-07-24 07:09:39,473][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set train.csv
+[2026-07-24 07:09:39,473][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-24 07:09:39,484][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-24 07:09:39,494][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+[2026-07-24 07:09:39,913][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=2048 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+[2026-07-24 07:09:52,483][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=2048 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+2026-07-24 07:09:54.528000: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:54.610287: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:54.626608: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:55.013976: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:55.116492: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:56.117985: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:56.943549: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:57.161742: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:57.411397: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:09:58.259272: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:08.784158: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:09.681608: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:10.605083: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:12.139070: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:12.516355: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:17.365270: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:17.708147: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:18.258532: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:18.914472: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:10:20.054751: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-07-24 07:11:40,091][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+WARNING:qiskit_machine_learning.neural_networks.estimator_qnn:No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+WARNING:qiskit_machine_learning.neural_networks.sampler_qnn:No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+[2026-07-24 07:11:48,179][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+WARNING:qiskit_machine_learning.neural_networks.estimator_qnn:No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+WARNING:qiskit_machine_learning.neural_networks.sampler_qnn:No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+2026-07-24 07:12:22.030262: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qbiocode.learning.compute_mmelon:compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+2026-07-24 07:12:27.450938: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:12:29.205863: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:12:30.545187: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:12:30.798597: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:12:31.320990: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:12:33.577094: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:12:34.218114: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:12:35.037463: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:12:35.905620: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qbiocode.learning.compute_mmelon:compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+[2026-07-24 07:13:20,170][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+WARNING:qiskit_machine_learning.neural_networks.sampler_qnn:No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+WARNING:qbiocode.learning.compute_pqk:Projection file pqk_projections/pqk_projection_train_qml_pca_8_1_test.npy has 39 rows but dataset expects 60 rows — deleting stale file and regenerating.
+WARNING:qiskit_machine_learning.neural_networks.estimator_qnn:No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+2026-07-24 07:14:18.508589: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:14:19.212686: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:14:20.219504: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:14:22.899949: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-07-24 07:14:23,212][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+WARNING:qiskit_machine_learning.neural_networks.estimator_qnn:No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+WARNING:qiskit_machine_learning.neural_networks.sampler_qnn:No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+2026-07-24 07:14:29.507887: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+WARNING:qbiocode.learning.compute_mmelon:compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+Error executing job with overrides: []
+joblib.externals.loky.process_executor._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py", line 490, in _process_worker
+    r = call_item()
+        ^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py", line 291, in __call__
+    return self.fn(*self.args, **self.kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 607, in __call__
+    return [func(*args, **kwargs) for func, args, kwargs in self.items]
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_pqk.py", line 387, in compute_pqk
+    return modeleval(
+           ^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/evaluation/model_evaluation.py", line 70, in modeleval
+    auc = roc_auc_score(y_test, y_predicted)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/metrics/_ranking.py", line 733, in roc_auc_score
+    return _average_binary_score(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/metrics/_base.py", line 77, in _average_binary_score
+    return binary_metric(y_true, y_score, sample_weight=sample_weight)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/metrics/_ranking.py", line 478, in _binary_roc_auc_score
+    fpr, tpr, _ = roc_curve(y_true, y_score, sample_weight=sample_weight)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/utils/_param_validation.py", line 191, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/metrics/_ranking.py", line 1319, in roc_curve
+    _, fps, _, tps, thresholds = confusion_matrix_at_thresholds(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py", line 80, in inner_f
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/utils/_param_validation.py", line 191, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/metrics/_ranking.py", line 1021, in confusion_matrix_at_thresholds
+    _sort_inputs_and_compute_classification_thresholds(
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/metrics/_ranking.py", line 892, in _sort_inputs_and_compute_classification_thresholds
+    check_consistent_length(y_true, y_score, sample_weight)
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py", line 458, in check_consistent_length
+    raise ValueError(
+ValueError: Found input variables with inconsistent numbers of samples: [60, 39]
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/apps/qprofiler/qprofiler.py", line 194, in main
+    summary.update(model_run(X_train_emb, X_test_emb, y_train, y_test, data_key, args))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/evaluation/model_run.py", line 201, in model_run
+    results = Parallel(n_jobs=n_jobs)(
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 2072, in __call__
+    return output if self.return_generator else list(output)
+                                                ^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1682, in _get_outputs
+    yield from self._retrieve()
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1784, in _retrieve
+    self._raise_error_fast()
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1859, in _raise_error_fast
+    error_job.get_result(self.timeout)
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 758, in get_result
+    return self._return_or_raise()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 773, in _return_or_raise
+    raise self._result
+ValueError: Found input variables with inconsistent numbers of samples: [60, 39]
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+2026-07-24 07:15:24.789160: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:15:28.155474: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:15:29.710550: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:15:33.976942: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 07:15:38.833444: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qbiocode.learning.compute_mmelon:compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+Resuming pqk_projection_valid_pca_8_1_train.npy from datapoint 29
+at datapoint 0
+at datapoint 0
+at datapoint 100
+at datapoint 0
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Resuming pqk_projection_train_pca_8_1_train.npy from datapoint 171
+at datapoint 200
+at datapoint 300
+at datapoint 400
+at datapoint 500
+Resuming pqk_projection_train_pca_8_1_test.npy from datapoint 127
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+[2026-07-24 18:05:57,773][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with svd
+2026-07-24 18:07:03.772476: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 18:07:04.436518: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 18:07:07.905077: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 18:07:10.180886: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 18:07:10.902741: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 18:07:11.634313: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 18:07:18.372900: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-24 18:07:19.045442: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qiskit_machine_learning.neural_networks.estimator_qnn:No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+WARNING:qbiocode.learning.compute_pqk:Projection file pqk_projections/pqk_projection_valid_svd_8_1_train.npy has 46 rows but dataset expects 72 rows — deleting stale file and regenerating.
+WARNING:qbiocode.learning.compute_pqk:Projection file pqk_projections/pqk_projection_valid_svd_8_1_test.npy has 12 rows but dataset expects 19 rows — deleting stale file and regenerating.
+WARNING:qiskit_machine_learning.neural_networks.sampler_qnn:No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+2026-07-24 18:07:47.350921: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qbiocode.learning.compute_mmelon:compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+at datapoint 0
+at datapoint 0
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@zu-a100-b05-02.zuvela.ibm.com>
+Subject: Job 40065[1]: <admet_qprofiler[1-66]> in cluster <ZuVela_FP15> Exited
+
+Job <admet_qprofiler[1-66]> was submitted from host <zu-login-02> by user <bkwon> in cluster <ZuVela_FP15> at Fri Jul 24 07:08:21 2026
+Job was executed on host(s) <6*zu-a100-b05-02>, in queue <normal>, as user <bkwon> in cluster <ZuVela_FP15> at Fri Jul 24 07:08:22 2026
+</u/bkwon> was used as the home directory.
+</proj/bmfm/users/bckwon/projects/QBioCode> was used as the working directory.
+Started at Fri Jul 24 07:08:22 2026
+Terminated at Sat Jul 25 01:51:29 2026
+Results reported at Sat Jul 25 01:51:29 2026
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/usr/bin/env bash
+#==============================================================================
+# LSF Job Array: Phase 4 — QProfiler Sweep (one job per endpoint × featurizer)
+#
+# Runs qprofiler-batch for each of the 22 ADMET endpoints × 3 featurizers
+# as an LSF job array (66 independent jobs).  Each job processes one
+# endpoint/featurizer directory.
+#
+# Submit from repo root:
+#   bsub < experiments/admet_benchmark/lsf/job_02_qprofiler_array.sh
+#
+# Estimated wall time per job: ~2.5 h (QML on simulator, 10 models × 3 splits)
+# Total compute: ~66 jobs × 2.5 h = 165 core-hours
+#==============================================================================
+
+#BSUB -J admet_qprofiler[1-66]
+#BSUB -q normal
+#BSUB -n 6
+#BSUB -R "span[hosts=1]"
+#BSUB -R "rusage[mem=16000]"
+#BSUB -gpu "num=1:mode=exclusive_process:j_exclusive=yes"
+#BSUB -o logs/admet/qprofiler_%I_%J.out
+#BSUB -e logs/admet/qprofiler_%I_%J.err
+#BSUB -cwd /proj/bmfm/users/bckwon/projects/QBioCode
+# Auto-requeue on job failure (covers node crashes, scratch errors, UNKWN).
+# Up to 3 requeue attempts per array element before giving up.
+#BSUB -r
+#BSUB -nr 3
+# Only exclude nodes that are currently unavail (prevents UNKWN from dead nodes).
+# Do NOT exclude nodes for intermittent scratch failures — those are transient and
+# banning them leaves most of the cluster unused.
+#BSUB -R "hname!='zu-a100-c05-02' && hname!='zu-a100-c05-05' && hname!='zu-a100-c08-02' && hname!='zu-a100-c08-04'"
+
+set -euo pipefail
+
+REPO_ROOT="/proj/bmfm/users/bckwon/projects/QBioCode"
+PYTHON="${REPO_ROOT}/.venv/bin/python"
+LOG_DIR="${REPO_ROOT}/logs/admet"
+DATA_DIR="${REPO_ROOT}/data/admet"
+CONFIG="${REPO_ROOT}/qbiocode/apps/qprofiler/configs/admet_config.yaml"
+
+mkdir -p "${LOG_DIR}"
+
+# Build ordered list of all (endpoint, featurizer) pairs — must match array size
+ENDPOINTS=(
+    Caco2_Wang HIA_Hou Pgp_Broccatelli Bioavailability_Ma
+    Lipophilicity_AstraZeneca Solubility_AqSolDB BBB_Martins
+    PPBR_AstraZeneca VDss_Lombardo
+    CYP2C19_Veith CYP2D6_Veith CYP3A4_Veith CYP1A2_Veith CYP2C9_Veith
+    CYP2C9_Substrate_CarbonMangels CYP2D6_Substrate_CarbonMangels
+
+(... more ...)
+------------------------------------------------------------
+
+TERM_OWNER: job killed by owner.
+Exited with exit code 143.
+
+Resource usage summary:
+
+    CPU time :                                   3008623.00 sec.
+    Max Memory :                                 40350 MB
+    Average Memory :                             14482.32 MB
+    Total Requested Memory :                     16000.00 MB
+    Delta Memory :                               -24350.00 MB
+    Max Swap :                                   -
+    Max Processes :                              49
+    Max Threads :                                3138
+    Run time :                                   67552 sec.
+    Turnaround time :                            67388 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <logs/admet/qprofiler_1_40065.err> for stderr output of this job.
+

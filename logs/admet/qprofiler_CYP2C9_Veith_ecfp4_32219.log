@@ -1,0 +1,71 @@
+2026-07-22 04:16:02.256144: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 04:16:03.773085: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+QProfiler Batch Mode
+============================================================
+Input directory: /proj/bmfm/users/bckwon/projects/QBioCode/data/admet/CYP2C9_Veith/ecfp4
+Config file: /proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/apps/qprofiler/configs/admet_config.yaml
+Data type: CYP2C9_Veith_ecfp4
+Parallel jobs: 10
+Output timestamp: 2026-07-22_02_16_05_850254
+============================================================
+2026-07-22 04:16:20.489309: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 04:16:20.500964: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 04:16:20.508533: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 04:16:20.560872: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 04:16:21.957501: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 04:16:21.986223: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 04:16:21.992084: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 04:16:22.054367: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 04:16:35.896411: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 04:16:36.240586: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 04:16:36.305589: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 04:16:36.640831: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 04:16:37.333608: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 04:16:37.764967: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 04:16:37.871797: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 04:16:38.163438: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-07-22 04:16:39,880][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 04:16:39,881][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 04:16:39,881][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 04:16:39,881][qbiocode.apps.qprofiler.qprofiler][INFO] - 
+The total run time of program is: 
+0.0006530284881591797
+[2026-07-22 04:16:40,404][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 04:16:40,405][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 04:16:40,405][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 04:16:40,405][qbiocode.apps.qprofiler.qprofiler][INFO] - 
+The total run time of program is: 
+0.0007381439208984375
+[2026-07-22 04:16:40,466][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 04:16:40,466][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 04:16:40,466][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 04:16:40,467][qbiocode.apps.qprofiler.qprofiler][INFO] - 
+The total run time of program is: 
+0.0007748603820800781
+[2026-07-22 04:16:40,738][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 04:16:40,738][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 04:16:40,739][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 04:16:40,739][qbiocode.apps.qprofiler.qprofiler][INFO] - 
+The total run time of program is: 
+0.0006968975067138672
+
+Collecting results...
+Warning: Results not found for train.csv
+Warning: Results not found for train_qml.csv
+Warning: Results not found for valid.csv
+Warning: Results not found for test.csv
+
+============================================================
+Batch processing complete!
+Total run time: 0.01 hours
+Results saved to: results/CYP2C9_Veith_ecfp4_batch_2026-07-22_02_16_05_850254
+============================================================

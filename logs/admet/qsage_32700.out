@@ -1,0 +1,127 @@
+======================================================
+Job ID     : 32700
+Host       : zu-a100-c05-02
+Start time : Wed Jul 22 05:33:27 AM CEST 2026
+======================================================
+05:33:27 [INFO] __main__ — ============================================================
+05:33:27 [INFO] __main__ — QBioCode-ADMET: QSage Training
+05:33:27 [INFO] __main__ — ============================================================
+05:33:28 [INFO] __main__ — Collected 68 ModelResults files → 1323 rows
+05:33:28 [INFO] __main__ — Collected 68 RawDataEvaluation files → 7 rows
+05:33:28 [INFO] __main__ — Compiled results saved to results/admet_benchmark/sage
+2026-07-22 05:33:40.162235: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 05:33:41.719892: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+05:33:42 [INFO] qiskit.passmanager.base_tasks — Pass: UnrollCustomDefinitions - 0.15831 (ms)
+05:33:42 [INFO] qiskit.passmanager.base_tasks — Pass: BasisTranslator - 0.06652 (ms)
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/experiments/admet_benchmark/03_train_qsage_admet.py", line 218, in <module>
+    main()
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/experiments/admet_benchmark/03_train_qsage_admet.py", line 161, in main
+    sage = QuantumSage(data_input=model_df)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/experiments/admet_benchmark/../../qbiocode/apps/sage/sage.py", line 45, in __init__
+    self._input_data_metadata = data_input[self._columns_metadata]
+                                ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/pandas/core/frame.py", line 4119, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 6212, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 6264, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['datatype', 'model_embed_datatype', 'BestParams_GridSearch'] not in index"
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@zu-a100-c05-02.zuvela.ibm.com>
+Subject: Job 32700: <admet_qsage> in cluster <ZuVela_FP15> Exited
+
+Job <admet_qsage> was submitted from host <zu-login-02> by user <bkwon> in cluster <ZuVela_FP15> at Wed Jul 22 05:33:26 2026
+Job was executed on host(s) <4*zu-a100-c05-02>, in queue <normal>, as user <bkwon> in cluster <ZuVela_FP15> at Wed Jul 22 05:33:26 2026
+</u/bkwon> was used as the home directory.
+</proj/bmfm/users/bckwon/projects/QBioCode> was used as the working directory.
+Started at Wed Jul 22 05:33:26 2026
+Terminated at Wed Jul 22 05:33:46 2026
+Results reported at Wed Jul 22 05:33:46 2026
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/usr/bin/env bash
+#==============================================================================
+# LSF Job: Phase 5a — QSage Training
+#
+# Compiles all QProfiler results from the sweep and trains a QSage
+# meta-model (XGBoost-Optuna) with SHAP analysis.
+#
+# Run AFTER job_02_qprofiler_array.sh completes.
+#
+# Submit from repo root:
+#   bsub < experiments/admet_benchmark/lsf/job_03_qsage.sh
+#
+# Estimated wall time: ~2 h (Optuna 200 trials × all model combinations)
+#==============================================================================
+
+#BSUB -J admet_qsage
+#BSUB -q normal
+#BSUB -n 4
+#BSUB -R "span[hosts=1]"
+#BSUB -R "rusage[mem=8000]"
+#BSUB -W 04:00
+#BSUB -o logs/admet/qsage_%J.out
+#BSUB -e logs/admet/qsage_%J.err
+#BSUB -cwd /proj/bmfm/users/bckwon/projects/QBioCode
+
+set -euo pipefail
+
+REPO_ROOT="/proj/bmfm/users/bckwon/projects/QBioCode"
+PYTHON="${REPO_ROOT}/.venv/bin/python"
+LOG_DIR="${REPO_ROOT}/logs/admet"
+
+mkdir -p "${LOG_DIR}"
+
+echo "======================================================"
+echo "Job ID     : ${LSB_JOBID:-local}"
+echo "Host       : $(hostname)"
+echo "Start time : $(date)"
+echo "======================================================"
+
+cd "${REPO_ROOT}"
+
+${PYTHON} experiments/admet_benchmark/03_train_qsage_admet.py \
+    --results-dir   results \
+    --output-dir    results/admet_benchmark/sage \
+    --sage-type     xgboost_optuna \
+    --n-iter        200 \
+    --cv            10 \
+    --test-size     0.2 \
+    --seed          42 \
+    2>&1 | tee "${LOG_DIR}/qsage_${LSB_JOBID:-local}.log"
+
+(... more ...)
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   31.90 sec.
+    Max Memory :                                 781 MB
+    Average Memory :                             568.60 MB
+    Total Requested Memory :                     8000.00 MB
+    Delta Memory :                               7219.00 MB
+    Max Swap :                                   -
+    Max Processes :                              5
+    Max Threads :                                133
+    Run time :                                   20 sec.
+    Turnaround time :                            20 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <logs/admet/qsage_32700.err> for stderr output of this job.
+

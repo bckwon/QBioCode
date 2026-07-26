@@ -1,0 +1,113 @@
+======================================================
+Job ID       : 38645[56]
+Host         : zu-a100-b05-01
+Start time   : Thu Jul 23 12:15:37 PM CEST 2026
+Endpoint     : Clearance_Hepatocyte_AZ
+Featurizer   : maccs
+Input dir    : /proj/bmfm/users/bckwon/projects/QBioCode/data/admet/Clearance_Hepatocyte_AZ/maccs
+======================================================
+2026-07-23 12:16:17.688986: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:16:26.276342: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+QProfiler Batch Mode
+============================================================
+Input directory: /proj/bmfm/users/bckwon/projects/QBioCode/data/admet/Clearance_Hepatocyte_AZ/maccs
+Config file: /proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/apps/qprofiler/configs/admet_config.yaml
+Data type: Clearance_Hepatocyte_AZ_maccs
+Parallel jobs: 10
+Output timestamp: 2026-07-23_10_16_40_703698
+============================================================
+2026-07-23 12:16:58.822767: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:00.485861: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:17:00.492406: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:01.341548: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:01.651672: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:02.351384: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:17:03.407634: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:17:03.834890: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:17:18.711612: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:20.456306: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:17:21.807296: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-07-23 12:17:23,392][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-23 12:17:23,392][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-23 12:17:23,392][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+2026-07-23 12:17:23.400439: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:23.731738: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:23.739461: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+Processing file: valid.csv
+[2026-07-23 12:17:24,128][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set valid.csv
+[2026-07-23 12:17:24,128][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-23 12:17:24,129][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-23 12:17:24,131][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+[2026-07-23 12:17:24,532][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=167 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+2026-07-23 12:17:25.696915: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:17:26.104160: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-07-23 12:17:28,666][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-23 12:17:28,666][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-23 12:17:28,666][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+Processing file: train_qml.csv
+[2026-07-23 12:17:29,620][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set train_qml.csv
+[2026-07-23 12:17:29,620][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-23 12:17:29,623][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-23 12:17:29,625][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+[2026-07-23 12:17:30,353][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=167 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+[2026-07-23 12:17:32,012][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-23 12:17:32,013][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-23 12:17:32,013][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-23 12:17:32,018][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-23 12:17:32,018][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-23 12:17:32,019][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+Processing file: test.csv
+[2026-07-23 12:17:39,948][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set test.csv
+[2026-07-23 12:17:39,948][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-23 12:17:39,952][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-23 12:17:39,954][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+[2026-07-23 12:17:46,010][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=167 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+Processing file: train.csv
+[2026-07-23 12:17:49,526][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set train.csv
+[2026-07-23 12:17:49,526][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-23 12:17:49,530][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-23 12:17:49,533][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+2026-07-23 12:17:50.382860: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:50.909399: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:52.150386: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:54.783350: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:17:58.585341: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:17:58.830885: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:17:59.574607: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:17:59.778390: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-07-23 12:18:00,199][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=167 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+2026-07-23 12:18:01.221670: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:18:04.493923: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:18:05.475217: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:18:08.498833: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:18:08.609529: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:18:09.114988: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:18:09.186952: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:18:11.784476: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:18:11.963953: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:18:12.742775: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-23 12:18:17.077085: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:18:20.004159: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:18:20.343437: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-23 12:18:21.214716: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.

@@ -1,0 +1,178 @@
+======================================================
+Job ID       : 32033[46]
+Host         : zu-a100-c08-02
+Start time   : Wed Jul 22 03:16:25 AM CEST 2026
+Endpoint     : CYP2D6_Substrate_CarbonMangels
+Featurizer   : ecfp4
+Input dir    : /proj/bmfm/users/bckwon/projects/QBioCode/data/admet/CYP2D6_Substrate_CarbonMangels/ecfp4
+======================================================
+2026-07-22 03:16:39.765262: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 03:16:41.486868: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+QProfiler Batch Mode
+============================================================
+Input directory: /proj/bmfm/users/bckwon/projects/QBioCode/data/admet/CYP2D6_Substrate_CarbonMangels/ecfp4
+Config file: /proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/apps/qprofiler/configs/admet_config.yaml
+Data type: CYP2D6_Substrate_CarbonMangels_ecfp4
+Parallel jobs: 10
+Output timestamp: 2026-07-22_01_16_43_902088
+============================================================
+2026-07-22 03:17:01.418019: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 03:17:01.463392: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 03:17:01.486746: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 03:17:01.565484: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 03:17:03.180133: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 03:17:03.223849: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 03:17:03.262589: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 03:17:03.349445: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 03:17:20.069877: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 03:17:20.355325: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 03:17:20.472862: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 03:17:20.513228: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 03:17:21.860229: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 03:17:22.083178: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 03:17:22.242152: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 03:17:22.294003: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-07-22 03:17:24,828][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 03:17:24,829][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 03:17:24,829][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 03:17:24,829][qbiocode.apps.qprofiler.qprofiler][INFO] - 
+The total run time of program is: 
+0.001241922378540039
+[2026-07-22 03:17:25,016][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 03:17:25,016][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 03:17:25,016][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 03:17:25,017][qbiocode.apps.qprofiler.qprofiler][INFO] - 
+The total run time of program is: 
+0.0008327960968017578
+[2026-07-22 03:17:25,133][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 03:17:25,134][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 03:17:25,134][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 03:17:25,134][qbiocode.apps.qprofiler.qprofiler][INFO] - 
+The total run time of program is: 
+0.0010447502136230469
+[2026-07-22 03:17:25,217][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 03:17:25,218][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 03:17:25,218][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 03:17:25,218][qbiocode.apps.qprofiler.qprofiler][INFO] - 
+The total run time of program is: 
+0.0008845329284667969
+
+Collecting results...
+Warning: Results not found for train.csv
+Warning: Results not found for train_qml.csv
+Warning: Results not found for valid.csv
+Warning: Results not found for test.csv
+
+============================================================
+Batch processing complete!
+Total run time: 0.01 hours
+Results saved to: results/CYP2D6_Substrate_CarbonMangels_ecfp4_batch_2026-07-22_01_16_43_902088
+============================================================
+
+======================================================
+End time : Wed Jul 22 03:17:31 AM CEST 2026
+Exit code: 0
+======================================================
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@zu-a100-c08-02.zuvela.ibm.com>
+Subject: Job 32033[46]: <admet_qprofiler[1-66]> in cluster <ZuVela_FP15> Done
+
+Job <admet_qprofiler[1-66]> was submitted from host <zu-login-02> by user <bkwon> in cluster <ZuVela_FP15> at Wed Jul 22 02:43:25 2026
+Job was executed on host(s) <6*zu-a100-c08-02>, in queue <normal>, as user <bkwon> in cluster <ZuVela_FP15> at Wed Jul 22 03:16:23 2026
+</u/bkwon> was used as the home directory.
+</proj/bmfm/users/bckwon/projects/QBioCode> was used as the working directory.
+Started at Wed Jul 22 03:16:23 2026
+Terminated at Wed Jul 22 03:17:31 2026
+Results reported at Wed Jul 22 03:17:31 2026
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/usr/bin/env bash
+#==============================================================================
+# LSF Job Array: Phase 4 — QProfiler Sweep (one job per endpoint × featurizer)
+#
+# Runs qprofiler-batch for each of the 22 ADMET endpoints × 3 featurizers
+# as an LSF job array (66 independent jobs).  Each job processes one
+# endpoint/featurizer directory.
+#
+# Submit from repo root:
+#   bsub < experiments/admet_benchmark/lsf/job_02_qprofiler_array.sh
+#
+# Estimated wall time per job: ~2.5 h (QML on simulator, 10 models × 3 splits)
+# Total compute: ~66 jobs × 2.5 h = 165 core-hours
+#==============================================================================
+
+#BSUB -J admet_qprofiler[1-66]
+#BSUB -q normal
+#BSUB -n 6
+#BSUB -R "span[hosts=1]"
+#BSUB -R "rusage[mem=16000]"
+#BSUB -gpu "num=1:mode=exclusive_process:j_exclusive=yes"
+#BSUB -W 04:00
+#BSUB -o logs/admet/qprofiler_%I_%J.out
+#BSUB -e logs/admet/qprofiler_%I_%J.err
+#BSUB -cwd /proj/bmfm/users/bckwon/projects/QBioCode
+
+set -euo pipefail
+
+REPO_ROOT="/proj/bmfm/users/bckwon/projects/QBioCode"
+PYTHON="${REPO_ROOT}/.venv/bin/python"
+LOG_DIR="${REPO_ROOT}/logs/admet"
+DATA_DIR="${REPO_ROOT}/data/admet"
+CONFIG="${REPO_ROOT}/qbiocode/apps/qprofiler/configs/admet_config.yaml"
+
+mkdir -p "${LOG_DIR}"
+
+# Build ordered list of all (endpoint, featurizer) pairs — must match array size
+ENDPOINTS=(
+    Caco2_Wang HIA_Hou Pgp_Broccatelli Bioavailability_Ma
+    Lipophilicity_AstraZeneca Solubility_AqSolDB BBB_Martins
+    PPBR_AstraZeneca VDss_Lombardo
+    CYP2C19_Veith CYP2D6_Veith CYP3A4_Veith CYP1A2_Veith CYP2C9_Veith
+    CYP2C9_Substrate_CarbonMangels CYP2D6_Substrate_CarbonMangels
+    CYP3A4_Substrate_CarbonMangels
+    Half_Life_Obach Clearance_Hepatocyte_AZ
+    hERG AMES DILI
+)
+FEATURIZERS=(ecfp4 maccs rdkit200)
+
+# Build flat task list: task_index → (endpoint, featurizer)
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   249.00 sec.
+    Max Memory :                                 2981 MB
+    Average Memory :                             1991.00 MB
+    Total Requested Memory :                     16000.00 MB
+    Delta Memory :                               13019.00 MB
+    Max Swap :                                   -
+    Max Processes :                              17
+    Max Threads :                                550
+    Run time :                                   66 sec.
+    Turnaround time :                            2046 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <logs/admet/qprofiler_46_32033.err> for stderr output of this job.
+

@@ -1,0 +1,24 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@zu-a100-c05-05.zuvela.ibm.com>
+Subject: Job 32219[31]: <admet_qprofiler_retry[1-40]> in cluster <ZuVela_FP15> Exited
+
+Job <admet_qprofiler_retry[1-40]> was submitted from host <zu-login-02> by user <bkwon> in cluster <ZuVela_FP15> at Wed Jul 22 04:11:18 2026
+Job was executed on host(s) <6*zu-a100-c05-05>, in queue <normal>, as user <bkwon> in cluster <ZuVela_FP15> at Wed Jul 22 04:16:45 2026
+</u/bkwon> was used as the home directory.
+</proj/bmfm/users/bckwon/projects/QBioCode> was used as the working directory.
+Started at Wed Jul 22 04:16:45 2026
+Terminated at Wed Jul 22 04:16:46 2026
+Results reported at Wed Jul 22 04:16:46 2026
+Cannot open your job file: /u/bkwon/.lsbatch/1784686278.32219.31
+Exited.
+
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <logs/admet/qprofiler_31_32219.err> for stderr output of this job.
+

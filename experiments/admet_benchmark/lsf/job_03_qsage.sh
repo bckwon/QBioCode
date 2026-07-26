@@ -18,14 +18,13 @@
 #BSUB -n 4
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=8000]"
-#BSUB -W 04:00
 #BSUB -o logs/admet/qsage_%J.out
 #BSUB -e logs/admet/qsage_%J.err
-#BSUB -cwd /dccstor/cardiac/QBioCode
+#BSUB -cwd /proj/bmfm/users/bckwon/projects/QBioCode
 
 set -euo pipefail
 
-REPO_ROOT="/dccstor/cardiac/QBioCode"
+REPO_ROOT="/proj/bmfm/users/bckwon/projects/QBioCode"
 PYTHON="${REPO_ROOT}/.venv/bin/python"
 LOG_DIR="${REPO_ROOT}/logs/admet"
 
@@ -40,7 +39,7 @@ echo "======================================================"
 cd "${REPO_ROOT}"
 
 ${PYTHON} experiments/admet_benchmark/03_train_qsage_admet.py \
-    --results-dir   results/admet_benchmark \
+    --results-dir   results \
     --output-dir    results/admet_benchmark/sage \
     --sage-type     xgboost_optuna \
     --n-iter        200 \

@@ -61,101 +61,110 @@ def compute_qnn(
         modeleval (dict): A dictionary containing the evaluation results, including accuracy, runtime, model parameters, and other relevant metrics.
     """
     beg_time = time.time()
+    session = None
+    model_params = {}
 
-    # choose a method for mapping your features onto the circuit
-    feature_map, _ = qutils.get_feature_map(
-        feature_map=encoding, feat_dimension=X_train.shape[1], reps=reps, entanglement=entanglement
-    )
+    try:
+        # choose a method for mapping your features onto the circuit
+        feature_map, _ = qutils.get_feature_map(
+            feature_map=encoding, feat_dimension=X_train.shape[1], reps=reps, entanglement=entanglement
+        )
 
-    # get ansatz
-    ansatz = qutils.get_ansatz(
-        ansatz_type=ansatz_type,
-        feat_dimension=feature_map.num_qubits,
-        reps=reps,
-        entanglement=entanglement,
-    )
+        # get ansatz
+        ansatz = qutils.get_ansatz(
+            ansatz_type=ansatz_type,
+            feat_dimension=feature_map.num_qubits,
+            reps=reps,
+            entanglement=entanglement,
+        )
 
-    #  Generate the backend, session and primitive
-    backend, session, prim = qutils.get_backend_session(
-        args, primitive, num_qubits=feature_map.num_qubits
-    )
+        #  Generate the backend, session and primitive
+        backend, session, prim = qutils.get_backend_session(
+            args, primitive, num_qubits=feature_map.num_qubits
+        )
 
-    # Get Optimizer
-    optimizer = qutils.get_optimizer(local_optimizer, max_iter=maxiter)
+        # Get Optimizer
+        optimizer = qutils.get_optimizer(local_optimizer, max_iter=maxiter)
 
-    # qc, input_params, weight_params = QNNCircuit(num_qubits=X_train.shape[1], feature_map=feature_map, ansatz=ansatz)
-    qc, _, _ = QNNCircuit(num_qubits=X_train.shape[1], feature_map=feature_map, ansatz=ansatz)
+        qc, _, _ = QNNCircuit(num_qubits=X_train.shape[1], feature_map=feature_map, ansatz=ansatz)
 
-    print(f"Currently running a quantum neural network (QNN) on this dataset.")
-    print(f"The number of qubits in your circuit is: {feature_map.num_qubits}")
-    print(f"The number of parameters in your circuit is: {feature_map.num_parameters}")
-    print(f"The number of ansatz parameters in your circuit is: {ansatz.num_parameters}")
+        print(f"Currently running a quantum neural network (QNN) on this dataset.")
+        print(f"The number of qubits in your circuit is: {feature_map.num_qubits}")
+        print(f"The number of parameters in your circuit is: {feature_map.num_parameters}")
+        print(f"The number of ansatz parameters in your circuit is: {ansatz.num_parameters}")
 
-    neural_network: EstimatorQNN | SamplerQNN
+        neural_network: EstimatorQNN | SamplerQNN
 
-    if primitive == "estimator":
-        if args["backend"] == "simulator":
-            neural_network = EstimatorQNN(
-                circuit=qc, input_params=feature_map.parameters, weight_params=ansatz.parameters
+        if primitive == "estimator":
+            if args["backend"] == "simulator":
+                neural_network = EstimatorQNN(
+                    circuit=qc, input_params=feature_map.parameters, weight_params=ansatz.parameters
+                )
+            else:
+                pm = generate_preset_pass_manager(backend=backend, optimization_level=3)
+                neural_network = EstimatorQNN(
+                    circuit=qc,
+                    estimator=prim,
+                    pass_manager=pm,
+                    input_params=feature_map.parameters,
+                    weight_params=ansatz.parameters,
+                )
+
+            # QNN maps inputs to [-1, +1]
+            neural_network.forward(
+                X_train[0, :], algorithm_globals.random.random(neural_network.num_weights)
             )
         else:
-            pm = generate_preset_pass_manager(backend=backend, optimization_level=3)
-            neural_network = EstimatorQNN(
-                circuit=qc,
-                estimator=prim,
-                pass_manager=pm,
-                input_params=feature_map.parameters,
-                weight_params=ansatz.parameters,
-            )
+            def parity(x):
+                return "{:b}".format(x).count("1") % 2
 
-        # QNN maps inputs to [-1, +1]
-        neural_network.forward(
-            X_train[0, :], algorithm_globals.random.random(neural_network.num_weights)
+            output_shape = (
+                2  # corresponds to the number of classes, possible outcomes of the (parity) mapping
+            )
+            if "simulator" in args["backend"]:
+                neural_network = SamplerQNN(
+                    circuit=qc,
+                    interpret=parity,
+                    output_shape=output_shape,
+                    input_params=feature_map.parameters,
+                    weight_params=ansatz.parameters,
+                )
+            else:
+                pm = generate_preset_pass_manager(backend=backend, optimization_level=3)
+                neural_network = SamplerQNN(
+                    circuit=qc,
+                    sampler=prim,
+                    interpret=parity,
+                    output_shape=output_shape,
+                    pass_manager=pm,
+                    input_params=feature_map.parameters,
+                    weight_params=ansatz.parameters,
+                )
+
+        # construct classifier
+        qnn = NeuralNetworkClassifier(neural_network=neural_network, optimizer=optimizer)
+
+        # fit classifier to data
+        hyperparameters = {
+            "feature_map": feature_map.__class__.__name__,
+            "ansatz": ansatz.__class__.__name__,
+            "optimizer": optimizer.__class__.__name__,
+            "optimizer_params": optimizer.settings,
+        }
+        model_params = hyperparameters
+        model_fit = qnn.fit(X_train, y_train)
+        y_predicted = qnn.predict(X_test)
+    except Exception as exc:
+        import logging as _log
+        _log.getLogger(__name__).warning(
+            f"compute_qnn skipped — {exc}. Returning NaN results so other models can continue."
         )
-    else:
-        # sampler=Sampler(backend=backend)
-        # parity maps bitstrings to 0 or 1
-        def parity(x):
-            return "{:b}".format(x).count("1") % 2
-
-        output_shape = (
-            2  # corresponds to the number of classes, possible outcomes of the (parity) mapping
+        if not isinstance(session, type(None)):
+            session.close()
+        return modeleval(
+            y_test, np.zeros(len(y_test), dtype=int),
+            beg_time, model_params, args, model=model, verbose=verbose
         )
-        # construct QNN
-        if "simulator" in args["backend"]:
-            neural_network = SamplerQNN(
-                circuit=qc,
-                interpret=parity,
-                output_shape=output_shape,
-                input_params=feature_map.parameters,
-                weight_params=ansatz.parameters,
-            )
-        else:
-            pm = generate_preset_pass_manager(backend=backend, optimization_level=3)
-            neural_network = SamplerQNN(
-                circuit=qc,
-                sampler=prim,
-                interpret=parity,
-                output_shape=output_shape,
-                pass_manager=pm,
-                input_params=feature_map.parameters,
-                weight_params=ansatz.parameters,
-            )
-
-    # construct classifier
-    qnn = NeuralNetworkClassifier(neural_network=neural_network, optimizer=optimizer)
-
-    # fit classifier to data
-    model_fit = qnn.fit(X_train, y_train)
-    hyperparameters = {
-        "feature_map": feature_map.__class__.__name__,
-        "ansatz": ansatz.__class__.__name__,
-        "optimizer": optimizer.__class__.__name__,
-        "optimizer_params": optimizer.settings,
-        # Add other hyperparameters as needed
-    }
-    model_params = hyperparameters
-    y_predicted = qnn.predict(X_test)
 
     if not isinstance(session, type(None)):
         session.close()

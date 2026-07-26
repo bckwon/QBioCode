@@ -1,0 +1,28 @@
+05:33:27 [INFO] __main__ — ============================================================
+05:33:27 [INFO] __main__ — QBioCode-ADMET: QSage Training
+05:33:27 [INFO] __main__ — ============================================================
+05:33:28 [INFO] __main__ — Collected 68 ModelResults files → 1323 rows
+05:33:28 [INFO] __main__ — Collected 68 RawDataEvaluation files → 7 rows
+05:33:28 [INFO] __main__ — Compiled results saved to results/admet_benchmark/sage
+2026-07-22 05:33:40.162235: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 05:33:41.719892: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+05:33:42 [INFO] qiskit.passmanager.base_tasks — Pass: UnrollCustomDefinitions - 0.15831 (ms)
+05:33:42 [INFO] qiskit.passmanager.base_tasks — Pass: BasisTranslator - 0.06652 (ms)
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/experiments/admet_benchmark/03_train_qsage_admet.py", line 218, in <module>
+    main()
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/experiments/admet_benchmark/03_train_qsage_admet.py", line 161, in main
+    sage = QuantumSage(data_input=model_df)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/experiments/admet_benchmark/../../qbiocode/apps/sage/sage.py", line 45, in __init__
+    self._input_data_metadata = data_input[self._columns_metadata]
+                                ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/pandas/core/frame.py", line 4119, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 6212, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 6264, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['datatype', 'model_embed_datatype', 'BestParams_GridSearch'] not in index"

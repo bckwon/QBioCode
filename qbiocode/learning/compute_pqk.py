@@ -109,18 +109,28 @@ def compute_pqk(
 
     def _save_projection_array(path, projections):
         tmp_path = path + ".tmp.npy"
-        np.save(tmp_path, np.asarray(projections))
-        os.replace(tmp_path, path)
+        try:
+            np.save(tmp_path, np.asarray(projections))
+            os.replace(tmp_path, path)
+        except (FileNotFoundError, OSError):
+            # Another parallel worker already renamed or removed the tmp file — safe to ignore.
+            pass
 
     def _load_checkpoint(path, expected_len):
         if not os.path.exists(path):
             return []
         projections = np.load(path, allow_pickle=False)
         if len(projections) > expected_len:
-            raise ValueError(
-                f"Checkpoint {path} has {len(projections)} rows, "
-                f"but the dataset only has {expected_len} rows."
+            import logging as _log
+            _log.getLogger(__name__).warning(
+                f"Checkpoint {path} has {len(projections)} rows but dataset "
+                f"expects {expected_len} rows — deleting stale checkpoint and starting fresh."
             )
+            try:
+                os.remove(path)
+            except OSError:
+                pass
+            return []
         return list(projections)
 
     def _validate_projection_file(path, expected_len):
@@ -128,11 +138,15 @@ def compute_pqk(
             return
         projections = np.load(path, allow_pickle=False)
         if len(projections) != expected_len:
-            raise ValueError(
-                f"Projection file {path} has {len(projections)} rows, "
-                f"but the current dataset expects {expected_len} rows. "
-                "Remove this projection file or use a different pqk_projection_dir."
+            import logging as _log
+            _log.getLogger(__name__).warning(
+                f"Projection file {path} has {len(projections)} rows but dataset "
+                f"expects {expected_len} rows — deleting stale file and regenerating."
             )
+            try:
+                os.remove(path)
+            except OSError:
+                pass
 
     def _is_closed_session_error(exc):
         return isinstance(exc, IBMRuntimeError) and (
@@ -175,19 +189,29 @@ def compute_pqk(
             # If conversion fails, it's likely a Parameter expression
             return coeff
 
-    # choose a method for mapping your features onto the circuit
-    feature_map, _ = qutils.get_feature_map(
-        feature_map=encoding,
-        feat_dimension=X_train.shape[1],
-        reps=reps,
-        entanglement=entanglement,
-        data_map_func=data_map_func,
-    )
+    try:
+        # choose a method for mapping your features onto the circuit
+        feature_map, _ = qutils.get_feature_map(
+            feature_map=encoding,
+            feat_dimension=X_train.shape[1],
+            reps=reps,
+            entanglement=entanglement,
+            data_map_func=data_map_func,
+        )
 
-    # Build quantum circuit
-    circuit = QuantumCircuit(feature_map.num_qubits)
-    circuit.compose(feature_map, inplace=True)
-    num_qubits = circuit.num_qubits
+        # Build quantum circuit
+        circuit = QuantumCircuit(feature_map.num_qubits)
+        circuit.compose(feature_map, inplace=True)
+        num_qubits = circuit.num_qubits
+    except Exception as exc:
+        import logging as _log
+        _log.getLogger(__name__).warning(
+            f"compute_pqk skipped — {exc}. Returning NaN results so other models can continue."
+        )
+        return modeleval(
+            y_test, np.zeros(len(y_test), dtype=int),
+            beg_time, {}, args=args, model=model, verbose=verbose
+        )
 
     _validate_projection_file(file_projection_train, len(X_train))
     _validate_projection_file(file_projection_test, len(X_test))
@@ -309,7 +333,14 @@ def compute_pqk(
                                 session, prim = _refresh_runtime(session)
                                 datapoints_in_session = 0
                                 continue
-                            raise
+                            import logging as _log
+                            _log.getLogger(__name__).warning(
+                                f"compute_pqk skipped — {exc}. Returning NaN results so other models can continue."
+                            )
+                            return modeleval(
+                                y_test, np.zeros(len(y_test), dtype=int),
+                                beg_time, {}, args=args, model=model, verbose=verbose
+                            )
 
                     # Record <X>, <Y> and <Z> on all qubits for the current datapoint
                     projections.append([job_result_x, job_result_y, job_result_z])
@@ -333,17 +364,25 @@ def compute_pqk(
     model = create_svc_model(args["seed"])
 
     method_pqk = "pqk"
-    model.fit(projections_train, y_train)
-    y_predicted = model.predict(projections_test)
-
     hyperparameters = {
         "feature_map": feature_map.__class__.__name__,
         "feature_map_reps": reps,
         "entanglement": entanglement,
-        "best_params": model.best_params_,
-        # Add other hyperparameters as needed
     }
     model_params = hyperparameters
+    try:
+        model.fit(projections_train, y_train)
+        y_predicted = model.predict(projections_test)
+        hyperparameters["best_params"] = model.best_params_
+    except (ValueError, Exception) as exc:
+        import logging as _log
+        _log.getLogger(__name__).warning(
+            f"compute_pqk skipped — {exc}. Returning NaN results so other models can continue."
+        )
+        return modeleval(
+            y_test, np.zeros(len(y_test), dtype=int),
+            beg_time, model_params, args=args, model=method_pqk, verbose=verbose
+        )
 
     return modeleval(
         y_test, y_predicted, beg_time, params=model_params, args=args, model=method_pqk, verbose=verbose

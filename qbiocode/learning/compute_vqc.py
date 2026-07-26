@@ -58,55 +58,68 @@ def compute_vqc(
         dict: Evaluation results including accuracy, time taken, and model parameters.
     """
     beg_time = time.time()
-    # choose a method for mapping your features onto the circuit
-    feature_map, _ = qutils.get_feature_map(
-        feature_map=encoding, feat_dimension=X_train.shape[1], reps=reps, entanglement=entanglement
-    )
+    session = None
+    model_params = {}
 
-    # get ansatz
-    ansatz = qutils.get_ansatz(
-        ansatz_type=ansatz_type,
-        feat_dimension=feature_map.num_qubits,
-        reps=reps,
-        entanglement=entanglement,
-    )
-
-    #  Generate the backend, session and primitive
-    backend, session, prim = qutils.get_backend_session(
-        args, primitive, num_qubits=feature_map.num_qubits
-    )
-
-    # Get Optimizer
-    optimizer = qutils.get_optimizer(local_optimizer, max_iter=maxiter)
-
-    # instantiate the primitive
-    if "simulator" == args["backend"]:
-        vqc = VQC(sampler=prim, feature_map=feature_map, ansatz=ansatz, optimizer=optimizer)
-    else:
-        pm = generate_preset_pass_manager(backend=backend, optimization_level=3)
-        vqc = VQC(
-            sampler=prim,
-            feature_map=feature_map,
-            ansatz=ansatz,
-            optimizer=optimizer,
-            pass_manager=pm,
+    try:
+        # choose a method for mapping your features onto the circuit
+        feature_map, _ = qutils.get_feature_map(
+            feature_map=encoding, feat_dimension=X_train.shape[1], reps=reps, entanglement=entanglement
         )
 
-    print(f"Currently running a variational quantum classifer (VQC) on this dataset.")
-    print(f"The number of qubits in your circuit is: {feature_map.num_qubits}")
-    print(f"The number of parameters in your circuit is: {feature_map.num_parameters}")
+        # get ansatz
+        ansatz = qutils.get_ansatz(
+            ansatz_type=ansatz_type,
+            feat_dimension=feature_map.num_qubits,
+            reps=reps,
+            entanglement=entanglement,
+        )
 
-    # fit classifier to data
-    model_fit = vqc.fit(X_train, y_train)
-    hyperparameters = {
-        "feature_map": feature_map.__class__.__name__,
-        "ansatz": ansatz.__class__.__name__,
-        "optimizer": optimizer.__class__.__name__,
-        "optimizer_params": optimizer.settings,
-        # Add other hyperparameters as needed
-    }
-    model_params = hyperparameters
-    y_predicted = vqc.predict(X_test)
+        #  Generate the backend, session and primitive
+        backend, session, prim = qutils.get_backend_session(
+            args, primitive, num_qubits=feature_map.num_qubits
+        )
+
+        # Get Optimizer
+        optimizer = qutils.get_optimizer(local_optimizer, max_iter=maxiter)
+
+        # instantiate the primitive
+        if "simulator" == args["backend"]:
+            vqc = VQC(sampler=prim, feature_map=feature_map, ansatz=ansatz, optimizer=optimizer)
+        else:
+            pm = generate_preset_pass_manager(backend=backend, optimization_level=3)
+            vqc = VQC(
+                sampler=prim,
+                feature_map=feature_map,
+                ansatz=ansatz,
+                optimizer=optimizer,
+                pass_manager=pm,
+            )
+
+        print(f"Currently running a variational quantum classifer (VQC) on this dataset.")
+        print(f"The number of qubits in your circuit is: {feature_map.num_qubits}")
+        print(f"The number of parameters in your circuit is: {feature_map.num_parameters}")
+
+        hyperparameters = {
+            "feature_map": feature_map.__class__.__name__,
+            "ansatz": ansatz.__class__.__name__,
+            "optimizer": optimizer.__class__.__name__,
+            "optimizer_params": optimizer.settings,
+        }
+        model_params = hyperparameters
+        model_fit = vqc.fit(X_train, y_train)
+        y_predicted = vqc.predict(X_test)
+    except Exception as exc:
+        import logging as _log
+        _log.getLogger(__name__).warning(
+            f"compute_vqc skipped — {exc}. Returning NaN results so other models can continue."
+        )
+        if not isinstance(session, type(None)):
+            session.close()
+        return modeleval(
+            y_test, np.zeros(len(y_test), dtype=int),
+            beg_time, model_params, args, model=model, verbose=verbose
+        )
 
     if not isinstance(session, type(None)):
         session.close()

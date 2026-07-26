@@ -18,14 +18,13 @@
 #BSUB -n 1
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=4000]"
-#BSUB -W 00:30
 #BSUB -o logs/admet/export_table_%J.out
 #BSUB -e logs/admet/export_table_%J.err
-#BSUB -cwd /dccstor/cardiac/QBioCode
+#BSUB -cwd /proj/bmfm/users/bckwon/projects/QBioCode
 
 set -euo pipefail
 
-REPO_ROOT="/dccstor/cardiac/QBioCode"
+REPO_ROOT="/proj/bmfm/users/bckwon/projects/QBioCode"
 PYTHON="${REPO_ROOT}/.venv/bin/python"
 LOG_DIR="${REPO_ROOT}/logs/admet"
 

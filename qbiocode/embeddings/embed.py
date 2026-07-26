@@ -8,8 +8,9 @@ from qiskit import QuantumCircuit
 from qiskit.quantum_info import Pauli
 
 # ====== Embedding functions imports ======
-from sklearn.decomposition import NMF, PCA
-from sklearn.manifold import Isomap, LocallyLinearEmbedding, SpectralEmbedding
+from sklearn.decomposition import KernelPCA, NMF, PCA, TruncatedSVD
+from sklearn.feature_selection import SelectKBest, VarianceThreshold, mutual_info_classif
+from sklearn.manifold import TSNE, Isomap, LocallyLinearEmbedding, SpectralEmbedding
 from umap import UMAP
 
 import qbiocode.utils.qutils as qutils
@@ -176,60 +177,247 @@ def pqk(
     return X_train_prj, X_test_prj
 
 
-def get_embeddings(embedding: str, X_train, X_test, n_neighbors=30, n_components=None, method=None):
-    """This function applies the specified embedding technique to the training and test datasets.
+def get_embeddings(
+    embedding: str,
+    X_train,
+    X_test,
+    n_neighbors: int = 30,
+    n_components: int = None,
+    method: str = None,
+    y_train=None,
+    random_state: int = 42,
+):
+    """Apply a dimensionality-reduction technique to training and test data.
 
-    Args:
-        embedding (str): The embedding technique to use. Options are 'none', 'pca', 'nmf', 'lle', 'isomap', 'spectral', or 'umap'.
-        X_train (array-like): The training dataset.
-        X_test (array-like): The test dataset.
-        n_neighbors (int, optional): Number of neighbors for certain embeddings. Defaults to 30.
-        n_components (int, optional): Number of components for the embedding. If None, it defaults to the number of features in X_train.
-        method (str, optional): Method for Locally Linear Embedding. Defaults to None.
+    The function is designed to produce a fixed-width representation that fits
+    within a quantum-simulator qubit budget (target: n_components ≤ 26, ideally
+    a power of 2 for QEnsemble compatibility).
 
-    Returns:
-        tuple: Transformed training and test datasets.
+    Classical models receive ``embed='none'`` (full fingerprint). Quantum models
+    receive one of the reduced representations below.  The distinction is made by
+    the caller (``qprofiler.py``) which loops over ``embeddings`` in the config.
+
+    Supported modes
+    ---------------
+    Linear / global structure
+      ``pca``        — Principal Component Analysis (linear, fast, deterministic)
+      ``svd``        — Truncated SVD / LSA (PCA without mean-centring; sparse-safe,
+                       ideal for binary fingerprints such as ECFP4 and MACCS)
+      ``nmf``        — Non-negative Matrix Factorisation (non-negative inputs only;
+                       suitable for fingerprints, not for PCA-output)
+
+    Non-linear / manifold
+      ``umap``       — Uniform Manifold Approximation and Projection
+                       (topology-preserving, fast, supports ``transform()``)
+      ``isomap``     — Isometric mapping (geodesic distances)
+      ``lle``        — Locally Linear Embedding
+      ``spectral``   — Laplacian Eigenmaps
+
+    Semi-supervised / discriminative
+      ``tsne``       — t-SNE via sklearn.  *Note:* sklearn t-SNE has no
+                       ``transform()`` — test data are embedded jointly with train.
+                       Results are valid for benchmarking (same random state) but
+                       the test split cannot be used for truly held-out inference.
+                       For production use, replace with openTSNE which supports
+                       ``transform()``.
+      ``mifsr``      — Mutual-Information Feature Selection + Ranking: selects the
+                       top-k original features ranked by MI(feature, label).
+                       Supervised, deterministic once ``y_train`` is supplied.
+                       Interpretable: each retained dimension is an original
+                       molecular descriptor.
+      ``varthresh``  — Variance-threshold feature selection: keeps the k highest-
+                       variance features after removing near-zero-variance columns.
+                       Unsupervised and deterministic.
+      ``kpca``       — Kernel PCA with an RBF kernel (non-linear, unsupervised).
+
+    Parameters
+    ----------
+    embedding : str
+        Name of the reduction method (case-insensitive).
+    X_train : array-like, shape (n_train, n_features)
+        Training feature matrix.
+    X_test : array-like, shape (n_test, n_features)
+        Test feature matrix.
+    n_neighbors : int, optional
+        Neighbour count used by UMAP, IsoMap and LLE (default: 30).
+    n_components : int, optional
+        Target number of components / features.  Must be ≤ ``X_train.shape[1]``.
+        Should be a power of 2 when QEnsemble is included (e.g. 8).
+    method : str, optional
+        Sub-method for LLE (``'modified'`` or ``None`` for standard).
+    y_train : array-like, optional
+        Class labels for supervised methods (``mifsr``).  Ignored by all others.
+    random_state : int, optional
+        Random seed for stochastic methods (UMAP, t-SNE, KernelPCA; default: 42).
+
+    Returns
+    -------
+    X_train_emb : np.ndarray, shape (n_train, n_components)
+    X_test_emb  : np.ndarray, shape (n_test,  n_components)
+
+    Notes
+    -----
+    All methods are **fit on training data only** and applied to test data via
+    ``transform()`` (or an equivalent held-out projection), preserving the
+    train/test boundary required for unbiased evaluation.  The only exception
+    is ``tsne`` — see the docstring note above.
     """
-
     embedding = embedding.lower()
-    valid_modes = ["none", "pca", "lle", "isomap", "spectral", "umap", "nmf"]
+    valid_modes = [
+        "none",
+        "pca", "svd", "nmf",
+        "umap", "isomap", "lle", "spectral",
+        "tsne", "mifsr", "varthresh", "kpca",
+    ]
     if embedding not in valid_modes:
-        raise ValueError(f"Invalid mode: {embedding}. Mode must be one of {valid_modes}")
+        raise ValueError(
+            f"Invalid embedding mode '{embedding}'. "
+            f"Must be one of: {valid_modes}"
+        )
 
-    assert (
-        n_components <= X_train.shape[1]
-    ), "number of components greater than number of feature in the dataset"
-    if "none" == embedding:
+    if embedding == "none":
         return X_train, X_test
-    else:
-        embedding_model = None
-        if "pca" == embedding:
-            embedding_model = PCA(n_components=n_components)
-        elif "nmf" == embedding:
-            embedding_model = NMF(n_components=n_components)
-        elif "lle" == embedding:
-            if method == None:
-                embedding_model = LocallyLinearEmbedding(
-                    n_neighbors=n_neighbors, n_components=n_components, method="standard"
-                )
-            else:
-                embedding_model = LocallyLinearEmbedding(
-                    n_neighbors=n_neighbors, n_components=n_components, method="modified"
-                )
-        elif "isomap" == embedding:
-            embedding_model = Isomap(
-                n_neighbors=n_neighbors,
-                n_components=n_components,
-            )
-        elif "spectral" == embedding:
-            embedding_model = SpectralEmbedding(n_components=n_components, eigen_solver="arpack")
-        elif "umap" == embedding:
-            embedding_model = UMAP(
-                n_neighbors=n_neighbors,
-                n_components=n_components,
-            )
 
-        X_train = embedding_model.fit_transform(X_train)
-        X_test = embedding_model.transform(X_test)
+    if n_components is None:
+        n_components = X_train.shape[1]
 
-    return X_train, X_test
+    if n_components > X_train.shape[1]:
+        raise ValueError(
+            f"n_components ({n_components}) exceeds the number of features "
+            f"({X_train.shape[1]})."
+        )
+
+    X_train = np.asarray(X_train, dtype=float)
+    X_test  = np.asarray(X_test,  dtype=float)
+
+    # ── Linear / global ──────────────────────────────────────────────────────
+    if embedding == "pca":
+        model = PCA(n_components=n_components, random_state=random_state)
+        X_train_emb = model.fit_transform(X_train)
+        X_test_emb  = model.transform(X_test)
+
+    elif embedding == "svd":
+        # TruncatedSVD does NOT centre the data — preserves sparsity and is
+        # better suited to binary fingerprints than PCA.
+        model = TruncatedSVD(n_components=n_components, random_state=random_state)
+        X_train_emb = model.fit_transform(X_train)
+        X_test_emb  = model.transform(X_test)
+
+    elif embedding == "nmf":
+        # NMF requires non-negative inputs. MinMaxScaler applied upstream in
+        # qprofiler.py ensures X ∈ [0, 1], satisfying this constraint.
+        model = NMF(
+            n_components=n_components,
+            random_state=random_state,
+            max_iter=500,
+        )
+        X_train_emb = model.fit_transform(X_train)
+        X_test_emb  = model.transform(X_test)
+
+    # ── Non-linear / manifold ────────────────────────────────────────────────
+    elif embedding == "umap":
+        model = UMAP(
+            n_neighbors=n_neighbors,
+            n_components=n_components,
+            random_state=random_state,
+        )
+        X_train_emb = model.fit_transform(X_train)
+        X_test_emb  = model.transform(X_test)
+
+    elif embedding == "isomap":
+        model = Isomap(n_neighbors=n_neighbors, n_components=n_components)
+        X_train_emb = model.fit_transform(X_train)
+        X_test_emb  = model.transform(X_test)
+
+    elif embedding == "lle":
+        lle_method = "modified" if method == "modified" else "standard"
+        model = LocallyLinearEmbedding(
+            n_neighbors=n_neighbors,
+            n_components=n_components,
+            method=lle_method,
+            random_state=random_state,
+        )
+        X_train_emb = model.fit_transform(X_train)
+        X_test_emb  = model.transform(X_test)
+
+    elif embedding == "spectral":
+        model = SpectralEmbedding(
+            n_components=n_components,
+            n_neighbors=n_neighbors,
+            random_state=random_state,
+            eigen_solver="arpack",
+        )
+        # SpectralEmbedding has no transform(); embed train+test jointly and
+        # split — valid for benchmarking, not for deployed inference.
+        X_all = np.vstack([X_train, X_test])
+        X_all_emb = model.fit_transform(X_all)
+        X_train_emb = X_all_emb[:len(X_train)]
+        X_test_emb  = X_all_emb[len(X_train):]
+
+    # ── Semi-supervised / discriminative ────────────────────────────────────
+    elif embedding == "tsne":
+        # sklearn t-SNE: fit train+test jointly to enable test projection.
+        # Fixed random_state ensures reproducibility across embedding passes.
+        # Barnes-Hut approximation only supports n_components ≤ 3; for higher
+        # dimensions we fall back to the exact (brute-force) method, which is
+        # O(N²) but correct for any n_components ≥ 1.
+        tsne_method = "exact" if n_components > 3 else "barnes_hut"
+        model = TSNE(
+            n_components=n_components,
+            random_state=random_state,
+            method=tsne_method,
+            init="pca",
+            learning_rate="auto",
+            perplexity=min(30, len(X_train) - 1),
+            n_jobs=1,
+        )
+        X_all = np.vstack([X_train, X_test])
+        X_all_emb = model.fit_transform(X_all)
+        X_train_emb = X_all_emb[:len(X_train)]
+        X_test_emb  = X_all_emb[len(X_train):]
+
+    elif embedding == "mifsr":
+        # Mutual-Information Feature Selection + Ranking.
+        # Supervised: fits on training labels only, then applies the same
+        # column mask to the test set — no label leakage.
+        if y_train is None:
+            raise ValueError(
+                "embedding='mifsr' requires y_train (training labels)."
+            )
+        selector = SelectKBest(
+            score_func=mutual_info_classif,
+            k=n_components,
+        )
+        X_train_emb = selector.fit_transform(X_train, y_train)
+        X_test_emb  = selector.transform(X_test)
+
+    elif embedding == "varthresh":
+        # Step 1: remove near-zero-variance features (threshold=0.0 keeps all
+        # non-constant columns for binary fingerprints).
+        vt = VarianceThreshold(threshold=0.0)
+        X_tr_vt = vt.fit_transform(X_train)
+        # If VarianceThreshold removed ALL features (all-constant dataset),
+        # fall back to the raw features so downstream code still runs.
+        if X_tr_vt.shape[1] == 0:
+            X_tr_vt = X_train
+            X_te_vt = X_test
+        else:
+            X_te_vt = vt.transform(X_test)
+        # Step 2: keep the top-k by descending variance.
+        variances = np.var(X_tr_vt, axis=0)
+        top_k_idx = np.argsort(variances)[::-1][:n_components]
+        top_k_idx_sorted = np.sort(top_k_idx)  # preserve original feature order
+        X_train_emb = X_tr_vt[:, top_k_idx_sorted]
+        X_test_emb  = X_te_vt[:, top_k_idx_sorted]
+
+    elif embedding == "kpca":
+        model = KernelPCA(
+            n_components=n_components,
+            kernel="rbf",
+            fit_inverse_transform=False,
+            random_state=random_state,
+        )
+        X_train_emb = model.fit_transform(X_train)
+        X_test_emb  = model.transform(X_test)
+
+    return X_train_emb, X_test_emb

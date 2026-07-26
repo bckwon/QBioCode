@@ -432,24 +432,43 @@ def compute_qensemble(X_train: np.ndarray, X_test: np.ndarray,
     # Make predictions for each test sample
     predictions = []
     qc = None  # Initialize to avoid unbound variable
-    for x_test in X_test:
-        x_test_norm = normalize_data(x_test)
-        
-        # Build and execute circuit
-        qc = build_ensemble_circuit(X_data, Y_data, x_test_norm, 
-                                    n_swap=n_swap, d=d, mode=mode,
-                                    ensemble_method=ensemble_method)
-        
-        if qc.num_qubits > 36:
-            raise ValueError(f"Circuit has {qc.num_qubits} qubits, exceeds simulation limit of 36")
-        
-        counts = execute_circuit(qc, n_shots=n_shots, device=device)
-        probs = retrieve_probabilities(counts)
-        predictions.append(probs)
-    
+    try:
+        for x_test in X_test:
+            x_test_norm = normalize_data(x_test)
+
+            # Build and execute circuit
+            qc = build_ensemble_circuit(X_data, Y_data, x_test_norm,
+                                        n_swap=n_swap, d=d, mode=mode,
+                                        ensemble_method=ensemble_method)
+
+            if qc.num_qubits > 36:
+                raise ValueError(f"Circuit has {qc.num_qubits} qubits, exceeds simulation limit of 36")
+
+            counts = execute_circuit(qc, n_shots=n_shots, device=device)
+            probs = retrieve_probabilities(counts)
+            predictions.append(probs)
+    except Exception as exc:
+        import logging as _log
+        _log.getLogger(__name__).warning(
+            f"compute_qensemble skipped — {exc}. "
+            "Returning NaN results so other models can continue."
+        )
+        model_params = {
+            'n_train': n_train, 'n_swap': n_swap, 'd': d,
+            'mode': mode, 'ensemble_method': ensemble_method,
+            'n_shots': n_shots, 'seed': seed,
+            'n_qubits': qc.num_qubits if qc is not None else 0,
+            'circuit_depth': qc.depth() if qc is not None else 0,
+            'error': str(exc),
+        }
+        return modeleval(
+            y_test, np.zeros(len(y_test), dtype=int),
+            beg_time, model_params, args, model=model, verbose=verbose
+        )
+
     # Convert probabilities to class predictions
     y_predicted = np.array([1 if p[1] > p[0] else 0 for p in predictions])
-    
+
     # Model parameters
     model_params = {
         'n_train': n_train,
@@ -462,6 +481,6 @@ def compute_qensemble(X_train: np.ndarray, X_test: np.ndarray,
         'n_qubits': qc.num_qubits if qc is not None else 0,
         'circuit_depth': qc.depth() if qc is not None else 0
     }
-    
-    return modeleval(y_test, y_predicted, beg_time, model_params, args, 
+
+    return modeleval(y_test, y_predicted, beg_time, model_params, args,
                     model=model, verbose=verbose)

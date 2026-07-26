@@ -95,7 +95,10 @@ def compute_dt(
     # Validate the model in test dataset and calculate accuracy
     y_predicted = dt.predict(X_test)
     return modeleval(
-        y_test, y_predicted, beg_time, model_params, args, model=model, verbose=verbose
+        y_test, y_predicted, beg_time, model_params, args, model=model, verbose=verbose,
+        fitted_model=model_fit,
+        checkpoint_dir=args.get("checkpoint_dir"),
+        dataset_name=data_key,
     )
 
 

@@ -1,0 +1,12 @@
+05:14:27 [INFO] __main__ — ============================================================
+05:14:27 [INFO] __main__ — QBioCode-ADMET: QSage Training
+05:14:27 [INFO] __main__ — ============================================================
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/experiments/admet_benchmark/03_train_qsage_admet.py", line 218, in <module>
+    main()
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/experiments/admet_benchmark/03_train_qsage_admet.py", line 142, in main
+    model_df, eval_df = collect_results(args.results_dir)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/experiments/admet_benchmark/03_train_qsage_admet.py", line 83, in collect_results
+    raise FileNotFoundError(
+FileNotFoundError: No ModelResults.csv files found under results/admet_benchmark. Run 02_run_qprofiler_admet.sh first.

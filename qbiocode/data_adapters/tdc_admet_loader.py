@@ -101,7 +101,7 @@ ADMET_ENDPOINTS: Dict[str, Dict] = {
         "label_meaning": "bbb_permeable",
     },
     "PPBR_AstraZeneca": {
-        "tdc_name": "PPBR_AstraZeneca",
+        "tdc_name": "ppbr_az",
         "category": "Distribution",
         "original_task": "regression",
         "binarize": True,

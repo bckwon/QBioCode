@@ -29,7 +29,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="/dccstor/cardiac/QBioCode"
+REPO_ROOT="/proj/bmfm/users/bckwon/projects/QBioCode"
 LSF_DIR="${REPO_ROOT}/experiments/admet_benchmark/lsf"
 LOG_DIR="${REPO_ROOT}/logs/admet"
 QUEUE="${QUEUE:-normal}"

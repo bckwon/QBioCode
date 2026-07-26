@@ -28,16 +28,41 @@ qiskit_json_path: '~/.qiskit/qiskit-ibm.json'
 n_jobs: 10
 
 # ── Embeddings ───────────────────────────────────────────────────────────────
-# 'none': use featurizer output directly
-# 'pca': reduce to n_components for QML qubit budget
-embeddings: ['none', 'pca']
+# Embedding passes run in order. Classical models always receive 'none' (full
+# fingerprint). Quantum models are automatically skipped on passes where the
+# feature dimension exceeds max_qubits (see model_run.py).
+#
+# QML qubit budget: n_components=8  →  2^8 = 256-element statevector (trivial)
+#   QEnsemble: total_qubits = 7 + 5×log2(8) = 22  (well within 26-qubit limit)
+#
+# Embedding taxonomy for the ADMET benchmark:
+#   Linear / global structure (fit on train, transform test):
+#     pca       — Principal Component Analysis (centred; captures max variance)
+#     svd       — Truncated SVD / LSA (no centring; sparse-safe for fingerprints)
+#     nmf       — Non-negative Matrix Factorisation (non-linear factors)
+#   Non-linear / manifold (fit on train, transform test):
+#     umap      — UMAP (topology-preserving; fastest non-linear option)
+#     kpca      — Kernel PCA with RBF (non-linear, global)
+#   Supervised / discriminative (fit on train labels):
+#     mifsr     — Mutual-Information Feature Selection + Ranking (top-k original
+#                 features; interpretable — each column is a real descriptor)
+#     varthresh — Top-k variance features (unsupervised; filter method)
+#   Manifold methods with joint embedding (train+test embedded together;
+#   valid for benchmarking but NOT for deployed inference):
+#     tsne      — t-SNE (perplexity-based; captures local structure)
+#
+# 'none' is always first so classical models run first and do not block QML.
+embeddings: ['none', 'pca', 'svd', 'nmf', 'umap', 'kpca', 'mifsr', 'varthresh', 'tsne']
 
-# 10-qubit budget (ECFP4 2048-bit → PCA → 10 features)
-n_components: 10
+# n_components must be a power of 2 for QEnsemble compatibility.
+# 8 → 3 qubits_per_sample, 22 total qubits for QEnsemble (safe for simulator).
+n_components: 8
 
 # ── Models ───────────────────────────────────────────────────────────────────
 # Full panel: standard classical + QML + MMELON foundation model baseline
-model: ['svc', 'rf', 'mlp', 'xgb', 'lr', 'qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']
+# NOTE: 'pqk' commented out — CPU statevector simulation takes ~87h per task
+#       (loops full quantum circuit per test sample). Run separately with GPU Aer backend.
+model: ['svc', 'rf', 'mlp', 'xgb', 'lr', 'qsvc', 'vqc', 'qnn', 'qensemble', 'mmelon']
 
 # ── Evaluation ───────────────────────────────────────────────────────────────
 average: 'weighted'
@@ -56,6 +81,10 @@ resil_level: 1
 test_size: 0.2
 # Stratified sampling is critical — ADMET endpoints are often imbalanced
 stratify: ['y']
+# Maximum feature dimension for quantum models (statevector simulator limit).
+# Features > max_qubits → quantum models auto-skipped for that embedding pass.
+max_qubits: 26
+
 scaling: ['True']
 grid_search: False
 cross_validation: 5
@@ -138,6 +167,20 @@ gridsearch_mlp_args: {'hidden_layer_sizes': [[50,], [100,], [100, 50]],
                       'alpha': [0.0001, 0.001],
                       'learning_rate': ['constant', 'adaptive']}
 
+xgb_args: {'n_estimators': 100,
+           'criterion': 'gini',
+           'max_depth': null,
+           'subsample': 0.5,
+           'learning_rate': 0.5,
+           'colsample_bytree': 1,
+           'min_child_weight': 1}
+
+gridsearch_xgb_args: {'n_estimators': [100, 200, 500],
+                      'max_depth': [3, 5, 10, null],
+                      'subsample': [0.5, 0.75, 1.0],
+                      'learning_rate': [0.01, 0.1, 0.5],
+                      'colsample_bytree': [0.5, 0.75, 1.0]}
+
 # ── QML parameters ───────────────────────────────────────────────────────────
 qnn_args: {'primitive': 'estimator',
            'local_optimizer': 'COBYLA',
@@ -177,7 +220,7 @@ qensemble_args: {'n_train': 4,
                  'mode': 'balanced',
                  'ensemble_method': 'swap',
                  'n_shots': 8192,
-                 'device': 'GPU'}
+                 'device': 'CPU'}
 
 # ── Hydra output directory ────────────────────────────────────────────────────
 hydra:

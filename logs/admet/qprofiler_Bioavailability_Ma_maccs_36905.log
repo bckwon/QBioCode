@@ -1,0 +1,368 @@
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 28] No space left on device.  joblib will operate in serial mode
+  warnings.warn("%s.  joblib will operate in serial mode" % (e,))
+2026-07-22 18:33:00.597629: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 18:33:12.826750: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 28] No space left on device.  joblib will operate in serial mode
+  warnings.warn("%s.  joblib will operate in serial mode" % (e,))
+2026-07-22 18:33:35.659117: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 18:33:37.436139: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-07-22 18:33:41,310][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 18:33:41,310][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 18:33:41,311][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+Processing file: train.csv
+[2026-07-22 18:33:47,796][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set train.csv
+[2026-07-22 18:33:47,796][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-22 18:33:47,798][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-22 18:33:47,800][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+[2026-07-22 18:33:49,860][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=167 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+[2026-07-22 18:44:19,456][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+[2026-07-22 19:19:41,696][qiskit_machine_learning.neural_networks.sampler_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+[2026-07-22 19:26:30,767][qiskit_machine_learning.neural_networks.estimator_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+Error executing job with overrides: []
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/apps/qprofiler/qprofiler.py", line 190, in main
+    summary.update(model_run(X_train_emb, X_test_emb, y_train, y_test, data_key, args))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/evaluation/model_run.py", line 201, in model_run
+    results = Parallel(n_jobs=n_jobs)(
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_pqk.py", line 202, in compute_pqk
+    _validate_projection_file(file_projection_train, len(X_train))
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_pqk.py", line 131, in _validate_projection_file
+    raise ValueError(
+ValueError: Projection file pqk_projections/pqk_projection_train_pca_8_1_train.npy has 322 rows, but the current dataset expects 358 rows. Remove this projection file or use a different pqk_projection_dir.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 28] No space left on device.  joblib will operate in serial mode
+  warnings.warn("%s.  joblib will operate in serial mode" % (e,))
+2026-07-22 19:30:15.282345: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 19:30:17.088629: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-07-22 19:30:20,070][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 19:30:20,070][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 19:30:20,071][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+Processing file: train_qml.csv
+[2026-07-22 19:30:20,783][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set train_qml.csv
+[2026-07-22 19:30:20,783][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-22 19:30:20,785][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-22 19:30:20,786][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+[2026-07-22 19:30:21,280][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=167 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+[2026-07-22 19:30:24,327][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+[2026-07-22 19:37:00,828][qiskit_machine_learning.neural_networks.sampler_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+[2026-07-22 19:40:31,917][qiskit_machine_learning.neural_networks.estimator_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+at datapoint 0
+at datapoint 100
+at datapoint 0
+[2026-07-22 19:43:01,724][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.01693 (ms)
+[2026-07-22 19:43:01,725][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.01693 (ms)
+[2026-07-22 19:43:01,725][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.02909 (ms)
+[2026-07-22 19:43:01,725][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.10037 (ms)
+[2026-07-22 19:43:01,725][qiskit.passmanager.base_tasks][INFO] - Pass: ElidePermutations - 0.01764 (ms)
+[2026-07-22 19:43:01,726][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveDiagonalGatesBeforeMeasure - 0.01311 (ms)
+[2026-07-22 19:43:01,726][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.02980 (ms)
+[2026-07-22 19:43:01,726][qiskit.passmanager.base_tasks][INFO] - Pass: InverseCancellation - 0.06151 (ms)
+[2026-07-22 19:43:01,726][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00596 (ms)
+[2026-07-22 19:43:01,726][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.09847 (ms)
+[2026-07-22 19:43:01,727][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.18430 (ms)
+[2026-07-22 19:43:01,727][qiskit.passmanager.base_tasks][INFO] - Pass: Split2QUnitaries - 0.00978 (ms)
+[2026-07-22 19:43:01,727][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00620 (ms)
+[2026-07-22 19:43:01,727][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.02170 (ms)
+[2026-07-22 19:43:01,727][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.05412 (ms)
+[2026-07-22 19:43:01,727][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.02599 (ms)
+[2026-07-22 19:43:01,727][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.01216 (ms)
+[2026-07-22 19:43:01,728][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.01359 (ms)
+[2026-07-22 19:43:01,728][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.09012 (ms)
+[2026-07-22 19:43:01,728][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00501 (ms)
+[2026-07-22 19:43:01,728][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00620 (ms)
+[2026-07-22 19:43:01,728][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.13566 (ms)
+[2026-07-22 19:43:01,733][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.06318 (ms)
+[2026-07-22 19:43:01,733][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00238 (ms)
+[2026-07-22 19:43:01,733][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.02337 (ms)
+[2026-07-22 19:43:01,733][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01168 (ms)
+[2026-07-22 19:43:01,734][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00358 (ms)
+[2026-07-22 19:43:01,734][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.13781 (ms)
+[2026-07-22 19:43:01,734][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.08583 (ms)
+[2026-07-22 19:43:01,734][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00548 (ms)
+[2026-07-22 19:43:01,734][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00668 (ms)
+[2026-07-22 19:43:01,734][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.06366 (ms)
+[2026-07-22 19:43:01,735][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.05579 (ms)
+[2026-07-22 19:43:01,735][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00191 (ms)
+[2026-07-22 19:43:01,735][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.01073 (ms)
+[2026-07-22 19:43:01,735][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01383 (ms)
+[2026-07-22 19:43:01,739][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00286 (ms)
+[2026-07-22 19:43:01,739][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.00596 (ms)
+[2026-07-22 19:43:01,739][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.00668 (ms)
+[2026-07-22 19:43:01,740][qiskit.compiler.transpiler][INFO] - Total Transpile Time - 231.08792 (ms)
+[2026-07-22 19:43:01,745][qbiocode.learning.compute_qensemble][WARNING] - compute_qensemble skipped — Simulation device "GPU" is not supported on this system. Returning NaN results so other models can continue.
+[2026-07-22 19:43:01,760][qbiocode.learning.compute_mmelon][INFO] -   MMELON: computing embeddings for 196 SMILES → data/mmelon_cache/mmelon_train_qml_pca_8_1_train_a67d0f9562d1.npy
+[2026-07-22 19:43:04,678][qbiocode.learning.compute_mmelon][INFO] -   MMELON: loading model 'ibm-research/biomed.sm.mv-te-84m' on cuda
+[2026-07-22 19:43:04,938][qbiocode.learning.compute_mmelon][WARNING] - compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+[2026-07-22 19:43:04,990][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with svd
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+[2026-07-22 19:51:00,038][qiskit_machine_learning.neural_networks.sampler_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+[2026-07-22 19:54:45,257][qiskit_machine_learning.neural_networks.estimator_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+at datapoint 0
+at datapoint 100
+at datapoint 0
+[2026-07-22 19:57:23,719][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.01431 (ms)
+[2026-07-22 19:57:23,719][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00858 (ms)
+[2026-07-22 19:57:23,719][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.01431 (ms)
+[2026-07-22 19:57:23,720][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.08941 (ms)
+[2026-07-22 19:57:23,720][qiskit.passmanager.base_tasks][INFO] - Pass: ElidePermutations - 0.00739 (ms)
+[2026-07-22 19:57:23,720][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveDiagonalGatesBeforeMeasure - 0.01287 (ms)
+[2026-07-22 19:57:23,720][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.01645 (ms)
+[2026-07-22 19:57:23,720][qiskit.passmanager.base_tasks][INFO] - Pass: InverseCancellation - 0.05054 (ms)
+[2026-07-22 19:57:23,720][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00572 (ms)
+[2026-07-22 19:57:23,720][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.06199 (ms)
+[2026-07-22 19:57:23,721][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.11253 (ms)
+[2026-07-22 19:57:23,721][qiskit.passmanager.base_tasks][INFO] - Pass: Split2QUnitaries - 0.00501 (ms)
+[2026-07-22 19:57:23,721][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00548 (ms)
+[2026-07-22 19:57:23,721][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.01836 (ms)
+[2026-07-22 19:57:23,721][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.05579 (ms)
+[2026-07-22 19:57:23,721][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01574 (ms)
+[2026-07-22 19:57:23,721][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00429 (ms)
+[2026-07-22 19:57:23,722][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.01407 (ms)
+[2026-07-22 19:57:23,722][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.13542 (ms)
+[2026-07-22 19:57:23,722][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00525 (ms)
+[2026-07-22 19:57:23,722][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00739 (ms)
+[2026-07-22 19:57:23,722][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.09418 (ms)
+[2026-07-22 19:57:23,723][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.05817 (ms)
+[2026-07-22 19:57:23,723][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00215 (ms)
+[2026-07-22 19:57:23,723][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.01359 (ms)
+[2026-07-22 19:57:23,723][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01097 (ms)
+[2026-07-22 19:57:23,723][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00262 (ms)
+[2026-07-22 19:57:23,723][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.14973 (ms)
+[2026-07-22 19:57:23,723][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.07248 (ms)
+[2026-07-22 19:57:23,724][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00548 (ms)
+[2026-07-22 19:57:23,724][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00620 (ms)
+[2026-07-22 19:57:23,724][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.06032 (ms)
+[2026-07-22 19:57:23,724][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.05555 (ms)
+[2026-07-22 19:57:23,724][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00215 (ms)
+[2026-07-22 19:57:23,724][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.01025 (ms)
+[2026-07-22 19:57:23,724][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01073 (ms)
+[2026-07-22 19:57:23,724][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00215 (ms)
+[2026-07-22 19:57:23,725][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.00525 (ms)
+[2026-07-22 19:57:23,725][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.00572 (ms)
+[2026-07-22 19:57:23,728][qiskit.compiler.transpiler][INFO] - Total Transpile Time - 124.35508 (ms)
+[2026-07-22 19:57:23,733][qbiocode.learning.compute_qensemble][WARNING] - compute_qensemble skipped — Simulation device "GPU" is not supported on this system. Returning NaN results so other models can continue.
+[2026-07-22 19:57:23,742][qbiocode.learning.compute_mmelon][INFO] -   MMELON: computing embeddings for 196 SMILES → data/mmelon_cache/mmelon_train_qml_svd_8_1_train_cb0efc76774d.npy
+[2026-07-22 19:57:23,742][qbiocode.learning.compute_mmelon][INFO] -   MMELON: loading model 'ibm-research/biomed.sm.mv-te-84m' on cuda
+[2026-07-22 19:57:24,008][qbiocode.learning.compute_mmelon][WARNING] - compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+[2026-07-22 19:57:24,073][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with nmf
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+[2026-07-22 20:06:00,952][qiskit_machine_learning.neural_networks.sampler_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+[2026-07-22 20:09:34,654][qiskit_machine_learning.neural_networks.estimator_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+at datapoint 0
+at datapoint 100
+at datapoint 0
+[2026-07-22 20:12:03,342][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.01240 (ms)
+[2026-07-22 20:12:03,343][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00644 (ms)
+[2026-07-22 20:12:03,343][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.00858 (ms)
+[2026-07-22 20:12:03,343][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.07367 (ms)
+[2026-07-22 20:12:03,343][qiskit.passmanager.base_tasks][INFO] - Pass: ElidePermutations - 0.00882 (ms)
+[2026-07-22 20:12:03,343][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveDiagonalGatesBeforeMeasure - 0.01192 (ms)
+[2026-07-22 20:12:03,343][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.01264 (ms)
+[2026-07-22 20:12:03,343][qiskit.passmanager.base_tasks][INFO] - Pass: InverseCancellation - 0.03099 (ms)
+[2026-07-22 20:12:03,343][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00572 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.04482 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.07892 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: Split2QUnitaries - 0.00429 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00477 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.01049 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.04363 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01144 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00262 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.01144 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.06485 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00453 (ms)
+[2026-07-22 20:12:03,344][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00525 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.06747 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.05269 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00238 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.01192 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01025 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00191 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.11182 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.06676 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00477 (ms)
+[2026-07-22 20:12:03,345][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00548 (ms)
+[2026-07-22 20:12:03,346][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.05484 (ms)
+[2026-07-22 20:12:03,346][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.05198 (ms)
+[2026-07-22 20:12:03,346][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00191 (ms)
+[2026-07-22 20:12:03,346][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.01097 (ms)
+[2026-07-22 20:12:03,346][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01144 (ms)
+[2026-07-22 20:12:03,346][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00238 (ms)
+[2026-07-22 20:12:03,346][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.03242 (ms)
+[2026-07-22 20:12:03,346][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.00691 (ms)
+[2026-07-22 20:12:03,347][qiskit.compiler.transpiler][INFO] - Total Transpile Time - 79.29683 (ms)
+[2026-07-22 20:12:03,349][qbiocode.learning.compute_qensemble][WARNING] - compute_qensemble skipped — Simulation device "GPU" is not supported on this system. Returning NaN results so other models can continue.
+[2026-07-22 20:12:03,357][qbiocode.learning.compute_mmelon][INFO] -   MMELON: computing embeddings for 196 SMILES → data/mmelon_cache/mmelon_train_qml_nmf_8_1_train_4610d6277a5b.npy
+[2026-07-22 20:12:03,357][qbiocode.learning.compute_mmelon][INFO] -   MMELON: loading model 'ibm-research/biomed.sm.mv-te-84m' on cuda
+[2026-07-22 20:12:03,609][qbiocode.learning.compute_mmelon][WARNING] - compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+[2026-07-22 20:12:03,634][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with umap
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+[2026-07-22 20:20:20,586][qiskit_machine_learning.neural_networks.sampler_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+[2026-07-22 20:23:48,880][qiskit_machine_learning.neural_networks.estimator_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+at datapoint 0
+at datapoint 100
+at datapoint 0
+[2026-07-22 20:26:26,775][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.01597 (ms)
+[2026-07-22 20:26:26,775][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00715 (ms)
+[2026-07-22 20:26:26,775][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.01025 (ms)
+[2026-07-22 20:26:26,775][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.06413 (ms)
+[2026-07-22 20:26:26,776][qiskit.passmanager.base_tasks][INFO] - Pass: ElidePermutations - 0.00858 (ms)
+[2026-07-22 20:26:26,776][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveDiagonalGatesBeforeMeasure - 0.01502 (ms)
+[2026-07-22 20:26:26,776][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.01359 (ms)
+[2026-07-22 20:26:26,776][qiskit.passmanager.base_tasks][INFO] - Pass: InverseCancellation - 0.03672 (ms)
+[2026-07-22 20:26:26,776][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.01645 (ms)
+[2026-07-22 20:26:26,776][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.05484 (ms)
+[2026-07-22 20:26:26,776][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.17619 (ms)
+[2026-07-22 20:26:26,777][qiskit.passmanager.base_tasks][INFO] - Pass: Split2QUnitaries - 0.00477 (ms)
+[2026-07-22 20:26:26,777][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00525 (ms)
+[2026-07-22 20:26:26,777][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.01311 (ms)
+[2026-07-22 20:26:26,777][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.05293 (ms)
+[2026-07-22 20:26:26,777][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01383 (ms)
+[2026-07-22 20:26:26,777][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00405 (ms)
+[2026-07-22 20:26:26,777][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.01359 (ms)
+[2026-07-22 20:26:26,778][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.08011 (ms)
+[2026-07-22 20:26:26,778][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00525 (ms)
+[2026-07-22 20:26:26,778][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00739 (ms)
+[2026-07-22 20:26:26,778][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.08225 (ms)
+[2026-07-22 20:26:26,778][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.08821 (ms)
+[2026-07-22 20:26:26,778][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00191 (ms)
+[2026-07-22 20:26:26,778][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.01383 (ms)
+[2026-07-22 20:26:26,779][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01144 (ms)
+[2026-07-22 20:26:26,779][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00262 (ms)
+[2026-07-22 20:26:26,779][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.15140 (ms)
+[2026-07-22 20:26:26,779][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.09918 (ms)
+[2026-07-22 20:26:26,779][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00525 (ms)
+[2026-07-22 20:26:26,779][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00668 (ms)
+[2026-07-22 20:26:26,779][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.06795 (ms)
+[2026-07-22 20:26:26,780][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.05722 (ms)
+[2026-07-22 20:26:26,780][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00215 (ms)
+[2026-07-22 20:26:26,780][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.01073 (ms)
+[2026-07-22 20:26:26,780][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01121 (ms)
+[2026-07-22 20:26:26,780][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00238 (ms)
+[2026-07-22 20:26:26,780][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.00525 (ms)
+[2026-07-22 20:26:26,780][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.00644 (ms)
+[2026-07-22 20:26:26,781][qiskit.compiler.transpiler][INFO] - Total Transpile Time - 100.37637 (ms)
+[2026-07-22 20:26:26,785][qbiocode.learning.compute_qensemble][WARNING] - compute_qensemble skipped — Simulation device "GPU" is not supported on this system. Returning NaN results so other models can continue.
+[2026-07-22 20:26:26,795][qbiocode.learning.compute_mmelon][INFO] -   MMELON: computing embeddings for 196 SMILES → data/mmelon_cache/mmelon_train_qml_umap_8_1_train_5e697069be41.npy
+[2026-07-22 20:26:26,795][qbiocode.learning.compute_mmelon][INFO] -   MMELON: loading model 'ibm-research/biomed.sm.mv-te-84m' on cuda
+[2026-07-22 20:26:27,045][qbiocode.learning.compute_mmelon][WARNING] - compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+[2026-07-22 20:26:27,084][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with kpca
+Currently running a quantum support vector classifier (QSVC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+[2026-07-22 20:34:04,103][qiskit_machine_learning.neural_networks.sampler_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+Currently running a variational quantum classifer (VQC) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+[2026-07-22 20:37:36,581][qiskit_machine_learning.neural_networks.estimator_qnn][WARNING] - No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+at datapoint 0
+at datapoint 100
+at datapoint 0
+[2026-07-22 20:40:08,742][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.01788 (ms)
+[2026-07-22 20:40:08,742][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00811 (ms)
+[2026-07-22 20:40:08,742][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.01025 (ms)
+[2026-07-22 20:40:08,742][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.06604 (ms)
+[2026-07-22 20:40:08,743][qiskit.passmanager.base_tasks][INFO] - Pass: ElidePermutations - 0.00954 (ms)
+[2026-07-22 20:40:08,743][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveDiagonalGatesBeforeMeasure - 0.01740 (ms)
+[2026-07-22 20:40:08,743][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.01311 (ms)
+[2026-07-22 20:40:08,743][qiskit.passmanager.base_tasks][INFO] - Pass: InverseCancellation - 0.03362 (ms)
+[2026-07-22 20:40:08,743][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00596 (ms)
+[2026-07-22 20:40:08,743][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.05412 (ms)
+[2026-07-22 20:40:08,743][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.07725 (ms)
+[2026-07-22 20:40:08,744][qiskit.passmanager.base_tasks][INFO] - Pass: Split2QUnitaries - 0.00453 (ms)
+[2026-07-22 20:40:08,744][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00525 (ms)
+[2026-07-22 20:40:08,744][qiskit.passmanager.base_tasks][INFO] - Pass: HighLevelSynthesis - 0.01240 (ms)
+[2026-07-22 20:40:08,744][qiskit.passmanager.base_tasks][INFO] - Pass: BasisTranslator - 0.05031 (ms)
+[2026-07-22 20:40:08,744][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01431 (ms)
+[2026-07-22 20:40:08,744][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00381 (ms)
+[2026-07-22 20:40:08,744][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.01264 (ms)
+[2026-07-22 20:40:08,745][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.07820 (ms)
+[2026-07-22 20:40:08,745][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00477 (ms)
+[2026-07-22 20:40:08,745][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00691 (ms)
+[2026-07-22 20:40:08,745][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.08202 (ms)
+[2026-07-22 20:40:08,745][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.06032 (ms)
+[2026-07-22 20:40:08,745][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00215 (ms)
+[2026-07-22 20:40:08,745][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.01454 (ms)
+[2026-07-22 20:40:08,745][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01168 (ms)
+[2026-07-22 20:40:08,746][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00262 (ms)
+[2026-07-22 20:40:08,746][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.14591 (ms)
+[2026-07-22 20:40:08,746][qiskit.passmanager.base_tasks][INFO] - Pass: ConsolidateBlocks - 0.09465 (ms)
+[2026-07-22 20:40:08,746][qiskit.passmanager.base_tasks][INFO] - Pass: UnitarySynthesis - 0.00525 (ms)
+[2026-07-22 20:40:08,746][qiskit.passmanager.base_tasks][INFO] - Pass: RemoveIdentityEquivalent - 0.00644 (ms)
+[2026-07-22 20:40:08,746][qiskit.passmanager.base_tasks][INFO] - Pass: Optimize1qGatesDecomposition - 0.05865 (ms)
+[2026-07-22 20:40:08,747][qiskit.passmanager.base_tasks][INFO] - Pass: CommutativeCancellation - 0.05531 (ms)
+[2026-07-22 20:40:08,747][qiskit.passmanager.base_tasks][INFO] - Pass: ContractIdleWiresInControlFlow - 0.00191 (ms)
+[2026-07-22 20:40:08,747][qiskit.passmanager.base_tasks][INFO] - Pass: GatesInBasis - 0.00978 (ms)
+[2026-07-22 20:40:08,747][qiskit.passmanager.base_tasks][INFO] - Pass: Depth - 0.01121 (ms)
+[2026-07-22 20:40:08,747][qiskit.passmanager.base_tasks][INFO] - Pass: Size - 0.00286 (ms)
+[2026-07-22 20:40:08,747][qiskit.passmanager.base_tasks][INFO] - Pass: MinimumPoint - 0.00548 (ms)
+[2026-07-22 20:40:08,747][qiskit.passmanager.base_tasks][INFO] - Pass: ContainsInstruction - 0.00620 (ms)
+[2026-07-22 20:40:08,748][qiskit.compiler.transpiler][INFO] - Total Transpile Time - 100.86083 (ms)
+[2026-07-22 20:40:08,750][qbiocode.learning.compute_qensemble][WARNING] - compute_qensemble skipped — Simulation device "GPU" is not supported on this system. Returning NaN results so other models can continue.
+[2026-07-22 20:40:08,758][qbiocode.learning.compute_mmelon][INFO] -   MMELON: computing embeddings for 196 SMILES → data/mmelon_cache/mmelon_train_qml_kpca_8_1_train_9b79c6ca3c99.npy
+[2026-07-22 20:40:08,758][qbiocode.learning.compute_mmelon][INFO] -   MMELON: loading model 'ibm-research/biomed.sm.mv-te-84m' on cuda
+[2026-07-22 20:40:09,015][qbiocode.learning.compute_mmelon][WARNING] - compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+[2026-07-22 20:40:09,055][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with mifsr

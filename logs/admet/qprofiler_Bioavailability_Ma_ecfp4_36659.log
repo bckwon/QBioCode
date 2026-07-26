@@ -1,0 +1,501 @@
+2026-07-22 16:18:06.708589: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:18:20.850981: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+QProfiler Batch Mode
+============================================================
+Input directory: /proj/bmfm/users/bckwon/projects/QBioCode/data/admet/Bioavailability_Ma/ecfp4
+Config file: /proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/apps/qprofiler/configs/admet_config.yaml
+Data type: Bioavailability_Ma_ecfp4
+Parallel jobs: 10
+Output timestamp: 2026-07-22_14_18_34_754824
+============================================================
+2026-07-22 16:18:56.056116: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:18:56.069976: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:18:56.071981: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:18:56.085244: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:18:58.220740: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:18:58.281869: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:18:58.288088: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:18:58.311021: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:19:20.826069: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:19:20.898915: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:19:21.744115: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:19:22.888835: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:19:23.307049: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:19:23.391493: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:19:24.936554: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:19:25.450304: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-07-22 16:19:28,870][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 16:19:28,870][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 16:19:28,871][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 16:19:29,180][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 16:19:29,181][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 16:19:29,181][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 16:19:30,462][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 16:19:30,463][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 16:19:30,463][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+[2026-07-22 16:19:32,639][qbiocode.apps.qprofiler.qprofiler][INFO] - Main program initiated
+[2026-07-22 16:19:32,643][qbiocode.apps.qprofiler.qprofiler][INFO] - The number of ML methods being parallelized is 10
+[2026-07-22 16:19:32,643][qbiocode.apps.qprofiler.qprofiler][INFO] - Chosen backend for quantum algorithms is: simulator
+Processing file: valid.csv
+[2026-07-22 16:20:04,284][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set valid.csv
+[2026-07-22 16:20:04,285][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-22 16:20:04,288][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-22 16:20:04,295][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+Processing file: test.csv
+[2026-07-22 16:20:12,362][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set test.csv
+[2026-07-22 16:20:12,362][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-22 16:20:12,370][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-22 16:20:12,373][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+Processing file: train_qml.csv
+[2026-07-22 16:20:27,741][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set train_qml.csv
+[2026-07-22 16:20:27,742][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-22 16:20:27,750][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-22 16:20:27,758][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+[2026-07-22 16:20:47,160][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=2048 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+[2026-07-22 16:20:55,747][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=2048 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+[2026-07-22 16:20:58,054][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=2048 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+Processing file: train.csv
+[2026-07-22 16:21:10,820][qbiocode.apps.qprofiler.qprofiler][INFO] - Started processing data set train.csv
+[2026-07-22 16:21:10,821][qbiocode.apps.qprofiler.qprofiler][INFO] - Dataset has 2 classes: [0, 1]
+[2026-07-22 16:21:10,849][qbiocode.apps.qprofiler.qprofiler][INFO] - Begin processing iteration (split) 1 of 3 with stratified sampling
+[2026-07-22 16:21:10,901][qbiocode.apps.qprofiler.qprofiler][INFO] - No feature reduction (embedding) applied in this iteration
+2026-07-22 16:21:23.963965: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:25.127007: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:27.216486: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:21:30.139276: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:31.769586: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:21:32.024442: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:33.507206: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:21:34.786225: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:21:41.431060: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:42.235277: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:43.068157: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:45.534088: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:45.998765: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:46.168919: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:21:49.368200: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:49.660554: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:51.573081: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:21:52.441592: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:21:56.031421: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:21:59.198879: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:22:03.212552: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:22:03.622182: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:22:04.028392: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:22:08.044706: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:22:11.223063: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:22:12.199951: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:22:14.318532: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:22:20.880645: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:22:25.323445: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:22:25.659252: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-07-22 16:22:44,877][qbiocode.evaluation.model_run][WARNING] - QML qubit budget exceeded: n_features=2048 > max_qubits=26. Skipping quantum models for this embedding pass: ['qsvc', 'vqc', 'qnn', 'pqk', 'qensemble', 'mmelon']. Use embeddings: ['pca', 'svd', 'umap', ...] with n_components <= max_qubits to include QML.
+2026-07-22 16:23:17.469495: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:23:23.023315: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:23:24.086573: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:23:25.999882: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:23:27.339725: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:23:29.061598: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:23:32.538772: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:23:34.648363: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:23:36.249486: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:23:39.701953: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-07-22 16:27:57,377][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+[2026-07-22 16:29:10,503][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+WARNING:qiskit_machine_learning.neural_networks.estimator_qnn:No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+[2026-07-22 16:32:49,366][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+[2026-07-22 16:34:09,443][qbiocode.apps.qprofiler.qprofiler][INFO] - Feature reduction (embedding) applied with pca
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+2026-07-22 16:39:11.266556: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:39:28.601340: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:40:37.781206: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:42:05.203200: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:44:46.574195: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:44:46.677896: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:44:47.358294: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:44:51.053921: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:44:59.024855: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:45:01.458840: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:45:01.871219: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:45:01.936051: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:45:14.566650: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:45:14.973435: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:46:30.275112: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:46:33.708366: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:46:38.539237: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:50:10.102996: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:50:15.678629: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING:qiskit_machine_learning.neural_networks.estimator_qnn:No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+2026-07-22 16:50:23.495634: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:50:25.068918: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:51:48.165083: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:54:33.961075: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 16:55:12.827063: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:56:16.542959: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qbiocode.learning.compute_qensemble:compute_qensemble skipped — Simulation device "GPU" is not supported on this system. Returning NaN results so other models can continue.
+2026-07-22 16:58:28.836932: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 16:58:35.248040: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qbiocode.learning.compute_mmelon:compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+2026-07-22 16:59:43.985509: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING:qiskit_machine_learning.neural_networks.sampler_qnn:No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+2026-07-22 17:00:09.994841: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:00:26.671056: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:00:32.151917: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:00:34.606875: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:00:35.246260: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:00:37.377176: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:00:42.023463: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:01:41.386573: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qbiocode.learning.compute_qensemble:compute_qensemble skipped — Simulation device "GPU" is not supported on this system. Returning NaN results so other models can continue.
+2026-07-22 17:04:33.250230: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:05:30.550814: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:05:44.853695: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:05:48.374360: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:05:48.476177: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:05:50.121238: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:05:50.543789: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:05:52.862716: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qbiocode.learning.compute_qensemble:compute_qensemble skipped — Simulation device "GPU" is not supported on this system. Returning NaN results so other models can continue.
+2026-07-22 17:05:57.730167: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:05:58.187611: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:05:59.148868: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:06:05.852551: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:06:07.004398: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:06:07.077062: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:06:08.082235: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:06:11.676904: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:06:13.635097: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:06:13.794821: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:06:14.390169: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:06:15.672693: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING:qiskit_machine_learning.neural_networks.estimator_qnn:No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+2026-07-22 17:06:18.621110: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 17:06:25.040436: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:qbiocode.learning.compute_mmelon:compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+2026-07-22 17:07:46.379847: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:07:46.388328: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:07:50.399457: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:08:31.506143: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:08:47.181354: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-07-22 17:10:58.488719: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+at datapoint 0
+at datapoint 100
+at datapoint 0
+WARNING:qiskit_machine_learning.neural_networks.sampler_qnn:No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+WARNING:qiskit_machine_learning.neural_networks.sampler_qnn:No gradient function provided, creating a gradient function. If your Sampler requires transpilation, please provide a pass manager.
+WARNING:qbiocode.learning.compute_qensemble:compute_qensemble skipped — Simulation device "GPU" is not supported on this system. Returning NaN results so other models can continue.
+WARNING:qbiocode.learning.compute_mmelon:compute_mmelon skipped — Unrecognized model in ibm-research/biomed.sm.mv-te-84m. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, blenderbot, blenderbot-small, blip, blip-2, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, conditional_detr, convbert, convnext, convnextv2, cpmant, ctrl, cvt, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deformable_detr, deit, depth_anything, depth_pro, deta, detr, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, git, glm, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granitemoe, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, jamba, jetmoe, jukebox, kosmos-2, layoutlm, layoutlmv2, layoutlmv3, led, levit, lilt, llama, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, mistral, mistral3, mixtral, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_vl, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, table-transformer, tapas, textnet, time_series_transformer, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth. Returning NaN results so other models can continue.
+Error executing job with overrides: []
+WARNING:qiskit_machine_learning.neural_networks.estimator_qnn:No gradient function provided, creating a gradient function. If your Estimator requires transpilation, please provide a pass manager.
+joblib.externals.loky.process_executor._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py", line 490, in _process_worker
+    r = call_item()
+        ^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py", line 291, in __call__
+    return self.fn(*self.args, **self.kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 607, in __call__
+    return [func(*args, **kwargs) for func, args, kwargs in self.items]
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_pqk.py", line 202, in compute_pqk
+    _validate_projection_file(file_projection_train, len(X_train))
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_pqk.py", line 131, in _validate_projection_file
+    raise ValueError(
+ValueError: Projection file pqk_projections/pqk_projection_train_qml_pca_8_1_train.npy has 240 rows, but the current dataset expects 196 rows. Remove this projection file or use a different pqk_projection_dir.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/apps/qprofiler/qprofiler.py", line 190, in main
+    summary.update(model_run(X_train_emb, X_test_emb, y_train, y_test, data_key, args))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/evaluation/model_run.py", line 201, in model_run
+    results = Parallel(n_jobs=n_jobs)(
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 2072, in __call__
+    return output if self.return_generator else list(output)
+                                                ^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1682, in _get_outputs
+    yield from self._retrieve()
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1784, in _retrieve
+    self._raise_error_fast()
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1859, in _raise_error_fast
+    error_job.get_result(self.timeout)
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 758, in get_result
+    return self._return_or_raise()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 773, in _return_or_raise
+    raise self._result
+ValueError: Projection file pqk_projections/pqk_projection_train_qml_pca_8_1_train.npy has 240 rows, but the current dataset expects 196 rows. Remove this projection file or use a different pqk_projection_dir.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+Error executing job with overrides: []
+2026-07-22 17:11:13.423496: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+joblib.externals.loky.process_executor._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py", line 490, in _process_worker
+    r = call_item()
+        ^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py", line 291, in __call__
+    return self.fn(*self.args, **self.kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 607, in __call__
+    return [func(*args, **kwargs) for func, args, kwargs in self.items]
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_pqk.py", line 202, in compute_pqk
+    _validate_projection_file(file_projection_train, len(X_train))
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_pqk.py", line 131, in _validate_projection_file
+    raise ValueError(
+ValueError: Projection file pqk_projections/pqk_projection_valid_pca_8_1_train.npy has 46 rows, but the current dataset expects 51 rows. Remove this projection file or use a different pqk_projection_dir.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/apps/qprofiler/qprofiler.py", line 190, in main
+    summary.update(model_run(X_train_emb, X_test_emb, y_train, y_test, data_key, args))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/evaluation/model_run.py", line 201, in model_run
+    results = Parallel(n_jobs=n_jobs)(
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 2072, in __call__
+    return output if self.return_generator else list(output)
+                                                ^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1682, in _get_outputs
+    yield from self._retrieve()
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1784, in _retrieve
+    self._raise_error_fast()
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 1859, in _raise_error_fast
+    error_job.get_result(self.timeout)
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 758, in get_result
+    return self._return_or_raise()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 773, in _return_or_raise
+    raise self._result
+ValueError: Projection file pqk_projections/pqk_projection_valid_pca_8_1_train.npy has 46 rows, but the current dataset expects 51 rows. Remove this projection file or use a different pqk_projection_dir.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+Currently running a quantum neural network (QNN) on this dataset.
+The number of qubits in your circuit is: 8
+The number of parameters in your circuit is: 8
+The number of ansatz parameters in your circuit is: 24
+Fatal Python error: Bus error
+
+Thread 0x0000150c68515640 (most recent call first):
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py", line 355 in wait
+  File "/u/bkwon/miniforge/lib/python3.12/concurrent/futures/_base.py", line 451 in result
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/primitive_job.py", line 65 in result
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/state_fidelities/compute_uncompute.py", line 193 in _call
+  File "/u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.py", line 59 in run
+  File "/u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.py", line 93 in _worker
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py", line 1012 in run
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Current thread 0x0000150c61315640 (most recent call first):
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/numpy/core/defchararray.py", line 337 in add
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/quantum_state.py", line 371 in _index_to_ket_array
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/quantum_state.py", line 272 in sample_memory
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/statevector_sampler.py", line 190 in _run_pub
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/statevector_sampler.py", line 174 in _run
+  File "/u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.py", line 59 in run
+  File "/u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.py", line 93 in _worker
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py", line 1012 in run
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x0000150e18440740 (most recent call first):
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py", line 355 in wait
+  File "/u/bkwon/miniforge/lib/python3.12/concurrent/futures/_base.py", line 451 in result
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/primitive_job.py", line 65 in result
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/kernels/fidelity_quantum_kernel.py", line 231 in _get_kernel_entries
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/kernels/fidelity_quantum_kernel.py", line 204 in _get_symmetric_kernel_matrix
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/kernels/fidelity_quantum_kernel.py", line 110 in evaluate
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py", line 553 in _compute_kernel
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py", line 352 in _dense_fit
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py", line 293 in fit
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/base.py", line 1403 in wrapper
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_qsvc.py", line 111 in compute_qsvc
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py", line 607 in __call__
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py", line 291 in __call__
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py", line 490 in _process_worker
+  File "/u/bkwon/miniforge/lib/python3.12/multiprocessing/process.py", line 108 in run
+  File "/u/bkwon/miniforge/lib/python3.12/multiprocessing/process.py", line 314 in _bootstrap
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/backend/popen_loky_posix.py", line 180 in Fatal Python error: <module>
+  File "Bus error<frozen runpy>
+
+", line 88Current thread 0x in _run_code
+00001496aa361640  File  (most recent call first):
+"  File <frozen runpy>"", line 198 in /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/operators/op_shape.py_run_module_as_main"
+, line 288 in auto
+  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/operators/base_operator.py", line 57 in Fatal Python error: __init__
+  File Bus error"
+
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/operators/operator.py"Thread 0x, line 1440000145f7fcaf640 (most recent call first):
+ in __init__
+  File   File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.py""/u/bkwon/miniforge/lib/python3.12/threading.py, line "918 in , line _evolve_instruction355
+ in   File "wait/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.py
+"  File , line "976/u/bkwon/miniforge/lib/python3.12/concurrent/futures/_base.py in "_evolve_instruction, line 
+451  File  in "result/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.py
+  File ", line 976" in /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/primitive_job.py_evolve_instruction"
+, line   File 65" in /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.pyresult"
+, line   File 780 in "from_instruction/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/state_fidelities/compute_uncompute.py
+"  File ", line /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.py193" in _call, line 
+101  File  in "__init__/u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.py
+"  File , line "59/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/statevector_sampler.py in "run
+, line   File 187 in "_run_pub/u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.py
+"  File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/statevector_sampler.py, line "93, line  in 174 in _worker
+_run  File 
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py""/u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.py", line , line 101259 in  in run
+run  File 
+  File ""/u/bkwon/miniforge/lib/python3.12/threading.py"/u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.py", line , line 107593 in  in _bootstrap_inner_worker
+
+  File   File ""/u/bkwon/miniforge/lib/python3.12/threading.py/u/bkwon/miniforge/lib/python3.12/threading.py"", line , line 10321012 in  in _bootstraprun
+
+Extension modules: 
+psutil._psutil_linuxCurrent thread 0x0000145f7faae640 (most recent call first):
+  File "
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/operators/op_shape.py  File ""/u/bkwon/miniforge/lib/python3.12/threading.py, line "288, line  in 1075,  in autonumpy.core._multiarray_umath
+_bootstrap_inner
+  File   File ""/u/bkwon/miniforge/lib/python3.12/threading.py/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/operators/base_operator.py"", line 1032, line  in 57_bootstrap in , 
+__init__numpy.core._multiarray_tests
+
+Thread 0x  File 000014985858c740 (most recent call first):
+"/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/operators/operator.py  File ""/u/bkwon/miniforge/lib/python3.12/threading.py, line ", 144, line numpy.linalg._umath_linalg355 in  in __init__wait
+
+  File   File ""/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.py/u/bkwon/miniforge/lib/python3.12/concurrent/futures/_base.py"", line , line 451 in result
+,   File 918numpy.fft._pocketfft_internal" in /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/primitive_job.py_evolve_instruction"
+, line   File 65" in /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.pyresult, 
+"numpy.random._common  File ", line /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/neural_networks/sampler_qnn.py976" in , line _evolve_instruction483
+ in   File _forward"
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.py,   File "numpy.random.bit_generator"/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/neural_networks/neural_network.py, line "976, line ,  in 229numpy.random._bounded_integers in _evolve_instruction
+forward
+  File   File ", numpy.random._mt19937"/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.py/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/algorithms/objective_functions.py"", line , numpy.random.mtrand780, line 101 in  in from_instruction_neural_network_forward
+, 
+  File numpy.random._philox  File ""/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/quantum_info/states/statevector.py/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/algorithms/objective_functions.py", "numpy.random._pcg64, line , line 190101 in  in , objectivenumpy.random._sfc64__init__
+  File 
+  File ", /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/_lib/_util.py"numpy.random._generator"/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/statevector_sampler.py", line 603, line  in __call__187
+ in   File _run_pub"
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/optimize/_differentiable_functions.py  File "", line /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/statevector_sampler.py362" in , line _update_fun
+174  File  in "_run/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/optimize/_differentiable_functions.py"
+, line   File 394" in /u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.pyfun"
+, line   File 59" in /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/_lib/pyprima/__init__.pyrun"
+, line   File 178" in /u/bkwon/miniforge/lib/python3.12/concurrent/futures/thread.pycalcfc"
+  File , line 93" in /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/_lib/pyprima/common/evaluate.py_worker"
+, line   File 80" in evaluate/u/bkwon/miniforge/lib/python3.12/threading.py
+"  File , line "1012, sklearn.__check_build._check_build/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/_lib/pyprima/cobyla/cobylb.py in "run
+  File "/u/bkwon/miniforge/lib/python3.12/threading.py", line 478, line  in 1075, cobylb in _cyutility
+_bootstrap_inner
+  File   File , ""scipy._cyutility/u/bkwon/miniforge/lib/python3.12/threading.py/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/_lib/pyprima/cobyla/cobyla.py"", line , 1032scipy._lib._ccallback_c in _bootstrap, line 
+461
+ in Thread 0xcobyla000014612e9da740
+ (most recent call first):
+  File "  File /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/_lib/pyprima/__init__.py""/u/bkwon/miniforge/lib/python3.12/threading.py", line , line 191355 in  in minimizewait
+
+  File   File "", /u/bkwon/miniforge/lib/python3.12/concurrent/futures/_base.py/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/optimize/_cobyla_py.pyscipy.sparse._sparsetools"", line , line 451277 in  in result_minimize_cobyla, 
+
+_csparsetools  File   File "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit/primitives/primitive_job.py", "/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/scipy/optimize/_minimize.pyscipy.sparse._csparsetools, line "65 in result, line 
+790 in   File minimize
+"  File /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/kernels/fidelity_quantum_kernel.py""/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_algorithms/optimizers/scipy_optimizer.py, line "231 in , line _get_kernel_entries162
+ in   File minimize"
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/kernels/fidelity_quantum_kernel.py  File ""/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/algorithms/trainable_model.py, line "184 in , line 299_get_kernel_matrix in 
+_minimize  File 
+"  File /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/kernels/fidelity_quantum_kernel.py""/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/algorithms/classifiers/vqc.py, line "115, , line  in scipy.special._ufuncs_cxx194evaluate in 
+_fit_internal  File , scipy.special._ellip_harm_2"/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py
+"  File , ", line scipy.special._special_ufuncs/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/qiskit_machine_learning/algorithms/trainable_model.py553" in , line _compute_kernel202
+,  in   File scipy.special._gufuncsfit"
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py  File , "scipy.special._ufuncs, line "479/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_vqc.py in "_dense_predict
+, , line   File scipy.special._specfun110" in /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/svm/_base.pycompute_vqc"
+, line ,   File 476scipy.special._comb" in /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py"predict, line 
+607  File  in __call__"
+/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py  File "", line 860/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py in "predict, line 
+291  File  in , __call__"/proj/bmfm/users/bckwon/projects/QBioCode/qbiocode/learning/compute_qsvc.py
+"  File , line 112" in scipy.linalg._fblas/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.pycompute_qsvc
+"  File , , line "scipy.linalg._flapack490/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/parallel.py in "_process_worker, line 
+, 607  File scipy.linalg.cython_lapack in "__call__/u/bkwon/miniforge/lib/python3.12/multiprocessing/process.py
+",   File , line scipy.linalg._cythonized_array_utils108 in "run/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py
+"  File , scipy.linalg._solve_toeplitz, line "291/u/bkwon/miniforge/lib/python3.12/multiprocessing/process.py" in __call__, , line 
+314scipy.linalg._batched_linalg  File  in _bootstrap"
+, /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py  File scipy.linalg._decomp_lu_cython""/proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/backend/popen_loky_posix.py, line "490 in , , line _process_workerscipy.linalg._matfuncs_schur_sqrtm180
+ in   File <module>
+, "  File scipy.linalg._matfuncs_expm/u/bkwon/miniforge/lib/python3.12/multiprocessing/process.py""<frozen runpy>", , line , line scipy.linalg._linalg_pythran10888 in  in run_run_code
+
+  File ,   File "scipy.linalg.cython_blas"/u/bkwon/miniforge/lib/python3.12/multiprocessing/process.py<frozen runpy>"", , line scipy.linalg._decomp_update, line 198314 in  in _bootstrap_run_module_as_main
+
+  File ", /proj/bmfm/users/bckwon/projects/QBioCode/.venv/lib/python3.12/site-packages/joblib/externals/loky/backend/popen_loky_posix.pyscipy.sparse.linalg._dsolve._superlu", line 180 in , scipy.sparse.linalg._eigen.arpack._arpacklib<module>
+  File ", <frozen runpy>scipy.sparse.linalg._propack", line 88 in _run_code
+  File , "scipy.spatial._ckdtree<frozen runpy>", line 198 in , scipy._lib.messagestream_run_module_as_main
+, scipy.spatial._qhull, scipy.spatial._voronoi, scipy.spatial._hausdorff, scipy.spatial._distance_wrap, scipy.spatial.transform._rotation_cy, scipy.spatial.transform._rigid_transform_cy, scipy.optimize._group_columns, scipy.optimize._trlib._trlib, scipy.optimize._lbfgsb
+Extension modules: , psutil._psutil_linux_moduleTNC, scipy.optimize._moduleTNC, numpy.core._multiarray_umath, scipy.optimize._slsqplib, , scipy.optimize._minpacknumpy.core._multiarray_tests, scipy.optimize._lsq.givens_elimination, numpy.linalg._umath_linalg, scipy.optimize._zeros, numpy.fft._pocketfft_internal, numpy.random._common, scipy._lib._uarray._uarray, numpy.random.bit_generator, scipy.linalg._decomp_interpolative, numpy.random._bounded_integers, scipy.optimize._bglu_dense, , numpy.random._mt19937scipy.optimize._lsap, numpy.random.mtrand, scipy.optimize._direct, numpy.random._philox, numpy.random._pcg64, , numpy.random._sfc64scipy.integrate._odepack, numpy.random._generator, scipy.integrate._quadpack, scipy.integrate._vode
+Extension modules: , psutil._psutil_linuxscipy.integrate._dop, , numpy.core._multiarray_umath, sklearn.__check_build._check_buildscipy.interpolate._fitpack, _cyutility, scipy.interpolate._dfitpack, scipy._cyutility, , scipy.interpolate._dierckx, numpy.core._multiarray_testsscipy._lib._ccallback_c, scipy.interpolate._ppoly, scipy.sparse._sparsetools, scipy.interpolate._interpnd, _csparsetools, numpy.linalg._umath_linalg, , scipy.interpolate._rbfinterp_pythranscipy.sparse._csparsetools, , scipy.interpolate._rgi_cythonscipy.special._ufuncs_cxx, scipy.special._ellip_harm_2, numpy.fft._pocketfft_internal, scipy.special.cython_special, scipy.special._special_ufuncs, scipy.stats._stats, , scipy.special._gufuncsnumpy.random._common, , scipy.stats._biasedurnscipy.special._ufuncs, , scipy.stats._stats_pythrannumpy.random.bit_generator, scipy.stats._levy_stable.levyst, , numpy.random._bounded_integersscipy.special._specfun, numpy.random._mt19937, , numpy.random.mtrandscipy.stats._ansari_swilk_statistics, numpy.random._philox, , , scipy.sparse.csgraph._toolsnumpy.random._pcg64scipy.special._comb, , scipy.sparse.csgraph._shortest_pathnumpy.random._sfc64, scipy.linalg._fblas, scipy.sparse.csgraph._traversal, numpy.random._generator, scipy.linalg._flapack, scipy.sparse.csgraph._min_spanning_tree, scipy.linalg.cython_lapack, scipy.sparse.csgraph._flow, , scipy.linalg._cythonized_array_utilsscipy.sparse.csgraph._matching, , scipy.linalg._solve_toeplitzscipy.sparse.csgraph._reordering, scipy.linalg._batched_linalg, scipy.stats._sobol, scipy.linalg._decomp_lu_cython, scipy.stats._qmc_cy, scipy.linalg._matfuncs_schur_sqrtm, scipy.linalg._matfuncs_expm, scipy.stats._rcont.rcont, scipy.linalg._linalg_pythran, , scipy.stats._qmvnt_cyscipy.linalg.cython_blas, sklearn.__check_build._check_build, scipy.linalg._decomp_update, scipy.sparse.linalg._dsolve._superlu, _cyutility, , scipy.ndimage._nd_imagescipy.sparse.linalg._eigen.arpack._arpacklib, scipy._cyutility, , scipy.ndimage._rank_filter_1d, scipy.sparse.linalg._propackscipy._lib._ccallback_c, , _ni_labelscipy.spatial._ckdtree, scipy.ndimage._ni_label, scipy._lib.messagestream, scipy.spatial._qhull, scipy.spatial._voronoi, scipy.spatial._hausdorff, , scipy.sparse._sparsetoolspyarrow.lib, scipy.spatial._distance_wrap, , _csparsetoolsscipy.spatial.transform._rotation_cy, , , scipy.sparse._csparsetoolspandas._libs.tslibs.ccalendarscipy.spatial.transform._rigid_transform_cy, , pandas._libs.tslibs.np_datetimescipy.optimize._group_columns, , pandas._libs.tslibs.dtypesscipy.optimize._trlib._trlib, , pandas._libs.tslibs.basescipy.optimize._lbfgsb, , pandas._libs.tslibs.nattype_moduleTNC, scipy.optimize._moduleTNC, scipy.optimize._slsqplib, , , pandas._libs.tslibs.timezonesscipy.optimize._minpackscipy.special._ufuncs_cxx, , scipy.special._ellip_harm_2, scipy.optimize._lsq.givens_eliminationpandas._libs.tslibs.fields, , scipy.special._special_ufuncsscipy.optimize._zeros, pandas._libs.tslibs.timedeltas, scipy.special._gufuncs, , scipy._lib._uarray._uarraypandas._libs.tslibs.tzconversion, scipy.special._ufuncs, , pandas._libs.tslibs.timestampsscipy.linalg._decomp_interpolative, scipy.special._specfun, , pandas._libs.propertiesscipy.optimize._bglu_dense, scipy.special._comb, pandas._libs.tslibs.offsets, scipy.optimize._lsap, scipy.optimize._direct, pandas._libs.tslibs.strptime, scipy.integrate._odepack, , pandas._libs.tslibs.parsingscipy.integrate._quadpack, , , pandas._libs.tslibs.conversionscipy.integrate._vodescipy.linalg._fblas, scipy.integrate._dop, , pandas._libs.tslibs.periodscipy.linalg._flapack, scipy.interpolate._fitpack, pandas._libs.tslibs.vectorized, scipy.linalg.cython_lapack, scipy.interpolate._dfitpack, pandas._libs.ops_dispatch, , scipy.linalg._cythonized_array_utilsscipy.interpolate._dierckx, pandas._libs.missing, , scipy.linalg._solve_toeplitzscipy.interpolate._ppoly, pandas._libs.hashtable, , scipy.linalg._batched_linalgscipy.interpolate._interpnd, pandas._libs.algos, , scipy.linalg._decomp_lu_cython, scipy.interpolate._rbfinterp_pythranpandas._libs.interval, scipy.interpolate._rgi_cython, , pandas._libs.libscipy.linalg._matfuncs_schur_sqrtm, scipy.special.cython_special, scipy.linalg._matfuncs_expm, scipy.stats._stats, scipy.linalg._linalg_pythran, scipy.stats._biasedurn, pyarrow._compute, scipy.linalg.cython_blas, scipy.stats._stats_pythran, scipy.linalg._decomp_update, , scipy.stats._levy_stable.levystpandas._libs.ops, , scipy.stats._ansari_swilk_statisticsscipy.sparse.linalg._dsolve._superlu, scipy.sparse.csgraph._tools, scipy.sparse.linalg._eigen.arpack._arpacklib, pandas._libs.hashing, scipy.sparse.csgraph._shortest_path, , scipy.sparse.linalg._propackpandas._libs.arrays, scipy.sparse.csgraph._traversal, scipy.sparse.csgraph._min_spanning_tree, scipy.spatial._ckdtree, scipy.sparse.csgraph._flow, scipy._lib.messagestream, , pandas._libs.tslibscipy.sparse.csgraph._matching, scipy.spatial._qhull, scipy.sparse.csgraph._reordering, , scipy.spatial._voronoipandas._libs.sparse, scipy.stats._sobol, , scipy.stats._qmc_cyscipy.spatial._hausdorff, scipy.stats._rcont.rcont, scipy.spatial._distance_wrap, scipy.stats._qmvnt_cy, scipy.spatial.transform._rotation_cy, scipy.ndimage._nd_image, scipy.ndimage._rank_filter_1d, scipy.spatial.transform._rigid_transform_cy, _ni_label, , scipy.ndimage._ni_labelscipy.optimize._group_columns, pyarrow.lib, scipy.optimize._trlib._trlib, pandas._libs.tslibs.ccalendar, , pandas._libs.tslibs.np_datetimescipy.optimize._lbfgsb, , pandas._libs.tslibs.dtypes_moduleTNC, pandas._libs.tslibs.base, scipy.optimize._moduleTNC, pandas._libs.tslibs.nattype, scipy.optimize._slsqplib, , scipy.optimize._minpackpandas._libs.tslibs.timezones, , scipy.optimize._lsq.givens_eliminationpandas._libs.tslibs.fields, , pandas._libs.tslibs.timedeltasscipy.optimize._zeros, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, scipy._lib._uarray._uarray, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, scipy.linalg._decomp_interpolative, pandas._libs.tslibs.conversion, scipy.optimize._bglu_dense, pandas._libs.tslibs.period, scipy.optimize._lsap, pandas._libs.tslibs.vectorized, , pandas._libs.ops_dispatchscipy.optimize._direct, pandas._libs.missing, pandas._libs.hashtable, scipy.integrate._odepack, pandas._libs.algos, , pandas._libs.intervalscipy.integrate._quadpack, , pandas._libs.libscipy.integrate._vode, scipy.integrate._dop, pyarrow._compute, pandas._libs.ops, pandas._libs.hashing, , scipy.interpolate._fitpackpandas._libs.arrays, scipy.interpolate._dfitpack, pandas._libs.tslib, scipy.interpolate._dierckx, pandas._libs.sparse, , scipy.interpolate._ppolypandas._libs.internals, scipy.interpolate._interpnd, pandas._libs.indexing, pandas._libs.index, scipy.interpolate._rbfinterp_pythran, pandas._libs.writers, scipy.interpolate._rgi_cython, pandas._libs.join, scipy.special.cython_special, , scipy.stats._statspandas._libs.window.aggregations, , pandas._libs.window.indexersscipy.stats._biasedurn, , pandas._libs.internals, pandas._libs.reshapescipy.stats._stats_pythran, pandas._libs.groupby, scipy.stats._levy_stable.levyst, , pandas._libs.jsonpandas._libs.indexing, pandas._libs.parsers, scipy.stats._ansari_swilk_statistics, pandas._libs.index, pandas._libs.testing, scipy.sparse.csgraph._tools, , sklearn._cyutilitypandas._libs.writers, scipy.sparse.csgraph._shortest_path, sklearn.utils._isfinite, scipy.sparse.csgraph._traversal, , sklearn.utils.sparsefuncs_fast, pandas._libs.joinscipy.sparse.csgraph._min_spanning_tree, sklearn.utils.murmurhash, scipy.sparse.csgraph._flow, sklearn.utils._openmp_helpers, scipy.sparse.csgraph._matching, , scipy.sparse.csgraph._reorderingsklearn.preprocessing._csr_polynomial_expansion, sklearn.preprocessing._target_encoder_fast, , scipy.stats._sobolscipy.io.matlab._mio_utils, , scipy.io.matlab._streamsscipy.stats._qmc_cy, scipy.io.matlab._mio5_utils, , scipy.stats._rcont.rcontpandas._libs.window.aggregations, sklearn.datasets._svmlight_format_fast, , scipy.stats._qmvnt_cy, sklearn.utils._randompandas._libs.window.indexers, sklearn.utils._vector_sentinel, sklearn.feature_extraction._hashing_fast, pandas._libs.reshape, , scipy.ndimage._nd_imagePIL._imaging, scipy.ndimage._rank_filter_1d, , pandas._libs.groupbykiwisolver._cext, _ni_label, torch._C, scipy.ndimage._ni_label, torch._C._dynamo.autograd_compiler, pandas._libs.json, torch._C._dynamo.eval_frame, , pandas._libs.parserstorch._C._dynamo.guards, torch._C._dynamo.utils, pyarrow.lib, torch._C._fft, torch._C._linalg, , , pandas._libs.tslibs.ccalendartorch._C._nestedpandas._libs.testing, , torch._C._nnpandas._libs.tslibs.np_datetime, torch._C._sparse, pandas._libs.tslibs.dtypes, torch._C._special, , cuda.bindings._bindings.cydriverpandas._libs.tslibs.base, , cuda.bindings.cydriver, sklearn._cyutilitypandas._libs.tslibs.nattype, cuda.bindings.driver, sklearn.utils._isfinite, cuda.bindings._bindings.cyruntime_ptds, cuda.bindings._bindings.cyruntime, , sklearn.utils.sparsefuncs_fastcuda.bindings.cyruntime, pandas._libs.tslibs.timezones, cuda.bindings.runtime, sklearn.utils.murmurhash, pandas._libs.tslibs.fields, , pandas._libs.tslibs.timedeltassklearn.utils._openmp_helpers, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, , pandas._libs.tslibs.parsingsklearn.utils._seq_dataset, , pandas._libs.tslibs.conversionsklearn.utils._cython_blas, , sklearn.linear_model._cd_fastpandas._libs.tslibs.period, sklearn.metrics.cluster._expected_mutual_info_fast, , pandas._libs.tslibs.vectorized, sklearn.preprocessing._csr_polynomial_expansionsklearn.metrics._dist_metrics, , pandas._libs.ops_dispatchsklearn.metrics._pairwise_distances_reduction._datasets_pair, sklearn.preprocessing._target_encoder_fast, , sklearn.metrics._pairwise_distances_reduction._basepandas._libs.missing, sklearn.metrics._pairwise_distances_reduction._middle_term_computer, , scipy.io.matlab._mio_utilspandas._libs.hashtable, sklearn.utils._heap, , scipy.io.matlab._streams, pandas._libs.algossklearn.utils._sorting, , , scipy.io.matlab._mio5_utilssklearn.metrics._pairwise_distances_reduction._argkminpandas._libs.interval, sklearn.metrics._pairwise_distances_reduction._argkmin_classmode, pandas._libs.lib, sklearn.metrics._pairwise_distances_reduction._radius_neighbors, sklearn.metrics._pairwise_distances_reduction._radius_neighbors_classmode, sklearn.datasets._svmlight_format_fast, sklearn.metrics._pairwise_fast, , sklearn.utils._randomsklearn._loss._loss, pyarrow._compute, , sklearn.utils.arrayfuncssklearn.utils._vector_sentinel, sklearn.linear_model._sag_fast, sklearn.feature_extraction._hashing_fast, sklearn.svm._liblinear, pandas._libs.ops, sklearn.svm._libsvm, sklearn.svm._libsvm_sparse, sklearn.utils._weight_vector, , sklearn.linear_model._sgd_fastpandas._libs.hashing, , sklearn.decomposition._online_lda_fastPIL._imaging, pandas._libs.arrays, sklearn.decomposition._cdnmf_fast, sklearn.neighbors._partition_nodes, sklearn.neighbors._ball_tree, sklearn.neighbors._kd_tree, , pandas._libs.tslibsklearn._isotonic, sklearn.tree._utils, sklearn.tree._tree, , kiwisolver._cextpandas._libs.sparse, sklearn.tree._partitioner, sklearn.tree._splitter, pandas._libs.internals, sklearn.tree._criterion, sklearn.neighbors._quad_tree, pandas._libs.indexing, sklearn.manifold._barnes_hut_tsne, sklearn.manifold._utils, pandas._libs.index, yaml._yaml, pandas._libs.writers, numba.core.typeconv._typeconv, pandas._libs.join, numba._helperlib, numba._dynfunc, numba._dispatcher, numba.core.runtime._nrt_python, numba.np.ufunc._internal, numba.experimental.jitclass._box, pandas._libs.window.aggregations, _cffi_backend, pandas._libs.window.indexers, , pandas._libs.reshapegoogle._upb._message, torch._C, pandas._libs.groupby, torch._C._dynamo.autograd_compiler, torch._C._dynamo.eval_frame, torch._C._dynamo.guards, , torch._C._dynamo.utilspandas._libs.json, , torch._C._fftpandas._libs.parsers, torch._C._linalg, torch._C._nested, charset_normalizer.md, torch._C._nn, pandas._libs.testing, charset_normalizer.cd, torch._C._sparse, torch._C._special, requests.packages.charset_normalizer.md, sklearn._cyutility, requests.packages.chardet.md, sklearn.utils._isfinite, requests.packages.charset_normalizer.cd, cuda.bindings._bindings.cydriver, requests.packages.chardet.cd, cuda.bindings.cydriver, h5py._errors, , , sklearn.utils.sparsefuncs_fasth5py.defscuda.bindings.driver, h5py._objects, cuda.bindings._bindings.cyruntime_ptds, , sklearn.utils.murmurhashh5py.h5, cuda.bindings._bindings.cyruntime, h5py.utils, sklearn.utils._openmp_helpers, h5py.h5t, h5py.h5s, cuda.bindings.cyruntime, h5py.h5ac, , cuda.bindings.runtimeh5py.h5p, h5py.h5r, h5py._proxy, h5py._conv, h5py.h5z, h5py.h5a, h5py.h5d, h5py.h5ds, h5py.h5g, h5py.h5i, h5py.h5o, h5py.h5f, sklearn.preprocessing._csr_polynomial_expansion, h5py.h5fd, h5py.h5pl, sklearn.preprocessing._target_encoder_fast, h5py.h5l, h5py._selector, scipy.io.matlab._mio_utils, scipy.io.matlab._streams, scipy.io.matlab._mio5_utils, sklearn.datasets._svmlight_format_fast, sklearn.utils._random, sklearn.utils._vector_sentinel, sklearn.feature_extraction._hashing_fast, , sklearn.ensemble._gradient_boosting, sklearn.ensemble._hist_gradient_boosting.common, sklearn.ensemble._hist_gradient_boosting._gradient_boosting, sklearn.ensemble._hist_gradient_boosting._binning, sklearn.utils._bitset, sklearn.ensemble._hist_gradient_boosting.histogram, sklearn.ensemble._hist_gradient_boosting._predictor, sklearn.ensemble._hist_gradient_boosting.splitting, scipy.cluster._vq, scipy.cluster._hierarchy, scipy.cluster._optimal_leaf_ordering (total: 261)
+PIL._imaging, kiwisolver._cext, sklearn.utils._seq_dataset, sklearn.utils._cython_blas, sklearn.linear_model._cd_fast, sklearn.metrics.cluster._expected_mutual_info_fast, sklearn.metrics._dist_metrics, sklearn.metrics._pairwise_distances_reduction._datasets_pair, sklearn.metrics._pairwise_distances_reduction._base, sklearn.metrics._pairwise_distances_reduction._middle_term_computer, sklearn.utils._heap, sklearn.utils._sorting, sklearn.metrics._pairwise_distances_reduction._argkmin, sklearn.metrics._pairwise_distances_reduction._argkmin_classmode, sklearn.metrics._pairwise_distances_reduction._radius_neighbors, sklearn.metrics._pairwise_distances_reduction._radius_neighbors_classmode, sklearn.metrics._pairwise_fast, sklearn._loss._loss, sklearn.utils.arrayfuncs, sklearn.linear_model._sag_fast, sklearn.svm._liblinear, sklearn.svm._libsvm, sklearn.svm._libsvm_sparse, sklearn.utils._weight_vector, sklearn.linear_model._sgd_fast, sklearn.decomposition._online_lda_fast, sklearn.decomposition._cdnmf_fast, sklearn.neighbors._partition_nodes, sklearn.neighbors._ball_tree, sklearn.neighbors._kd_tree, sklearn._isotonic, sklearn.tree._utils, sklearn.tree._tree, sklearn.tree._partitioner, sklearn.tree._splitter, sklearn.tree._criterion, sklearn.neighbors._quad_tree, sklearn.manifold._barnes_hut_tsne, sklearn.manifold._utils, yaml._yaml, numba.core.typeconv._typeconv, numba._helperlib, numba._dynfunc, numba._dispatcher, numba.core.runtime._nrt_python, numba.np.ufunc._internal, numba.experimental.jitclass._box, _cffi_backend, google._upb._message, charset_normalizer.md, charset_normalizer.cd, requests.packages.charset_normalizer.md, requests.packages.chardet.md, requests.packages.charset_normalizer.cd, requests.packages.chardet.cd, h5py._errors, h5py.defs, h5py._objects, h5py.h5, h5py.utils, h5py.h5t, h5py.h5s, h5py.h5ac, h5py.h5p, h5py.h5r, h5py._proxy, h5py._conv, h5py.h5z, h5py.h5a, h5py.h5d, h5py.h5ds, h5py.h5g, h5py.h5i, h5py.h5o, h5py.h5f, h5py.h5fd, h5py.h5pl, h5py.h5l, h5py._selector, torch._C, torch._C._dynamo.autograd_compiler, , sklearn.ensemble._gradient_boosting, sklearn.ensemble._hist_gradient_boosting.common, sklearn.ensemble._hist_gradient_boosting._gradient_boosting, sklearn.ensemble._hist_gradient_boosting._binning, sklearn.utils._bitset, sklearn.ensemble._hist_gradient_boosting.histogram, sklearn.ensemble._hist_gradient_boosting._predictor, sklearn.ensemble._hist_gradient_boosting.splittingtorch._C._dynamo.eval_frame, scipy.cluster._vq, , torch._C._dynamo.guardsscipy.cluster._hierarchy, , torch._C._dynamo.utilsscipy.cluster._optimal_leaf_ordering, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special (total: 261)
+, cuda.bindings._bindings.cydriver, cuda.bindings.cydriver, cuda.bindings.driver, cuda.bindings._bindings.cyruntime_ptds, cuda.bindings._bindings.cyruntime, cuda.bindings.cyruntime, cuda.bindings.runtime, sklearn.utils._seq_dataset, sklearn.utils._cython_blas, sklearn.linear_model._cd_fast, sklearn.metrics.cluster._expected_mutual_info_fast, sklearn.metrics._dist_metrics, sklearn.metrics._pairwise_distances_reduction._datasets_pair, sklearn.metrics._pairwise_distances_reduction._base, sklearn.metrics._pairwise_distances_reduction._middle_term_computer, sklearn.utils._heap, sklearn.utils._sorting, sklearn.metrics._pairwise_distances_reduction._argkmin, sklearn.metrics._pairwise_distances_reduction._argkmin_classmode, sklearn.metrics._pairwise_distances_reduction._radius_neighbors, sklearn.metrics._pairwise_distances_reduction._radius_neighbors_classmode, sklearn.metrics._pairwise_fast, sklearn._loss._loss, sklearn.utils.arrayfuncs, sklearn.linear_model._sag_fast, sklearn.svm._liblinear, sklearn.svm._libsvm, sklearn.svm._libsvm_sparse, sklearn.utils._weight_vector, sklearn.linear_model._sgd_fast, sklearn.decomposition._online_lda_fast, sklearn.decomposition._cdnmf_fast, sklearn.neighbors._partition_nodes, sklearn.neighbors._ball_tree, sklearn.neighbors._kd_tree, sklearn._isotonic, sklearn.tree._utils, sklearn.tree._tree, sklearn.tree._partitioner, sklearn.tree._splitter, sklearn.tree._criterion, sklearn.neighbors._quad_tree, sklearn.manifold._barnes_hut_tsne, sklearn.manifold._utils, yaml._yaml, numba.core.typeconv._typeconv, numba._helperlib, numba._dynfunc, numba._dispatcher, numba.core.runtime._nrt_python, numba.np.ufunc._internal, numba.experimental.jitclass._box, _cffi_backend, google._upb._message, charset_normalizer.md, charset_normalizer.cd, requests.packages.charset_normalizer.md, requests.packages.chardet.md, requests.packages.charset_normalizer.cd, requests.packages.chardet.cd, h5py._errors, h5py.defs, h5py._objects, h5py.h5, h5py.utils, h5py.h5t, h5py.h5s, h5py.h5ac, h5py.h5p, h5py.h5r, h5py._proxy, h5py._conv, h5py.h5z, h5py.h5a, h5py.h5d, h5py.h5ds, h5py.h5g, h5py.h5i, h5py.h5o, h5py.h5f, h5py.h5fd, h5py.h5pl, h5py.h5l, h5py._selector

@@ -19,14 +19,21 @@
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=16000]"
 #BSUB -gpu "num=1:mode=exclusive_process:j_exclusive=yes"
-#BSUB -W 04:00
 #BSUB -o logs/admet/qprofiler_%I_%J.out
 #BSUB -e logs/admet/qprofiler_%I_%J.err
-#BSUB -cwd /dccstor/cardiac/QBioCode
+#BSUB -cwd /proj/bmfm/users/bckwon/projects/QBioCode
+# Auto-requeue on job failure (covers node crashes, scratch errors, UNKWN).
+# Up to 3 requeue attempts per array element before giving up.
+#BSUB -r
+#BSUB -nr 3
+# Only exclude nodes that are currently unavail (prevents UNKWN from dead nodes).
+# Do NOT exclude nodes for intermittent scratch failures — those are transient and
+# banning them leaves most of the cluster unused.
+#BSUB -R "hname!='zu-a100-c05-02' && hname!='zu-a100-c05-05' && hname!='zu-a100-c08-02' && hname!='zu-a100-c08-04'"
 
 set -euo pipefail
 
-REPO_ROOT="/dccstor/cardiac/QBioCode"
+REPO_ROOT="/proj/bmfm/users/bckwon/projects/QBioCode"
 PYTHON="${REPO_ROOT}/.venv/bin/python"
 LOG_DIR="${REPO_ROOT}/logs/admet"
 DATA_DIR="${REPO_ROOT}/data/admet"
@@ -89,6 +96,7 @@ cd "${REPO_ROOT}"
 DATA_TYPE="${ENDPOINT}_${FEAT}"
 
 # Run qprofiler-batch for this single endpoint/featurizer
+PATH="${REPO_ROOT}/.venv/bin:${PATH}"
 PYTHONPATH="${REPO_ROOT}" \
     qprofiler-batch \
     --input-dir  "${INPUT_DIR}" \

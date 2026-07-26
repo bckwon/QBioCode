@@ -1,0 +1,2 @@
+/u/bkwon/.lsbatch/1784827616.39935.2.shell: line 106: 838271 Illegal instruction     (core dumped) PYTHONPATH="${REPO_ROOT}" qprofiler-batch --input-dir "${INPUT_DIR}" --config "${CONFIG}" --data-type "${DATA_TYPE}" --n-jobs 10 2>&1
+     838273 Done                    | tee "${LOG_DIR}/qprofiler_${ENDPOINT}_${FEAT}_${LSB_JOBID:-local}.log"

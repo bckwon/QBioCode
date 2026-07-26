@@ -16,7 +16,7 @@ from joblib import Parallel, delayed
 from qbiocode import checkpoint_restart
 
 
-def run_job(data_file, configfile, output_folder_timestamp, data_type):
+def run_job(data_file, configfile, output_folder_timestamp, data_type, input_dir=None):
     """Run QProfiler on a single dataset file with custom configuration.
     
     This function creates a temporary configuration file for each dataset by:
@@ -34,6 +34,10 @@ def run_job(data_file, configfile, output_folder_timestamp, data_type):
         configfile (str): Path to the base YAML configuration file to use as template
         output_folder_timestamp (str): Timestamp string for organizing output directories
         data_type (str): Label for this batch of data (used in output directory naming)
+        input_dir (str, optional): Absolute path to the directory containing data_file.
+            When provided, overrides the ``folder_path`` key in the config so that
+            qprofiler looks in the correct per-endpoint/featurizer directory rather
+            than the root data directory.
         
     Returns:
         None
@@ -56,6 +60,9 @@ def run_job(data_file, configfile, output_folder_timestamp, data_type):
 
     # Modify the entry
     data["file_dataset"] = data_file
+    # Override folder_path so qprofiler looks in the exact input directory
+    if input_dir is not None:
+        data["folder_path"] = input_dir
 
     # Write the updated data back to the file
     config_name = 'config_'+data_type+'_'+output_folder_timestamp+'__'+data_file.replace('.csv','').replace('.txt','')
@@ -195,14 +202,14 @@ def main():
         
         # Process only incomplete datasets
         results = Parallel(n_jobs=n_jobs)(
-            delayed(run_job)(file, configfile, output_folder_timestamp, data_type)
+            delayed(run_job)(file, configfile, output_folder_timestamp, data_type, path_to_input)
             for file in os.listdir(path_to_input)
             if file.endswith('csv') and file not in completed_files
         )
     else:
         # Process all datasets
         results = Parallel(n_jobs=n_jobs)(
-            delayed(run_job)(file, configfile, output_folder_timestamp, data_type)
+            delayed(run_job)(file, configfile, output_folder_timestamp, data_type, path_to_input)
             for file in os.listdir(path_to_input)
             if file.endswith('csv')
         )

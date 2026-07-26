@@ -1,0 +1,216 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>QML Dimension Problem — Root Cause Analysis</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.6; color: #1f2328; background: #fff; padding: 28px 16px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: #57606a; margin-bottom: 24px; }
+  h2 { font-size: 15px; font-weight: 700; margin: 28px 0 10px; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+  h3 { font-size: 13px; font-weight: 700; margin: 16px 0 6px; color: #1f2328; }
+  p { margin-bottom: 10px; }
+  ul, ol { margin: 0 0 10px 20px; }
+  li { margin-bottom: 4px; }
+  code { font-family: "SF Mono", "Consolas", monospace; font-size: 12px; background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 3px; padding: 1px 5px; }
+  pre { font-family: "SF Mono", "Consolas", monospace; font-size: 12px; background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 12px; margin: 10px 0; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 13px; }
+  th { background: #f7f8fa; font-weight: 600; text-align: left; padding: 7px 10px; border: 1px solid #e5e7eb; }
+  td { padding: 6px 10px; border: 1px solid #e5e7eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafbfc; }
+  .bad  { color: #cf222e; font-weight: 600; }
+  .warn { color: #9a6700; font-weight: 600; }
+  .ok   { color: #1a7f37; font-weight: 600; }
+  .callout { background: #f7f8fa; border-left: 4px solid #3b82d4; padding: 12px 14px; margin: 14px 0; border-radius: 0 4px 4px 0; }
+  .callout-warn { background: #fff8f0; border-left-color: #9a6700; }
+  .callout-bad  { background: #fff0f0; border-left-color: #cf222e; }
+  .callout-ok   { background: #f0faf4; border-left-color: #1a7f37; }
+  .section-label { display: inline-block; font-size: 11px; font-weight: 700; background: #e5e7eb; color: #57606a; border-radius: 3px; padding: 1px 6px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 12px; color: #57606a; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>QML Dimension Problem — Root Cause Analysis</h1>
+<div class="subtitle">ADMET benchmark · <code>admet</code> branch · July 2026</div>
+
+
+<h2>Executive Summary</h2>
+<p>
+Every quantum model crash in the pipeline traces to a single architectural mismatch: the pipeline sends <strong>raw molecular fingerprints (up to 2,048 features)</strong> directly to quantum algorithms that require <strong>one qubit per feature</strong>. A classical statevector simulator needs a <code>2<sup>N</sup></code>-element complex array to represent N qubits. For N = 2,048, that is a number with ~600 decimal digits — not just too large for RAM, but too large for any integer type that can describe an array length. The crash is therefore <em>not a bug</em> to be patched around; it is a hard mathematical impossibility that requires a design decision about the qubit budget.
+</p>
+<p>
+Additionally, <strong>MMELON</strong> fails for a completely different reason: the installed version of <code>transformers</code> (4.50.3) does not register <code>ibm-research/biomed.sm.mv-te-84m</code> as a known model type because the model uses custom code not bundled with that release.
+</p>
+
+
+<h2>How Features Flow Into Quantum Models</h2>
+<p>
+<code>qprofiler.py</code> loops over two embedding passes controlled by <code>embeddings: ['none', 'pca']</code> in <code>admet_config.yaml</code>. On <strong>each pass</strong> it calls <code>model_run()</code>, which runs <em>all</em> models — classical and quantum — in a single <code>Parallel</code> pool:
+</p>
+<pre>for embed in ['none', 'pca']:                          # line 160
+    X_train_emb, X_test_emb = get_embeddings(embed, X_train, X_test, n_components=10)
+    model_run(X_train_emb, X_test_emb, y_train, y_test, data_key, args)
+    # → Parallel([compute_svc, compute_rf, ..., compute_qnn, compute_vqc, compute_pqk, ...])</pre>
+<p>
+On the <code>'none'</code> pass, <code>X_train_emb</code> is the <em>raw scaled fingerprint</em> — 2,048 columns for ECFP4, 167 for MACCS, 200 for RDKit200. Every quantum model receives this directly. On the <code>'pca'</code> pass it is reduced to <code>n_components=10</code>, which works for QNN/VQC/QSVC/PQK (10 qubits each), but QEnsemble still fails at 27 qubits.
+</p>
+
+
+<h2>Exact Qubit Requirements Per Model and Featurizer</h2>
+
+<h3>QNN / VQC / QSVC / PQK — one qubit per input feature</h3>
+<p>All four use <code>get_feature_map(feat_dimension=X_train.shape[1])</code>, which creates a <code>ZZFeatureMap</code> with exactly <code>feat_dimension</code> qubits. The statevector simulator allocates a <code>complex128</code> array of length <code>2<sup>feat_dimension</sup></code>.</p>
+
+<table>
+  <tr><th>Featurizer</th><th>Features (qubits)</th><th>Statevector size</th><th>With embed='pca', n=10</th></tr>
+  <tr><td>ECFP4</td><td class="bad">2,048</td><td class="bad">2<sup>2048</sup> (astronomically impossible)</td><td class="ok">2<sup>10</sup> = 1,024 elements ✓</td></tr>
+  <tr><td>MACCS</td><td class="bad">167</td><td class="bad">2<sup>167</sup> (astronomically impossible)</td><td class="ok">2<sup>10</sup> ✓</td></tr>
+  <tr><td>RDKit200</td><td class="bad">200</td><td class="bad">2<sup>200</sup> (astronomically impossible)</td><td class="ok">2<sup>10</sup> ✓</td></tr>
+  <tr><td>PCA(n=10)</td><td class="ok">10</td><td class="ok">16,384 elements, ~0.0 GB ✓</td><td>—</td></tr>
+</table>
+
+<h3>QEnsemble — qubit count grows with log<sub>2</sub>(next-power-of-2 of n_features)</h3>
+<p><code>normalize_data(x)</code> does <em>not</em> pad — it normalizes the raw vector. <code>build_ensemble_circuit</code> reads <code>qubits_per = int(log2(X_data.shape[1]))</code>, which is the floor log. The total circuit register count is:</p>
+<pre>total_qubits = d  +  n_obs × qubits_per  +  n_obs  +  qubits_per  +  1
+             = 2  +  4  × qubits_per     +  4      +  qubits_per  +  1
+             = 7  +  5  × qubits_per             (with n_train=4, d=2)</pre>
+
+<table>
+  <tr><th>Featurizer</th><th>n_features</th><th>qubits_per = ⌊log₂(n)⌋</th><th>Total qubits</th><th>Status</th></tr>
+  <tr><td>ECFP4</td><td>2,048</td><td>11</td><td class="bad">62</td><td class="bad">CRASH — Qiskit internal &gt;36 guard</td></tr>
+  <tr><td>MACCS</td><td>167</td><td>7</td><td class="bad">42</td><td class="bad">CRASH — &gt;36 qubit guard</td></tr>
+  <tr><td>RDKit200</td><td>200</td><td>7</td><td class="bad">42</td><td class="bad">CRASH — &gt;36 qubit guard</td></tr>
+  <tr><td>PCA(n=10)</td><td>10</td><td>3</td><td class="warn">22</td><td class="warn">OK for RAM, but statevector 2<sup>22</sup> = 4M elements; borderline slow</td></tr>
+</table>
+
+<h3>The Qiskit Statevector Simulator Limit</h3>
+<p>
+The simulator is <code>StatevectorEstimator</code> (Qiskit's statevector primitive). It allocates a numpy <code>complex128</code> array of shape <code>(2**N,)</code>. The actual failure modes are:
+</p>
+<ul>
+  <li><strong>N ≤ 30:</strong> Works fine (&lt;16 GB for the statevector)</li>
+  <li><strong>N = 32–35:</strong> Possible on high-RAM nodes (68–512 GB), but prohibitively slow</li>
+  <li><strong>N = 36:</strong> Fails with <code>MemoryError: Unable to allocate 1.00 TiB</code> — confirmed on the cluster nodes</li>
+  <li><strong>N ≥ 37:</strong> Same memory error — numpy cannot allocate the array</li>
+  <li><strong>N ≥ 64 (e.g. 167, 200, 2048):</strong> The <code>ValueError: Maximum allowed dimension exceeded</code> error — this is <em>not</em> a memory error; it is numpy's own overflow check when <code>2**N</code> exceeds the platform's <code>intp</code> max (2<sup>63</sup> on 64-bit). numpy refuses to even describe the shape.</li>
+</ul>
+<div class="callout callout-bad">
+  <strong>Key insight:</strong> For ECFP4/MACCS/RDKit200 with embed='none', the crash happens <em>before any circuit runs</em> — during feature map construction in <code>get_feature_map()</code> or during the first <code>neural_network.forward()</code> probe call. The error is a numpy array shape overflow, not an out-of-memory error. No amount of additional RAM would fix it.
+</div>
+
+
+<h2>MMELON — A Separate Issue</h2>
+<p>
+<code>ibm-research/biomed.sm.mv-te-84m</code> is an IBM Research model that uses a <strong>custom model architecture</strong> registered via the HuggingFace <code>trust_remote_code</code> mechanism. <code>transformers 4.50.3</code> raises <code>ValueError: Unrecognized model</code> even with <code>trust_remote_code=True</code> because the remote code itself fails to load (likely a network issue on cluster nodes or a missing <code>model_type</code> field in the config.json that the remote code depends on). This is independent of the qubit problem.
+</p>
+<div class="callout callout-warn">
+  Confirmed via direct test: <code>AutoConfig.from_pretrained("ibm-research/biomed.sm.mv-te-84m", trust_remote_code=True)</code> still raises the same <code>ValueError</code> on the cluster. The model either requires internet access to fetch remote code (blocked on compute nodes) or a newer version of <code>transformers</code> with first-class support.
+</div>
+
+
+<h2>Root Cause Summary Table</h2>
+<table>
+  <tr><th>Error</th><th>Model(s)</th><th>When</th><th>Root Cause</th></tr>
+  <tr>
+    <td><code>ValueError: Maximum allowed dimension exceeded</code></td>
+    <td>QNN, VQC, QSVC, PQK</td>
+    <td>embed='none' (all 3 featurizers)</td>
+    <td>numpy <code>intp</code> overflow: <code>2**167</code>, <code>2**200</code>, <code>2**2048</code> exceed 64-bit max int. Feature count directly sets qubit count. One qubit per input feature is physically impossible for molecular fingerprints.</td>
+  </tr>
+  <tr>
+    <td><code>ValueError: Circuit has N qubits, exceeds simulation limit of 36</code></td>
+    <td>QEnsemble</td>
+    <td>embed='none' (all 3 featurizers)</td>
+    <td>QEnsemble uses <code>⌊log₂(n_features)⌋</code> qubits per training sample, and builds a circuit with 4 training samples + 1 test + control/label registers. With ECFP4: 62 total qubits. The in-code guard at 36 qubits correctly detects this.</td>
+  </tr>
+  <tr>
+    <td><code>ValueError: Desired statevector length not a positive power of 2</code></td>
+    <td>QEnsemble</td>
+    <td>embed='pca', n=10; some featurizers</td>
+    <td><code>normalize_data(x)</code> returns a list of 10 elements. <code>qc.initialize()</code> requires a vector of length exactly 2<sup>k</sup>. With 10 features, <code>qubits_per = ⌊log₂(10)⌋ = 3</code>, so Qiskit expects 2<sup>3</sup>=8 amplitudes but receives 10. The <code>prepare_training_set</code> → <code>normalize_data</code> chain does not pad to power-of-2.</td>
+  </tr>
+  <tr>
+    <td><code>Sampler job failed!</code></td>
+    <td>QSVC</td>
+    <td>Intermittent</td>
+    <td>Kernel matrix computation for QSVC on N samples requires O(N²) circuit executions. With a large training set this times out or overflows.</td>
+  </tr>
+  <tr>
+    <td><code>ValueError: Unrecognized model in ibm-research/biomed.sm.mv-te-84m</code></td>
+    <td>MMELON</td>
+    <td>Every run</td>
+    <td><code>transformers 4.50.3</code> does not recognize this custom IBM model type. <code>trust_remote_code=True</code> doesn't fix it — the remote code itself requires a network fetch or a different <code>config.json</code> structure. Needs either <code>pip install transformers --upgrade</code> to a version with native support, or a local model copy.</td>
+  </tr>
+</table>
+
+
+<h2>Design Options for the Scientific Article</h2>
+<p>There are three architecturally sound paths, not mutually exclusive:</p>
+
+<h3>Option A — PCA gate (already in the config, just needs enforcement)</h3>
+<p>
+The config already has <code>embeddings: ['none', 'pca']</code> and <code>n_components: 10</code>. The intent is clear: QML models should <em>only</em> run on the PCA-reduced data. The architectural fix is to <strong>skip quantum models on the 'none' pass</strong> inside <code>model_run.py</code>. Classical models run on raw features; quantum models run only on PCA-10.
+</p>
+<pre>quantum_models = {"qsvc", "qnn", "vqc", "pqk", "qensemble", "mmelon"}
+
+# In model_run(), when building the delayed() list, check the embedding:
+if method in quantum_models and X_train.shape[1] &gt; MAX_QUBITS:
+    # skip — return NaN row directly, do not even schedule
+    continue</pre>
+<p>
+This is already the scientific intent: compare classical fingerprint-based models vs. QML on PCA-compressed representations. <strong>This is the recommended fix.</strong> It requires changing one place (<code>model_run.py</code>) and adding a config key for <code>max_qubits</code> (e.g. 26).
+</p>
+
+<h3>Option B — Featurizer-aware qubit budget</h3>
+<p>
+Introduce a <code>train_qml.csv</code> split (already produced by the data prep script — it has the same 2,048 columns but a smaller sample count). Reduce QML features at preparation time using <code>VarianceThreshold</code> + PCA to exactly <code>n_components</code>, write a separate <code>train_qml_pca.csv</code>, and only point QML models there. This decouples QML feature engineering from the classical feature pipeline.
+</p>
+
+<h3>Option C — Subspace feature maps (most scientifically interesting)</h3>
+<p>
+For the paper, you could implement <em>random feature subsampling</em>: draw <code>n_components</code> features uniformly at random from the full fingerprint, repeat with multiple seeds, and average. This preserves the connection to the original chemical representation rather than projecting into PCA space. It is a legitimate QML design choice documented in the quantum kernel literature.
+</p>
+
+<h3>QEnsemble power-of-2 padding (separate fix needed regardless)</h3>
+<p>
+Even with PCA-10, QEnsemble's <code>normalize_data</code> does not pad to the next power of 2. The <code>prepare_training_set</code> function should pad each sample to length <code>2<sup>⌈log₂(n)⌉</sup></code> before returning. Without this, QEnsemble fails for any <code>n_components</code> that is not itself a power of 2.
+</p>
+<pre># Fix in data_encoding.py → prepare_training_set():
+import math
+def normalize_data_padded(x):
+    n_pad = 2 ** math.ceil(math.log2(len(x))) if len(x) &gt; 1 else 2
+    padded = np.zeros(n_pad)
+    padded[:len(x)] = x
+    norm = np.linalg.norm(padded)
+    return (padded / norm).tolist()       # returns length = power of 2</pre>
+<p>With PCA-10: <code>n_pad=16</code>, <code>qubits_per=4</code>, total qubits = 7 + 5×4 = <strong>27</strong>. Marginal for the statevector simulator (~8 GB for 2<sup>27</sup> elements), but feasible. Reduce to <code>n_components=8</code> → 23 qubits → 1 GB → comfortable.</p>
+
+<h3>MMELON (separate from QML)</h3>
+<p>Two paths:
+</p><ol>
+  <li><strong>Upgrade transformers:</strong> <code>uv pip install "transformers&gt;=4.52"</code> — check if newer versions natively support this model type.</li>
+  <li><strong>Use a local model snapshot:</strong> <code>git lfs clone https://huggingface.co/ibm-research/biomed.sm.mv-te-84m</code> into the repo, point <code>model_name</code> at the local path. Solves the network access issue on compute nodes.</li>
+</ol>
+<p></p>
+
+
+<h2>Recommended Immediate Action (Minimal Change)</h2>
+<div class="callout callout-ok">
+<strong>One-line config change + one guard in model_run.py resolves all QML failures for the benchmark:</strong>
+<ol style="margin-top:8px;margin-left:18px">
+  <li>In <code>admet_config.yaml</code>: set <code>n_components: 8</code> (power of 2, 23 qubits for QEnsemble, safe for statevector)</li>
+  <li>In <code>model_run.py</code>: add a guard — if <code>X_train.shape[1] &gt; n_components</code> and <code>method in quantum_models</code>, return a NaN row without spawning the subprocess. This prevents the 'none' pass from ever dispatching QML.</li>
+  <li>In <code>data_encoding.py</code> → <code>normalize_data</code>: pad to next power of 2 for QEnsemble compatibility.</li>
+  <li>For MMELON: test <code>pip install --upgrade transformers</code> or use a local model path.</li>
+</ol>
+</div>
+<p>This approach is scientifically clean: it makes the paper's experimental design explicit — <em>"quantum models operate on PCA-8 representations of molecular fingerprints; classical models operate on the full fingerprint"</em> — which is standard practice in near-term QML benchmarks and aligns with the qubit budget of current quantum hardware (typically 27–127 qubits on IBM devices).</p>
+
+<footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>
