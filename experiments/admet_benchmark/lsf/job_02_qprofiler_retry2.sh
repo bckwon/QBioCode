@@ -17,7 +17,6 @@
 #BSUB -R "rusage[mem=16000]"
 #BSUB -m "zu-a100-b05-01 zu-a100-b05-02 zu-a100-c05-01 zu-a100-c05-02 zu-a100-c05-03 zu-a100-c05-04 zu-a100-c08-01 zu-a100-c08-03 zu-a100-c08-04"
 #BSUB -gpu "num=1:mode=shared:j_exclusive=no"
-#BSUB -W 04:00
 #BSUB -o logs/admet/qprofiler_%I_%J.out
 #BSUB -e logs/admet/qprofiler_%I_%J.err
 #BSUB -cwd /proj/bmfm/users/bckwon/projects/QBioCode

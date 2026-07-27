@@ -52,7 +52,7 @@ n_jobs: 10
 #     tsne      — t-SNE (perplexity-based; captures local structure)
 #
 # 'none' is always first so classical models run first and do not block QML.
-embeddings: ['none', 'pca', 'svd', 'nmf', 'umap', 'kpca', 'mifsr', 'varthresh', 'tsne']
+embeddings: ['none', 'pca', 'umap']
 
 # n_components must be a power of 2 for QEnsemble compatibility.
 # 8 → 3 qubits_per_sample, 22 total qubits for QEnsemble (safe for simulator).
@@ -91,7 +91,7 @@ cross_validation: 5
 NN_depth: 1
 # 3 train/valid splits — balances statistical robustness vs wall-time
 # (reduced from 5 to fit within the night queue's 08:30 cutoff)
-iter: 3
+iter: 1
 
 # ── Checkpointing ────────────────────────────────────────────────────────────
 # Fitted model objects are saved here; best_models.json tracks the best per
@@ -186,23 +186,23 @@ qnn_args: {'primitive': 'estimator',
            'local_optimizer': 'COBYLA',
            'encoding': ZZ,
            'entanglement': 'linear',
-           'reps': 2,
-           'maxiter': 100,
+           'reps': 1,
+           'maxiter': 50,
            'ansatz_type': 'amp'}
 
 qsvc_args: {'C': 0.01,
             'pegasos': False,
             'encoding': ZZ,
             'entanglement': 'linear',
-            'reps': 2,
+            'reps': 1,
             'primitive': 'sampler'}
 
 vqc_args: {'primitive': 'sampler',
            'local_optimizer': 'COBYLA',
-           'maxiter': 100,
+           'maxiter': 50,
            'encoding': ZZ,
            'entanglement': 'linear',
-           'reps': 2,
+           'reps': 1,
            'ansatz_type': 'amp'}
 
 pqk_args:  {'encoding': ZZ,

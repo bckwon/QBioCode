@@ -18,7 +18,7 @@
 #BSUB -n 6
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=16000]"
-#BSUB -gpu "num=1:mode=exclusive_process:j_exclusive=yes"
+#BSUB -gpu "num=1:mode=shared:j_exclusive=no"
 #BSUB -o logs/admet/qprofiler_%I_%J.out
 #BSUB -e logs/admet/qprofiler_%I_%J.err
 #BSUB -cwd /proj/bmfm/users/bckwon/projects/QBioCode
@@ -26,10 +26,8 @@
 # Up to 3 requeue attempts per array element before giving up.
 #BSUB -r
 #BSUB -nr 3
-# Only exclude nodes that are currently unavail (prevents UNKWN from dead nodes).
-# Do NOT exclude nodes for intermittent scratch failures — those are transient and
-# banning them leaves most of the cluster unused.
-#BSUB -R "hname!='zu-a100-c05-02' && hname!='zu-a100-c05-05' && hname!='zu-a100-c08-02' && hname!='zu-a100-c08-04'"
+# Pin to the proven-healthy GPU node zu-a100-b05-02 (shared mode confirmed working).
+#BSUB -R "hname=='zu-a100-b05-02'"
 
 set -euo pipefail
 

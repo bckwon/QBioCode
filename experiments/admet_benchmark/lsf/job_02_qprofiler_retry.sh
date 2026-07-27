@@ -15,7 +15,6 @@
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=16000]"
 #BSUB -gpu "num=1:mode=exclusive_process:j_exclusive=yes"
-#BSUB -W 04:00
 #BSUB -o logs/admet/qprofiler_%I_%J.out
 #BSUB -e logs/admet/qprofiler_%I_%J.err
 #BSUB -cwd /proj/bmfm/users/bckwon/projects/QBioCode

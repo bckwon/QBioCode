@@ -1,2 +1,0 @@
-/u/bkwon/.lsbatch/1784729800.36659.8.shell: line 103: 3524655 Bus error               PYTHONPATH="${REPO_ROOT}" qprofiler-batch --input-dir "${INPUT_DIR}" --config "${CONFIG}" --data-type "${DATA_TYPE}" --n-jobs 10 2>&1
-     3524656 Done                    | tee "${LOG_DIR}/qprofiler_${ENDPOINT}_${FEAT}_${LSB_JOBID:-local}.log"
