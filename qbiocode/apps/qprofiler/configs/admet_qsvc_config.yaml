@@ -1,0 +1,111 @@
+## QBioCode ADMET QSVC Re-Run Configuration
+## ==========================================
+## Purpose: Re-run ONLY the QSVC model across all 22 endpoints × 3 featurizers
+## after the kernel-collapse fix (MinMaxScaler pre-rescaling + C=1.0).
+##
+## Key differences from admet_config.yaml:
+##   - model: ['qsvc'] only — no classical, no other QML
+##   - embeddings: ['pca', 'umap'] only — 'none' is always skipped for QSVC
+##     (full fingerprints >> 26 qubits), so omitting it saves time
+##   - n_jobs: 2 (only 1 active model at a time, no parallelism needed)
+##
+## Results land in a fresh results/ subdirectory (new timestamp per run),
+## so existing results for other models are NEVER overwritten.
+##
+## Submit via:
+##   bsub < experiments/admet_benchmark/lsf/job_02g_qsvc_rerun.sh
+
+config_file_name: 'admet_qsvc_config'
+
+folder_path: 'data/admet'
+file_dataset: 'ALL'
+
+index_col: False
+
+# ── Backend ─────────────────────────────────────────────────────────────────
+backend: 'simulator'
+qiskit_json_path: '~/.qiskit/qiskit-ibm.json'
+
+# ── Parallelism ──────────────────────────────────────────────────────────────
+# Only 1 model runs per embedding pass — no benefit to >2 workers
+n_jobs: 2
+
+# ── Embeddings ───────────────────────────────────────────────────────────────
+# 'none' omitted: QSVC with full fingerprints (167–2048 dims) always exceeds
+# the 26-qubit budget and would just produce skipped/NaN rows.
+embeddings: ['pca', 'umap']
+n_components: 8
+
+# ── Model: QSVC only ─────────────────────────────────────────────────────────
+model: ['qsvc']
+
+# ── Evaluation ───────────────────────────────────────────────────────────────
+average: 'weighted'
+multi_class: 'raise'
+admet_metrics: True
+
+# ── Seeds ────────────────────────────────────────────────────────────────────
+seed: 42
+q_seed: 42
+shots: 1024
+resil_level: 1
+
+# ── Splits ───────────────────────────────────────────────────────────────────
+test_size: 0.2
+stratify: ['y']
+max_qubits: 26
+
+scaling: ['True']
+grid_search: False
+cross_validation: 5
+NN_depth: 1
+iter: 1
+
+# ── Checkpointing ────────────────────────────────────────────────────────────
+checkpoint_dir: 'results/admet_benchmark/checkpoints'
+
+# ── MMELON (unused in this run, kept for schema compatibility) ────────────────
+mmelon_args:
+  model_name: 'ibm-research/biomed.sm.mv-te-84m'
+  head: 'rf'
+  cache_dir: 'data/mmelon_cache'
+  batch_size: 32
+  max_length: 128
+
+# ── Classical model stubs (unused but required by schema) ────────────────────
+svc_args: {'C': 1.0, 'gamma': 0.1, kernel: 'linear'}
+gridsearch_svc_args: {'C': [0.1, 1, 10, 100], 'gamma': [0.001, 0.01, 0.1, 1], 'kernel': ['linear', 'rbf']}
+dt_args: {'criterion': 'gini', 'max_depth': null, 'min_samples_split': 2, 'min_samples_leaf': 1, 'max_features': null}
+gridsearch_dt_args: {'criterion': ['gini', 'entropy'], 'max_depth': [null, 5, 10]}
+nb_args: {'var_smoothing': 1.e-09}
+gridsearch_nb_args: {'var_smoothing': [1.e-09, 1.e-08, 1.e-07]}
+lr_args: {'penalty': 'l2', 'C': 1.0, 'solver': 'saga', 'max_iter': 10000}
+gridsearch_lr_args: {'penalty': ['l1', 'l2'], 'C': [0.01, 0.1, 1.0, 10.0], 'solver': ['saga'], 'max_iter': [10000]}
+rf_args: {'n_estimators': 200, 'max_features': 'sqrt', 'max_depth': null, 'min_samples_split': 2, 'min_samples_leaf': 1, 'bootstrap': True}
+gridsearch_rf_args: {'n_estimators': [100, 200], 'max_features': ['sqrt'], 'max_depth': [10, null]}
+mlp_args: {'hidden_layer_sizes': 100, 'activation': 'relu', 'max_iter': 10000, 'solver': 'adam', 'alpha': 0.0001, 'learning_rate': 'constant'}
+gridsearch_mlp_args: {'hidden_layer_sizes': [[100,]], 'activation': ['relu'], 'max_iter': [10000], 'solver': ['adam'], 'alpha': [0.0001], 'learning_rate': ['constant']}
+xgb_args: {'n_estimators': 100, 'criterion': 'gini', 'max_depth': null, 'subsample': 0.5, 'learning_rate': 0.5, 'colsample_bytree': 1, 'min_child_weight': 1}
+gridsearch_xgb_args: {'n_estimators': [100, 200], 'max_depth': [3, 5], 'subsample': [0.5, 1.0], 'learning_rate': [0.1, 0.5]}
+
+# ── QML parameters ───────────────────────────────────────────────────────────
+qnn_args: {'primitive': 'estimator', 'local_optimizer': 'COBYLA', 'encoding': ZZ, 'entanglement': 'linear', 'reps': 1, 'maxiter': 50, 'ansatz_type': 'amp'}
+
+# QSVC — FIXED: C=1.0 (was 0.01, caused all-majority-class predictions)
+# MinMaxScaler(0,1) re-scaling is now applied inside compute_qsvc.py
+# before the quantum kernel to ensure non-trivial off-diagonal kernel values.
+qsvc_args: {'C': 1.0,
+            'pegasos': False,
+            'encoding': ZZ,
+            'entanglement': 'linear',
+            'reps': 1,
+            'primitive': 'sampler'}
+
+vqc_args: {'primitive': 'sampler', 'local_optimizer': 'COBYLA', 'maxiter': 50, 'encoding': ZZ, 'entanglement': 'linear', 'reps': 1, 'ansatz_type': 'amp'}
+pqk_args: {'encoding': ZZ, 'entanglement': 'pairwise', 'primitive': 'estimator', 'reps': 4}
+qensemble_args: {'n_train': 4, 'n_swap': 1, 'd': 2, 'mode': 'balanced', 'ensemble_method': 'swap', 'n_shots': 8192, 'device': 'CPU'}
+
+# ── Hydra output directory ────────────────────────────────────────────────────
+hydra:
+  run:
+    dir: results/${config_file_name}/dataset=${file_dataset}/${backend}_${now:%Y-%m-%d_%H-%M-%S}

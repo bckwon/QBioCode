@@ -13,6 +13,7 @@ from qiskit_machine_learning.kernels import FidelityQuantumKernel
 # from qiskit.primitives import Sampler
 from qiskit_machine_learning.state_fidelities import ComputeUncompute
 from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import MinMaxScaler
 
 import qbiocode.utils.qutils as qutils
 
@@ -73,6 +74,14 @@ def compute_qsvc(
     beg_time = time.time()
     session = None
     model_params = {}
+
+    # ZZFeatureMap encodes data as rotation angles; the kernel is near-zero for
+    # inputs outside [0, 1] (concentration of measure).  Re-scale to [0, 1] here
+    # so the kernel has meaningful off-diagonal structure regardless of what
+    # embedding (PCA, UMAP, …) produced the input features.
+    _scaler = MinMaxScaler(feature_range=(0, 1))
+    X_train = _scaler.fit_transform(X_train)
+    X_test = _scaler.transform(X_test)
 
     try:
         # choose a method for mapping your features onto the circuit

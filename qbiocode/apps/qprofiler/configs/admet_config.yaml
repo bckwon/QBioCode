@@ -190,7 +190,7 @@ qnn_args: {'primitive': 'estimator',
            'maxiter': 50,
            'ansatz_type': 'amp'}
 
-qsvc_args: {'C': 0.01,
+qsvc_args: {'C': 1.0,
             'pegasos': False,
             'encoding': ZZ,
             'entanglement': 'linear',
