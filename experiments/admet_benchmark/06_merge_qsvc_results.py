@@ -186,7 +186,7 @@ def merge_qsvc_into_master(
 
         if dry_run:
             log.info(
-                f"  [DRY-RUN] {master_csv.relative_to(Path.cwd())}: "
+                f"  [DRY-RUN] {master_csv}: "
                 f"would remove {old_qsvc} old QSVC rows, add {n_new} new rows"
             )
         else:
@@ -197,7 +197,7 @@ def merge_qsvc_into_master(
             # Write merged
             merged.to_csv(master_csv, index=False)
             log.info(
-                f"  ✅ {master_csv.relative_to(Path.cwd())}: "
+                f"  ✅ {master_csv}: "
                 f"removed {old_qsvc} old rows, added {n_new} new rows"
             )
 
@@ -256,6 +256,24 @@ def main() -> None:
     if not qsvc_results:
         log.error("No QSVC result CSVs found — is the re-run complete?")
         sys.exit(1)
+
+    # Deduplicate: if multiple runs produced results for the same
+    # (folder_path, split) key (e.g. from job 75734 + job 76376), keep only
+    # the most recently modified CSV.  All runs use the same fixed config so
+    # any result is equally valid, but applying two to the same master file
+    # would cause a redundant second rewrite.
+    dedup: dict[tuple, Path] = {}
+    for folder_path, split, qsvc_csv in qsvc_results:
+        key = (folder_path, split)
+        if key not in dedup or qsvc_csv.stat().st_mtime > dedup[key].stat().st_mtime:
+            dedup[key] = qsvc_csv
+    n_before = len(qsvc_results)
+    qsvc_results = [(fp, sp, csv) for (fp, sp), csv in dedup.items()]
+    if len(qsvc_results) < n_before:
+        log.info(
+            f"Deduplicated QSVC results: {n_before} → {len(qsvc_results)} "
+            f"(kept most recent per ep/feat/split)"
+        )
 
     # Merge
     total_new = total_removed = total_masters = 0

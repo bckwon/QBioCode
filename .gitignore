@@ -42,6 +42,7 @@ docs/outputdir/*
 
 # Project specific
 results/
+results/*
 data/
 
 # Tutorial generated outputs

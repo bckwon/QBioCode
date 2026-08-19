@@ -1,0 +1,149 @@
+## QBioCode ADMET Classical-at-300 Ablation Configuration
+## =========================================================
+## Purpose
+## -------
+## Runs ONLY classical ML models (lr, rf, mlp, xgb, svc) on the
+## QML-capped training split (train_qml.csv, ≤300 samples), using the
+## same test set (test.csv) as the main benchmark.
+##
+## This ablation isolates the DATA EFFECT from the MODEL EFFECT in the
+## quantum-classical comparison:
+##
+##   Main benchmark:  classical trained on N (full) vs QML trained on ≤300
+##   This ablation:   classical trained on ≤300    vs QML trained on ≤300
+##
+## Comparing this ablation to the main classical results reveals how much
+## of the quantum-classical gap is due to data starvation alone.
+##
+## Input file used: train_qml.csv  (pre-stratified 300-sample cap, already
+##   on disk for every endpoint×featurizer — the exact same rows QML sees)
+##
+## Output location:
+##   results/admet_classical300_config/dataset=train_qml.csv/simulator_{ts}/
+##
+## Usage (batch mode, one endpoint×featurizer):
+##   qprofiler-batch \
+##     --input-dir  data/admet/{endpoint}/{featurizer} \
+##     --config     qbiocode/apps/qprofiler/configs/admet_classical300_config.yaml \
+##     --data-type  {endpoint}_{featurizer} \
+##     --n-jobs     5
+##
+## Submit all 66 tasks:
+##   bsub < experiments/admet_benchmark/lsf/job_02h_classical300_ablation.sh
+
+# ── Identity ─────────────────────────────────────────────────────────────────
+config_file_name: 'admet_classical300_config'
+
+# Ablation metadata — recorded in every output .hydra/config.yaml
+ablation: 'classical_at_300'
+max_train_samples: 300
+ablation_note: >
+  Classical models trained on train_qml.csv (≤300 samples, same split used
+  by QML in the main benchmark). Directly comparable to QML results.
+  Test evaluation uses test.csv via the full four-file batch sweep.
+
+# ── Data ─────────────────────────────────────────────────────────────────────
+# folder_path is overridden per-task by qprofiler-batch --input-dir
+folder_path: 'data/admet'
+# file_dataset='ALL' causes qprofiler-batch to run all four CSVs in the
+# input directory.  The classical-at-300 signal comes from the train_qml.csv
+# pass; train.csv / valid.csv / test.csv passes provide the full-feature
+# baseline for reference within the same output dir.
+file_dataset: 'ALL'
+
+index_col: False
+
+# ── Backend ─────────────────────────────────────────────────────────────────
+# No quantum circuits — 'simulator' is a no-op for classical-only runs but
+# must be set so Hydra output path renders correctly.
+backend: 'simulator'
+qiskit_json_path: '~/.qiskit/qiskit-ibm.json'
+
+# ── Parallelism ──────────────────────────────────────────────────────────────
+# 5 models, 3 embeddings → 15 cells per split.  5 workers saturate the node.
+n_jobs: 5
+
+# ── Embeddings ───────────────────────────────────────────────────────────────
+# Matches the main benchmark exactly so every (embedding, model) cell is
+# directly comparable between this ablation and the main results.
+embeddings: ['none', 'pca', 'umap']
+n_components: 8
+
+# ── Models: classical only ────────────────────────────────────────────────────
+# No QML — this ablation is purely about isolating the data-size effect.
+# svc included for completeness but lr/rf/mlp/xgb are the primary classicals.
+model: ['lr', 'rf', 'mlp', 'xgb', 'svc']
+
+# ── Evaluation ───────────────────────────────────────────────────────────────
+average: 'weighted'
+multi_class: 'raise'
+admet_metrics: True
+
+# ── Seeds ────────────────────────────────────────────────────────────────────
+# Identical to main benchmark — ensures any random variation in train/test
+# split is identical to the original runs for valid comparison.
+seed: 42
+q_seed: 42
+shots: 1024
+resil_level: 1
+
+# ── Splits ───────────────────────────────────────────────────────────────────
+test_size: 0.2
+stratify: ['y']
+max_qubits: 26
+
+scaling: ['True']
+grid_search: False
+cross_validation: 5
+NN_depth: 1
+iter: 1
+
+# ── Checkpointing ────────────────────────────────────────────────────────────
+checkpoint_dir: 'results/admet_benchmark/checkpoints_classical300'
+
+# ── MMELON (disabled — not relevant to this ablation) ────────────────────────
+mmelon_args:
+  model_name: 'ibm-research/biomed.sm.mv-te-84m'
+  head: 'rf'
+  cache_dir: 'data/mmelon_cache'
+  batch_size: 32
+  max_length: 128
+
+# ── Classical model parameters ───────────────────────────────────────────────
+# Identical to admet_config.yaml — no tuning differences allowed.
+svc_args: {'C': 0.01, 'gamma': 0.1, kernel: 'linear'}
+gridsearch_svc_args: {'C': [0.1, 1, 10, 100], 'gamma': [0.001, 0.01, 0.1, 1], 'kernel': ['linear', 'rbf']}
+
+dt_args: {'criterion': 'gini', 'max_depth': null, 'min_samples_split': 2, 'min_samples_leaf': 1, 'max_features': null}
+gridsearch_dt_args: {'criterion': ['gini', 'entropy'], 'max_depth': [null, 5, 10, 20], 'min_samples_split': [2, 5, 10], 'min_samples_leaf': [1, 2, 4], 'max_features': [null, 'sqrt', 'log2']}
+
+nb_args: {'var_smoothing': 1.e-09}
+gridsearch_nb_args: {'var_smoothing': [1.e-09, 1.e-08, 1.e-07, 1.e-06, 1.e-05]}
+
+lr_args: {'penalty': 'l2', 'C': 1.0, 'solver': 'saga', 'max_iter': 10000}
+gridsearch_lr_args: {'penalty': ['l1', 'l2'], 'C': [1.e-03, 1.e-02, 1.e-01, 1.e+00, 1.e+01, 1.e+02], 'solver': ['liblinear', 'saga'], 'max_iter': [5000, 10000]}
+
+rf_args: {'n_estimators': 200, 'max_features': 'sqrt', 'max_depth': null, 'min_samples_split': 2, 'min_samples_leaf': 1, 'bootstrap': True}
+gridsearch_rf_args: {'n_estimators': [100, 200, 500], 'max_features': ['sqrt', 'log2'], 'max_depth': [10, 20, null], 'min_samples_split': [2, 5], 'min_samples_leaf': [1, 2], 'bootstrap': [True, False]}
+
+mlp_args: {'hidden_layer_sizes': 100, 'activation': 'relu', 'max_iter': 10000, 'solver': 'adam', 'alpha': 0.0001, 'learning_rate': 'constant'}
+gridsearch_mlp_args: {'hidden_layer_sizes': [[50,], [100,], [100, 50]], 'activation': ['tanh', 'relu'], 'max_iter': [5000, 10000], 'solver': ['adam'], 'alpha': [0.0001, 0.001], 'learning_rate': ['constant', 'adaptive']}
+
+xgb_args: {'n_estimators': 100, 'criterion': 'gini', 'max_depth': null, 'subsample': 0.5, 'learning_rate': 0.5, 'colsample_bytree': 1, 'min_child_weight': 1}
+gridsearch_xgb_args: {'n_estimators': [100, 200, 500], 'max_depth': [3, 5, 10, null], 'subsample': [0.5, 0.75, 1.0], 'learning_rate': [0.01, 0.1, 0.5], 'colsample_bytree': [0.5, 0.75, 1.0]}
+
+# ── QML stubs (required by schema, unused in this config) ─────────────────────
+qnn_args: {'primitive': 'estimator', 'local_optimizer': 'COBYLA', 'encoding': ZZ, 'entanglement': 'linear', 'reps': 1, 'maxiter': 50, 'ansatz_type': 'amp'}
+qsvc_args: {'C': 1.0, 'pegasos': False, 'encoding': ZZ, 'entanglement': 'linear', 'reps': 1, 'primitive': 'sampler'}
+vqc_args: {'primitive': 'sampler', 'local_optimizer': 'COBYLA', 'maxiter': 50, 'encoding': ZZ, 'entanglement': 'linear', 'reps': 1, 'ansatz_type': 'amp'}
+pqk_args: {'encoding': ZZ, 'entanglement': 'pairwise', 'primitive': 'estimator', 'reps': 4}
+qensemble_args: {'n_train': 4, 'n_swap': 1, 'd': 2, 'mode': 'balanced', 'ensemble_method': 'swap', 'n_shots': 8192, 'device': 'CPU'}
+
+# ── Hydra output directory ────────────────────────────────────────────────────
+# Pattern: results/admet_classical300_config/dataset={file}/simulator_{ts}/
+# Completely isolated from:
+#   results/admet_config/          (main benchmark)
+#   results/admet_qsvc_config/     (QSVC rerun)
+hydra:
+  run:
+    dir: results/${config_file_name}/dataset=${file_dataset}/${backend}_${now:%Y-%m-%d_%H-%M-%S}
