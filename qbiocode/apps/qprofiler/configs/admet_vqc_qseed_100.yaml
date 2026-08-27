@@ -1,0 +1,240 @@
+config_file_name: admet_vqc_qseed_100
+folder_path: data/admet
+file_dataset: ALL
+index_col: false
+backend: simulator
+qiskit_json_path: ~/.qiskit/qiskit-ibm.json
+n_jobs: 10
+embeddings:
+- none
+- pca
+- umap
+n_components: 8
+model:
+- vqc
+average: weighted
+multi_class: raise
+admet_metrics: true
+seed: 42
+q_seed: 100
+shots: 1024
+resil_level: 1
+test_size: 0.2
+stratify:
+- y
+max_qubits: 26
+scaling:
+- 'True'
+grid_search: false
+cross_validation: 5
+NN_depth: 1
+iter: 1
+checkpoint_dir: results/admet_benchmark/checkpoints
+mmelon_args:
+  model_name: ibm-research/biomed.sm.mv-te-84m
+  head: rf
+  cache_dir: data/mmelon_cache
+  batch_size: 32
+  max_length: 128
+svc_args:
+  C: 0.01
+  gamma: 0.1
+  kernel: linear
+gridsearch_svc_args:
+  C:
+  - 0.1
+  - 1
+  - 10
+  - 100
+  gamma:
+  - 0.001
+  - 0.01
+  - 0.1
+  - 1
+  kernel:
+  - linear
+  - rbf
+  - poly
+  - sigmoid
+dt_args:
+  criterion: gini
+  max_depth: null
+  min_samples_split: 2
+  min_samples_leaf: 1
+  max_features: null
+gridsearch_dt_args:
+  criterion:
+  - gini
+  - entropy
+  max_depth:
+  - null
+  - 5
+  - 10
+  - 20
+  min_samples_split:
+  - 2
+  - 5
+  - 10
+  min_samples_leaf:
+  - 1
+  - 2
+  - 4
+  max_features:
+  - null
+  - sqrt
+  - log2
+nb_args:
+  var_smoothing: 1.0e-09
+gridsearch_nb_args:
+  var_smoothing:
+  - 1.0e-09
+  - 1.0e-08
+  - 1.0e-07
+  - 1.0e-06
+  - 1.0e-05
+lr_args:
+  penalty: l2
+  C: 1.0
+  solver: saga
+  max_iter: 10000
+gridsearch_lr_args:
+  penalty:
+  - l1
+  - l2
+  C:
+  - 0.001
+  - 0.01
+  - 0.1
+  - 1.0
+  - 10.0
+  - 100.0
+  solver:
+  - liblinear
+  - saga
+  max_iter:
+  - 5000
+  - 10000
+rf_args:
+  n_estimators: 200
+  max_features: sqrt
+  max_depth: null
+  min_samples_split: 2
+  min_samples_leaf: 1
+  bootstrap: true
+gridsearch_rf_args:
+  n_estimators:
+  - 100
+  - 200
+  - 500
+  max_features:
+  - sqrt
+  - log2
+  max_depth:
+  - 10
+  - 20
+  - null
+  min_samples_split:
+  - 2
+  - 5
+  min_samples_leaf:
+  - 1
+  - 2
+  bootstrap:
+  - true
+  - false
+mlp_args:
+  hidden_layer_sizes: 100
+  activation: relu
+  max_iter: 10000
+  solver: adam
+  alpha: 0.0001
+  learning_rate: constant
+gridsearch_mlp_args:
+  hidden_layer_sizes:
+  - - 50
+  - - 100
+  - - 100
+    - 50
+  activation:
+  - tanh
+  - relu
+  max_iter:
+  - 5000
+  - 10000
+  solver:
+  - adam
+  alpha:
+  - 0.0001
+  - 0.001
+  learning_rate:
+  - constant
+  - adaptive
+xgb_args:
+  n_estimators: 100
+  criterion: gini
+  max_depth: null
+  subsample: 0.5
+  learning_rate: 0.5
+  colsample_bytree: 1
+  min_child_weight: 1
+gridsearch_xgb_args:
+  n_estimators:
+  - 100
+  - 200
+  - 500
+  max_depth:
+  - 3
+  - 5
+  - 10
+  - null
+  subsample:
+  - 0.5
+  - 0.75
+  - 1.0
+  learning_rate:
+  - 0.01
+  - 0.1
+  - 0.5
+  colsample_bytree:
+  - 0.5
+  - 0.75
+  - 1.0
+qnn_args:
+  primitive: estimator
+  local_optimizer: COBYLA
+  encoding: ZZ
+  entanglement: linear
+  reps: 1
+  maxiter: 50
+  ansatz_type: amp
+qsvc_args:
+  C: 1.0
+  pegasos: false
+  encoding: ZZ
+  entanglement: linear
+  reps: 1
+  primitive: sampler
+vqc_args:
+  primitive: sampler
+  local_optimizer: COBYLA
+  maxiter: 50
+  encoding: ZZ
+  entanglement: linear
+  reps: 1
+  ansatz_type: amp
+pqk_args:
+  encoding: ZZ
+  entanglement: pairwise
+  primitive: estimator
+  reps: 4
+qensemble_args:
+  n_train: 4
+  n_swap: 1
+  d: 2
+  mode: balanced
+  ensemble_method: swap
+  n_shots: 8192
+  device: CPU
+hydra:
+  run:
+    dir: results/${config_file_name}/dataset=${file_dataset}/${backend}_${now:%Y-%m-%d_%H-%M-%S}

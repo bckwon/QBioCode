@@ -1,0 +1,192 @@
+NN_depth: 1
+admet_metrics: true
+average: weighted
+backend: simulator
+checkpoint_dir: results/admet_benchmark/checkpoints
+config_file_name: admet_qsvc_seed_84
+cross_validation: 5
+data_type: Pgp_Broccatelli_rdkit200_seed84
+dt_args:
+  criterion: gini
+  max_depth: null
+  max_features: null
+  min_samples_leaf: 1
+  min_samples_split: 2
+embeddings:
+- pca
+- umap
+file_dataset: test.csv
+folder_path: /proj/bmfm/users/bckwon/projects/QBioCode/data/admet_seeds/seed_84/Pgp_Broccatelli/rdkit200
+grid_search: false
+gridsearch_dt_args:
+  criterion:
+  - gini
+  - entropy
+  max_depth:
+  - null
+  - 5
+  - 10
+gridsearch_lr_args:
+  C:
+  - 0.01
+  - 0.1
+  - 1.0
+  - 10.0
+  max_iter:
+  - 10000
+  penalty:
+  - l1
+  - l2
+  solver:
+  - saga
+gridsearch_mlp_args:
+  activation:
+  - relu
+  alpha:
+  - 0.0001
+  hidden_layer_sizes:
+  - - 100
+  learning_rate:
+  - constant
+  max_iter:
+  - 10000
+  solver:
+  - adam
+gridsearch_nb_args:
+  var_smoothing:
+  - 1.0e-09
+  - 1.0e-08
+  - 1.0e-07
+gridsearch_rf_args:
+  max_depth:
+  - 10
+  - null
+  max_features:
+  - sqrt
+  n_estimators:
+  - 100
+  - 200
+gridsearch_svc_args:
+  C:
+  - 0.1
+  - 1
+  - 10
+  - 100
+  gamma:
+  - 0.001
+  - 0.01
+  - 0.1
+  - 1
+  kernel:
+  - linear
+  - rbf
+gridsearch_xgb_args:
+  learning_rate:
+  - 0.1
+  - 0.5
+  max_depth:
+  - 3
+  - 5
+  n_estimators:
+  - 100
+  - 200
+  subsample:
+  - 0.5
+  - 1.0
+hydra:
+  run:
+    dir: results/${config_file_name}/dataset=${file_dataset}/${backend}_${now:%Y-%m-%d_%H-%M-%S}
+index_col: false
+iter: 1
+lr_args:
+  C: 1.0
+  max_iter: 10000
+  penalty: l2
+  solver: saga
+max_qubits: 26
+mlp_args:
+  activation: relu
+  alpha: 0.0001
+  hidden_layer_sizes: 100
+  learning_rate: constant
+  max_iter: 10000
+  solver: adam
+mmelon_args:
+  batch_size: 32
+  cache_dir: data/mmelon_cache
+  head: rf
+  max_length: 128
+  model_name: ibm-research/biomed.sm.mv-te-84m
+model:
+- qsvc
+multi_class: raise
+n_components: 8
+n_jobs: 2
+nb_args:
+  var_smoothing: 1.0e-09
+pqk_args:
+  encoding: ZZ
+  entanglement: pairwise
+  primitive: estimator
+  reps: 4
+q_seed: 84
+qensemble_args:
+  d: 2
+  device: CPU
+  ensemble_method: swap
+  mode: balanced
+  n_shots: 8192
+  n_swap: 1
+  n_train: 4
+qiskit_json_path: ~/.qiskit/qiskit-ibm.json
+qnn_args:
+  ansatz_type: amp
+  encoding: ZZ
+  entanglement: linear
+  local_optimizer: COBYLA
+  maxiter: 50
+  primitive: estimator
+  reps: 1
+qsvc_args:
+  C: 1.0
+  encoding: ZZ
+  entanglement: linear
+  pegasos: false
+  primitive: sampler
+  reps: 1
+resil_level: 1
+rf_args:
+  bootstrap: true
+  max_depth: null
+  max_features: sqrt
+  min_samples_leaf: 1
+  min_samples_split: 2
+  n_estimators: 200
+scaling:
+- 'True'
+seed: 84
+shots: 1024
+stratify:
+- y
+svc_args:
+  C: 1.0
+  gamma: 0.1
+  kernel: linear
+test_size: 0.2
+timestamp: 2026-08-20_02_48_36_482023
+vqc_args:
+  ansatz_type: amp
+  encoding: ZZ
+  entanglement: linear
+  local_optimizer: COBYLA
+  maxiter: 50
+  primitive: sampler
+  reps: 1
+xgb_args:
+  colsample_bytree: 1
+  criterion: gini
+  learning_rate: 0.5
+  max_depth: null
+  min_child_weight: 1
+  n_estimators: 100
+  subsample: 0.5
