@@ -1,10 +1,6 @@
-# ====== Base class imports ======
-
 import time
 from typing import Any, Literal, Optional
 import pandas as pd
-
-# ====== Scikit-learn imports ======
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
@@ -33,14 +29,12 @@ def modeleval(
     dataset_name: Optional[str] = None,
     split_id: int = 0,
 ):
-    """Evaluate model performance and optionally persist the fitted model.
+    """Evaluate model performance and return a QBioCode-standard results DataFrame.
 
-    Computes accuracy, F1, AUC (and optionally AUPRC, MCC for ADMET tasks)
-    and returns a QBioCode-standard results DataFrame.
-
-    When ``fitted_model`` and ``checkpoint_dir`` are both provided, the
-    fitted model is serialized via :func:`qbiocode.utils.model_checkpoint.save_checkpoint`
-    and the best-model index is updated if this split's F1 is a new best.
+    Computes accuracy, F1, and AUC. When ``args['admet_metrics']`` is True,
+    also computes AUPRC and MCC. When both ``fitted_model`` and
+    ``checkpoint_dir`` are provided, saves the model via
+    :func:`qbiocode.utils.model_checkpoint.save_checkpoint`.
 
     Args:
         y_test (array-like): True labels for the test set.
@@ -63,16 +57,13 @@ def modeleval(
 
     Returns:
         pd.DataFrame: Results DataFrame with accuracy, F1, AUC, and model params.
-            Also contains ``auprc`` and ``mcc`` columns when
-            ``args.get('admet_metrics')`` is True.
+            Contains ``auprc`` and ``mcc`` columns when ``args.get('admet_metrics')`` is True.
     """
-    # ── Core metrics ────────────────────────────────────────────────────────
     auc = roc_auc_score(y_test, y_predicted)
     accuracy = accuracy_score(y_test, y_predicted, normalize=True)
     f1 = f1_score(y_test, y_predicted, average=average)
     compile_time = time.time() - beg_time
 
-    # ── ADMET extended metrics (opt-in) ─────────────────────────────────────
     admet_extras: dict = {}
     if args.get("admet_metrics", False):
         try:
@@ -87,7 +78,6 @@ def modeleval(
     if verbose:
         print_results(model, accuracy, f1, compile_time, params)
 
-    # ── Optional checkpoint save ─────────────────────────────────────────────
     if fitted_model is not None and checkpoint_dir is not None:
         try:
             from qbiocode.utils.model_checkpoint import save_checkpoint  # lazy import
@@ -96,13 +86,11 @@ def modeleval(
                 fitted_model, model, ds_key, split_id, float(f1), checkpoint_dir
             )
         except Exception as exc:
-            # Non-fatal: log and continue
             import logging
             logging.getLogger(__name__).warning(
                 f"Checkpoint save failed for {model}/{dataset_name}: {exc}"
             )
 
-    # ── Build results dict ───────────────────────────────────────────────────
     if args.get("grid_search", False):
         result_dict = {
             "model": model,

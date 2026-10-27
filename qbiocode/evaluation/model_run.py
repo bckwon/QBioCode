@@ -1,4 +1,3 @@
-# ====== Base class imports ======
 import json
 import logging
 import os
@@ -6,18 +5,14 @@ import os
 import numpy as np
 import pandas as pd
 
-# ======= Parallelization =====
 from joblib import Parallel, delayed
 
 log = logging.getLogger(__name__)
 
 current_dir = os.getcwd()
 
-# Maximum number of qubits the statevector simulator can handle comfortably.
-# 2**26 complex128 elements ≈ 1 GB RAM; beyond this the simulator becomes
-# prohibitively slow or crashes with a MemoryError.
-# All quantum models use one qubit per input feature, so this is also the
-# maximum allowed feature dimension for quantum models.
+# Quantum models require one qubit per input feature.
+# Statevectors beyond 2**26 complex128 elements (~1 GB) are impractical.
 _QML_MAX_QUBITS = 26
 
 
@@ -34,35 +29,26 @@ def _make_nan_result(y_test, model_name: str, args: dict) -> pd.DataFrame:
 
 
 def model_run(X_train, X_test, y_train, y_test, data_key, args):
-    """This function runs the ML methods, with or without a grid search, as specified in the config.yaml file.
-    It returns a python dictionary contatining these results, which can then be parsed out. It is designed to run
-    each of the ML methods in parallel, for each data set (this is done by calling the Parallel module in results below).
-    The arguments X_train, X_test, y_train, y_test are all passed in from the main script (qmlbench.py) as the input
-    datasets are processed, while the remaining arguments are passed from the config.yaml file.
+    """Run all configured ML models in parallel and return results.
 
     Args:
-        X_train (pd.DataFrame): Training features.
-        X_test (pd.DataFrame): Testing features.
-        y_train (pd.Series): Training labels.
-        y_test (pd.Series): Testing labels.
-        data_key (str): Key for the dataset being processed.
-        args (dict): Dictionary containing configuration parameters, including:
-            - model: List of models to run.
-            - n_jobs: Number of parallel jobs to run.
-            - grid_search: Boolean indicating whether to perform grid search.
-            - cross_validation: Cross-validation strategy.
-            - gridsearch_<model>_args: Arguments for grid search for each model.
-            - <model>_args: Additional arguments for each model.
+        X_train (np.ndarray): Training features.
+        X_test (np.ndarray): Test features.
+        y_train (np.ndarray): Training labels.
+        y_test (np.ndarray): Test labels.
+        data_key (str): Identifier for the current dataset/embedding/iteration.
+        args (dict): Configuration dict with keys:
+            - model (list): Model names to run.
+            - n_jobs (int): Parallel job count.
+            - grid_search (bool): Run optimized (_opt) model variants.
+            - cross_validation: CV strategy for grid search.
+            - gridsearch_<model>_args (dict): Grid search kwargs per model.
+            - <model>_args (dict): Model kwargs.
 
     Returns:
-        model_total_result (dict): A dictionary containing the results of the models run, with keys as model names and values as their respective results.
-        This dictionary can readily be converted to a Pandas Dataframe, as seen in the 'ModelResults.csv' files that are produced in the results directory
-        when the main profiler is run (qbiocode-profiler.py).
-
+        dict: Pivoted results keyed by column name, compatible with
+            ``pd.DataFrame.from_dict``.
     """
-
-    # Lazy imports to avoid circular dependency
-    # These imports happen inside the function, not at module level
     from qbiocode.learning.compute_dt import compute_dt, compute_dt_opt
     from qbiocode.learning.compute_lr import compute_lr, compute_lr_opt
     from qbiocode.learning.compute_rf import compute_rf, compute_rf_opt
@@ -78,7 +64,6 @@ def model_run(X_train, X_test, y_train, y_test, data_key, args):
     from qbiocode.learning.compute_mmelon import compute_mmelon
     from qbiocode.learning.compute_qensemble import compute_qensemble
 
-    # Build model dictionary
     compute_ml_dict = {
         "svc_opt": compute_svc_opt,
         "svc": compute_svc,
@@ -103,16 +88,8 @@ def model_run(X_train, X_test, y_train, y_test, data_key, args):
         "qensemble": compute_qensemble,
     }
 
-    # Quantum models and foundation models don't have _opt versions
     quantum_models = {"qsvc", "qnn", "vqc", "pqk", "qpl", "mmelon", "qensemble"}
 
-    # ── QML qubit budget guard ────────────────────────────────────────────────
-    # Quantum models need one qubit per input feature and a statevector of
-    # 2**n_features complex128 values.  When features > _QML_MAX_QUBITS the
-    # computation is either physically impossible (numpy int overflow for
-    # n > 63) or impractical (> 1 GB statevector).  We short-circuit here
-    # rather than inside each compute_* function so that the joblib Parallel
-    # pool never spawns a subprocess that is guaranteed to crash.
     max_qubits = int(args.get("max_qubits", _QML_MAX_QUBITS))
     n_features = X_train.shape[1]
     active_models = list(args["model"])
@@ -122,55 +99,31 @@ def model_run(X_train, X_test, y_train, y_test, data_key, args):
         if skipped_qml:
             log.warning(
                 "QML qubit budget exceeded: n_features=%d > max_qubits=%d. "
-                "Skipping quantum models for this embedding pass: %s. "
-                "Use embeddings: ['pca', 'svd', 'umap', ...] with "
-                "n_components <= max_qubits to include QML.",
+                "Skipping quantum models: %s. "
+                "Use an embedding with n_components <= max_qubits.",
                 n_features, max_qubits, skipped_qml,
             )
             active_models = [m for m in active_models if m not in quantum_models]
 
-    # ── Parallelism ───────────────────────────────────────────────────────────
-    # Run classical and quantum models
     n_jobs = len(args["model"])
     if "n_jobs" in args.keys():
         n_jobs = min(args["n_jobs"], len(args["model"]))
 
-    grid_search = False
-    if "grid_search" in args.keys():
-        grid_search = args["grid_search"]
+    grid_search = args.get("grid_search", False)
 
-    # Check if any quantum models are in the model list when grid_search is enabled
     if grid_search:
         quantum_in_models = [m for m in args["model"] if m in quantum_models]
         if quantum_in_models:
-            print("\n" + "=" * 80)
-            print("WARNING: Grid search is enabled with quantum models:", quantum_in_models)
-            print("=" * 80)
-            print("Quantum models do not support automated grid search.")
-            print("For hyperparameter tuning of quantum models, you should:")
-            print("  1. Create multiple configuration files with different hyperparameters")
-            print("  2. Run QProfiler separately for each configuration")
-            print("  3. Compare results across runs")
-            print("\nUse the config generation utility:")
-            print("  from qbiocode.utils import generate_qml_experiment_configs")
-            print("  num_configs, _ = generate_qml_experiment_configs(")
-            print("      template_config_path='configs/config.yaml',")
-            print("      output_dir='configs/qml_gridsearch',")
-            print("      data_dirs=['data/your_data_dir']")
-            print("  )")
-            print("\nSee documentation: qbiocode.utils.generate_qml_experiment_configs")
-            print("=" * 80 + "\n")
+            print(f"WARNING: Grid search enabled with quantum models {quantum_in_models}.")
+            print("Quantum models do not support grid search. Use generate_qml_experiment_configs")
+            print("to create per-hyperparameter config files and run QProfiler separately.")
 
-    # Pre-build NaN rows for any QML models that were budget-skipped so that
-    # the output DataFrame still has a consistent set of columns regardless
-    # of which embedding pass is running.
     skipped_results = [_make_nan_result(y_test, m, args) for m in skipped_qml]
 
     if grid_search:
         results = []
         for method in active_models:
             if method in quantum_models:
-                # Quantum models don't have _opt versions, use regular function
                 result = delayed(compute_ml_dict[method])(
                     X_train,
                     X_test,
@@ -183,7 +136,6 @@ def model_run(X_train, X_test, y_train, y_test, data_key, args):
                     verbose=False,
                 )
             else:
-                # Classical models have _opt versions with grid search
                 result = delayed(compute_ml_dict[method + "_opt"])(
                     X_train,
                     X_test,

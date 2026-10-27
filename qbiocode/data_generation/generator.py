@@ -1,11 +1,4 @@
-"""
-Main data generation interface for QBioCode.
-
-This module provides a unified interface to generate various types of synthetic
-datasets for machine learning benchmarking and evaluation.
-"""
-
-### Imports ###
+"""Unified interface for synthetic dataset generation."""
 
 import qbiocode.data_generation.make_circles as circles
 import qbiocode.data_generation.make_class as make_class
@@ -15,9 +8,6 @@ import qbiocode.data_generation.make_spheres as spheres
 import qbiocode.data_generation.make_spirals as spirals
 import qbiocode.data_generation.make_swiss_roll as swiss_roll
 
-### Main Function ###
-
-# parameters to vary across the configurations
 N_SAMPLES = list(range(100, 300, 20))
 NOISE = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 HOLE = [True, False]
@@ -105,17 +95,14 @@ def generate_data(
     """
 
     if type_of_data == "circles":
-        # Generate circles dataset
         circles.generate_circles_datasets(
             n_samples=n_samples, noise=noise, save_path=save_path, random_state=random_state
         )
     elif type_of_data == "moons":
-        # Generate moons dataset
         moons.generate_moons_datasets(
             n_samples=n_samples, noise=noise, save_path=save_path, random_state=random_state
         )
     elif type_of_data == "classes":
-        # Generate higher-dimensional classification dataset
         make_class.generate_classification_datasets(
             n_samples=n_samples,
             n_features=n_features,
@@ -128,17 +115,14 @@ def generate_data(
             random_state=random_state,
         )
     elif type_of_data == "s_curve":
-        # Generate S-curve dataset
         s_curve.generate_s_curve_datasets(
             n_samples=n_samples, noise=noise, save_path=save_path, random_state=random_state
         )
     elif type_of_data == "spheres":
-        # Generate spheres dataset
         spheres.generate_spheres_datasets(
             n_s=n_samples, dim=dim, radius=rad, save_path=save_path, random_state=random_state
         )
     elif type_of_data == "spirals":
-        # Generate spirals dataset
         spirals.generate_spirals_datasets(
             n_s=n_samples,
             n_c=n_classes,
@@ -148,7 +132,6 @@ def generate_data(
             random_state=random_state,
         )
     elif type_of_data == "swiss_roll":
-        # Generate Swiss roll dataset
         swiss_roll.generate_swiss_roll_datasets(
             n_samples=n_samples,
             noise=noise,

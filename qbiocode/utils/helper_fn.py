@@ -1,19 +1,9 @@
-"""
-Helper Functions for Data Preprocessing and Model Evaluation
-============================================================
-
-This module provides utility functions for data preprocessing, feature encoding,
-and result presentation in machine learning workflows.
-"""
-
-# ====== Base class imports ======
+"""Utility functions for data preprocessing, feature encoding, and result display."""
 
 import time
 from typing import Literal
 
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, OrdinalEncoder, StandardScaler
-
-# ====== Scikit-learn imports ======
 
 
 def scaler_fn(X, scaling: Literal["None", "StandardScaler", "MinMaxScaler"] = "None"):
@@ -39,30 +29,10 @@ def scaler_fn(X, scaling: Literal["None", "StandardScaler", "MinMaxScaler"] = "N
     X_scaled : array-like of shape (n_samples, n_features)
         Scaled data. If scaling='None', returns original data unchanged.
 
-    Notes
-    -----
-    StandardScaler transforms data to have mean=0 and variance=1:
-
-    .. math::
-        z = \\frac{x - \\mu}{\\sigma}
-
-    MinMaxScaler transforms data to [0, 1] range:
-
-    .. math::
-        x_{scaled} = \\frac{x - x_{min}}{x_{max} - x_{min}}
-
     Examples
     --------
-    >>> import numpy as np
-    >>> from qbiocode.utils import scaler_fn
-    >>> X = np.array([[1, 2], [3, 4], [5, 6]])
     >>> X_scaled = scaler_fn(X, scaling='StandardScaler')
     >>> X_minmax = scaler_fn(X, scaling='MinMaxScaler')
-
-    See Also
-    --------
-    sklearn.preprocessing.StandardScaler : Standardize features
-    sklearn.preprocessing.MinMaxScaler : Scale features to a range
     """
     if scaling == "MinMaxScaler":
         scaler = MinMaxScaler()
@@ -109,29 +79,10 @@ def feature_encoding(
         - 'OrdinalEncoder': shape (n_samples, 1)
         - 'OneHotEncoder': shape (n_samples, n_categories)
 
-    Notes
-    -----
-    One-hot encoding creates a binary column for each unique category, useful
-    when categories have no ordinal relationship. Ordinal encoding assigns
-    integer values, suitable when categories have a natural order.
-
-    The function automatically reshapes the input to (-1, 1) format required
-    by scikit-learn encoders.
-
     Examples
     --------
-    >>> import numpy as np
-    >>> from qbiocode.utils import feature_encoding
-    >>> categories = np.array(['A', 'B', 'C', 'A', 'B'])
-    >>> # One-hot encoding
     >>> encoded_onehot = feature_encoding(categories, feature_encoding='OneHotEncoder')
-    >>> # Ordinal encoding
     >>> encoded_ordinal = feature_encoding(categories, feature_encoding='OrdinalEncoder')
-
-    See Also
-    --------
-    sklearn.preprocessing.OneHotEncoder : Encode categorical features as one-hot
-    sklearn.preprocessing.OrdinalEncoder : Encode categorical features as integers
     """
     if feature_encoding == "OrdinalEncoder":
         encoder = OrdinalEncoder()
@@ -169,25 +120,6 @@ def print_results(model, accuracy, f1, compile_time, params):
     None
         Prints results to stdout.
 
-    Notes
-    -----
-    The function formats floating-point numbers to 4 decimal places for
-    consistency. All metrics are printed with descriptive labels.
-
-    Examples
-    --------
-    >>> from qbiocode.utils import print_results
-    >>> params = {'n_estimators': 100, 'max_depth': 10}
-    >>> print_results('RandomForest', 0.9234, 0.9156, 2.345, params)
-    RandomForest Model Accuracy score: 0.9234
-    RandomForest Model F1 score: 0.9156
-    Time taken for RandomForest Model (secs): 2.3450
-    RandomForest Model Params:  {'n_estimators': 100, 'max_depth': 10}
-
-    See Also
-    --------
-    sklearn.metrics.accuracy_score : Compute accuracy
-    sklearn.metrics.f1_score : Compute F1 score
     """
     print(f"{model} Model Accuracy score: {accuracy:.4f}")
     print(f"{model} Model F1 score: {f1:.4f}")
@@ -195,4 +127,3 @@ def print_results(model, accuracy, f1, compile_time, params):
     print(f"{model} Model Params: ", params)
 
 
-# Made with Bob

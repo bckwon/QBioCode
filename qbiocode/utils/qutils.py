@@ -35,18 +35,17 @@ from qbiocode.utils.ibm_account import instantiate_runtime_service
 
 
 def get_backend_session(args: dict, primitive: str, num_qubits: int):
-    """
-    This function to get the backend and session for the specified primitive.
+    """Return a backend, session, and primitive for the configured backend.
 
     Args:
-        args (dict): Dictionary containing backend and other parameters.
-        primitive (str): The type of primitive to instantiate ('sampler' or 'estimator').
-        num_qubits (int): Number of qubits for the backend.
+        args (dict): Config dict with ``backend``, ``seed``, ``shots``,
+            ``resil_level``, and ``sim_method`` keys.
+        primitive (str): ``'sampler'`` or ``'estimator'``.
+        num_qubits (int): Minimum qubit count required.
 
     Returns:
-        backend: The backend instance.
-        session: The session instance.
-        prim: The instantiated primitive (Sampler or Estimator).
+        tuple: ``(backend, session, prim)`` — backend and session are ``None``
+            when using the statevector simulator.
     """
     backend = None
     session = None
@@ -84,19 +83,19 @@ def get_backend_session(args: dict, primitive: str, num_qubits: int):
 
 
 def transpile_circuit(circuit, opt_level, backend, initial_layout, PT=False, dd_sequence="XpXm"):
-    """
-    This function transpiles the given quantum circuit based on the optimization level and backend.
+    """Transpile a quantum circuit for the target backend.
 
     Args:
-        circuit (QuantumCircuit): The quantum circuit to be transpiled.
-        opt_level (int or str): Optimization level for transpilation.
-        backend (Backend): The backend to which the circuit will be transpiled.
-        initial_layout (Layout): Initial layout for the transpilation.
-        PT (bool): Whether to apply pulse twirling. Defaults to False.
-        dd_sequence (str): Sequence for dynamical decoupling. Defaults to 'XpXm'.
+        circuit (QuantumCircuit): Circuit to transpile.
+        opt_level (int or str): Optimization level, or ``'AI'`` for
+            AI-assisted transpilation via ``TranspilerService``.
+        backend: Target backend.
+        initial_layout: Initial qubit layout.
+        PT (bool): Enable pulse twirling. Default False.
+        dd_sequence (str): Dynamical decoupling sequence. Default ``'XpXm'``.
 
     Returns:
-        t_qc (QuantumCircuit): The transpiled quantum circuit.
+        QuantumCircuit: Transpiled circuit.
     """
     if str(opt_level) == "AI":
         pm = TranspilerService(
@@ -131,23 +130,19 @@ def get_sampler(
     dd_seq="XpXm",
     PT=True,
 ):
-    """
-    This function creates a Sampler instance with specified options.
+    """Create a Sampler primitive with error-suppression options.
 
     Args:
-        mode (Session): The session mode for the sampler.
-        shots (int): Number of shots for sampling.
-        dd (bool): Whether to enable dynamical decoupling.
-        dd_seq (str): Sequence type for dynamical decoupling.
-        PT (bool): Whether to enable pulse twirling.
+        mode (Session): Runtime session.
+        shots (int): Measurement shots. Default 1024.
+        dd (bool): Enable dynamical decoupling. Default True.
+        dd_seq (str): DD sequence type. Default ``'XpXm'``.
+        PT (bool): Enable pulse twirling. Default True.
 
     Returns:
-        Sampler: An instance of the Sampler with the specified options.
+        Sampler: Configured Sampler instance.
     """
-
     sampler_options = SamplerOptions()
-
-    ## ERROR SUPPRESSION TESTING ###
     sampler_options.default_shots = shots
     if dd:
         sampler_options.dynamical_decoupling.enable = dd
@@ -159,7 +154,7 @@ def get_sampler(
         sampler_options.twirling.enable_measure = False
         sampler_options.twirling.num_randomizations = "auto"
         sampler_options.twirling.shots_per_randomization = "auto"
-        sampler_options.twirling.strategy = "active-accum"  ### TRY VARYING THIS ###
+        sampler_options.twirling.strategy = "active-accum"
 
     sampler = Sampler(mode=mode, options=sampler_options)
 
@@ -174,26 +169,20 @@ def get_estimator(
     dd_seq="XpXm",
     PT=True,
 ):
-    """
-    This function creates an Estimator instance with specified options.
+    """Create an Estimator primitive with error-suppression options.
 
     Args:
-        mode (Session): The session mode for the estimator.
-        shots (int): Number of shots for estimation.
-        resil_level (int): Resilience level for error suppression.
-        dd (bool): Whether to enable dynamical decoupling.
-        dd_seq (str): Sequence type for dynamical decoupling.
-        PT (bool): Whether to enable pulse twirling.
+        mode (Session): Runtime session.
+        shots (int): Measurement shots. Default 1024.
+        resil_level (int): Resilience level (0–2). Default 2.
+        dd (bool): Enable dynamical decoupling. Default True.
+        dd_seq (str): DD sequence type. Default ``'XpXm'``.
+        PT (bool): Enable pulse twirling. Default True.
+
     Returns:
-        Estimator: An instance of the Estimator with the specified options.
+        Estimator: Configured Estimator instance.
     """
-
-    experimental_opts = {}
-    # experimental_opts["execution_path"] = "gen3-turbo"
-
-    estimator_options = EstimatorOptions(experimental=experimental_opts)
-
-    ## ERROR SUPPRESSION TESTING ###
+    estimator_options = EstimatorOptions(experimental={})
     estimator_options.default_shots = shots
     estimator_options.resilience_level = resil_level
     if dd:
@@ -206,25 +195,23 @@ def get_estimator(
         estimator_options.twirling.enable_measure = False
         estimator_options.twirling.num_randomizations = "auto"
         estimator_options.twirling.shots_per_randomization = "auto"
-        estimator_options.twirling.strategy = "active-accum"  ### TRY VARYING THIS ###
+        estimator_options.twirling.strategy = "active-accum"
 
     estimator = Estimator(mode=mode, options=estimator_options)
     return estimator
 
 
 def get_ansatz(ansatz_type, feat_dimension, reps=1, entanglement="linear"):
-    """
-    This function returns an ansatz based on the specified type and parameters.
-    It supports 'esu2', 'amp', and 'twolocal' ansatz types, constructing it using the specified feature dimension,
-    number of repetitions, and entanglement type.
+    """Return an ansatz circuit for the specified type.
 
     Args:
-        ansatz_type (str): Type of the ansatz ('esu2', 'amp', or 'twolocal').
-        feat_dimension (int): Number of qubits for the ansatz.
-        reps (int): Number of repetitions for the ansatz.
-        entanglement (str): Type of entanglement for the ansatz.
+        ansatz_type (str): ``'esu2'``, ``'amp'``, or ``'twolocal'``.
+        feat_dimension (int): Number of qubits.
+        reps (int): Circuit repetitions. Default 1.
+        entanglement (str): Entanglement strategy. Default ``'linear'``.
+
     Returns:
-        ansatz: An instance of the specified ansatz type.
+        Ansatz circuit instance.
     """
     if ansatz_type == "esu2":
         ansatz = EfficientSU2(feat_dimension, ["ry", "rz"], entanglement, reps=reps)
@@ -236,21 +223,18 @@ def get_ansatz(ansatz_type, feat_dimension, reps=1, entanglement="linear"):
 
 
 def get_feature_map(feature_map, feat_dimension, reps=1, entanglement="linear", data_map_func=None):
-    """
-    This function returns a feature map based on the specified type and parameters.
-    It supports 'Z', 'ZZ', and 'P' feature maps, constructing it using the specified feature dimension,
-    number of repetitions, entanglement type, and data mapping function.
+    """Return a Qiskit feature map circuit.
+
     Args:
-        feature_map (str): Type of the feature map ('Z', 'ZZ', or 'P').
-        feat_dimension (int): Number of qubits for the feature map.
-        reps (int): Number of repetitions for the feature map.
-        entanglement (str): Type of entanglement for the feature map.
-        data_map_func (callable, optional): Function to map data to the feature map parameters.
+        feature_map (str): ``'Z'``, ``'ZZ'``, or ``'P'``.
+        feat_dimension (int): Number of qubits.
+        reps (int): Circuit repetitions. Default 1.
+        entanglement (str): Entanglement strategy. Default ``'linear'``.
+        data_map_func (callable, optional): Custom data mapping function.
+
     Returns:
-        feature_map: An instance of the specified feature map type.
-        feat_dimension (int): The number of qubits in the feature map.
+        tuple: ``(feature_map, feat_dimension)``.
     """
-    # Get Feature Map
     if feature_map == "Z":
         feature_map = ZFeatureMap(
             feat_dimension, reps=reps, parameter_prefix="a", data_map_func=data_map_func
@@ -271,29 +255,23 @@ def get_feature_map(feature_map, feat_dimension, reps=1, entanglement="linear", 
             data_map_func=data_map_func,
         )
 
-    # print("The number of qubits is:", feature_map.num_qubits)
-    # print("The number of parameters is:", feature_map.num_parameters)
-
     return feature_map, feat_dimension
 
 
 def get_optimizer(
     type="COBYLA", max_iter=100, learning_rate_a=None, perturbation_gamma=None, prior_iter=0
 ):
-    """
-    This function returns an optimizer based on the specified type and parameters.
-    It supports 'SPSA', 'COBYLA', 'GradientDescent', and 'L_BFGS_B' optimizer types,
-    constructing it using the specified maximum iterations, learning rate, perturbation gamma, and prior iterations.
+    """Return a Qiskit optimizer instance.
 
     Args:
-        type (str): Type of the optimizer ('SPSA', 'COBYLA', 'GradientDescent', or 'L_BFGS_B').
-        max_iter (int): Maximum number of iterations for the optimizer.
-        learning_rate_a (float, optional): Initial learning rate for SPSA.
-        perturbation_gamma (float, optional): Perturbation gamma for SPSA.
-        prior_iter (int): Number of prior iterations to consider.
+        type (str): ``'SPSA'``, ``'COBYLA'``, ``'GradientDescent'``, or ``'L_BFGS_B'``.
+        max_iter (int): Maximum iterations. Default 100.
+        learning_rate_a (float, optional): SPSA initial learning rate.
+        perturbation_gamma (float, optional): SPSA perturbation exponent.
+        prior_iter (int): Prior iterations for SPSA power-series offset.
 
     Returns:
-        optimizer: An instance of the specified optimizer type.
+        Optimizer instance.
     """
     if type == "SPSA":
         if (learning_rate_a != None) & (perturbation_gamma != None):

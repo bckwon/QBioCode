@@ -1,5 +1,3 @@
-# This will be a simple function to extract information from a user's qiskit-json file
-
 import json
 import os
 
@@ -7,20 +5,16 @@ from qiskit_ibm_runtime import QiskitRuntimeService
 
 
 def get_creds(args):
-    """This function determines the user's IBM Quantum channel, instance, and token, using values provided
-    within the config.yaml file or as defined within the user's qiskit configuration from provided qiskit_json_path
-    specified in the config.yaml file, and then parses its contents. It returns the main items in this json file,
-    such as the instance and api token, which can then be passed into the QML functions when using a real
-    hardware backend.
-    The function will return a dictionary with the keys 'channel', 'instance', 'token', and 'url',
-    which can be used to instantiate the QiskitRuntimeService.
-    If the qiskit_json_path is provided, it will attempt to read the credentials from that file.
+    """Read IBM Quantum credentials from the config or a qiskit-ibm.json file.
+
     Args:
-        args (dict): This passes the arguments from the config.yaml file.  In this particular case, it is importing the path to the qiskit-ibm.json file (qiskit_json_path) and the credentials
-        defined in this json file (ibm_channel, ibm_instance, ibm_token, ibm_url).
+        args (dict): Config dict. Reads ``ibm_channel``, ``ibm_instance``,
+            ``ibm_token``, ``ibm_url``, and optionally ``qiskit_json_path``
+            pointing to a qiskit-ibm.json credentials file.
 
     Returns:
-        rval (dict): A dictionary containing the IBM Quantum credentials, including 'channel', 'instance', 'token', and 'url'.
+        dict: Credential dict with keys ``channel``, ``instance``, ``token``,
+            ``url`` suitable for ``QiskitRuntimeService(**creds)``.
     """
     cred_source_dict = {
         "channel": "ibm_channel",
@@ -59,23 +53,17 @@ def get_creds(args):
                         if value:
                             rval[ibm_name] = value
         else:
-            print(
-                "IBM credentials not found! Please verify that the path to your qiskit-ibm.json file is correct."
-            )
-    print(rval)
+            print("IBM credentials not found. Verify the path to your qiskit-ibm.json file.")
     return rval
 
 
 def instantiate_runtime_service(args):
-    """This function provides a quick way to instantiate QiskitRuntimeService in one place. A basic call to this function can then be done in anywhere else.
-    It uses the get_creds function to retrieve the necessary credentials from the qiskit-ibm.json file, with the file path specified in the config.yaml file.
-    It returns an instance of the QiskitRuntimeService class, which can be used to interact with IBM Quantum services.
+    """Instantiate QiskitRuntimeService using credentials from ``get_creds``.
 
     Args:
-        args (dict): This passes the arguments from the config.yaml file.  In this particular case, it is importing the path to the qiskit-ibm.json file (qiskit_json_path) and the credentials
-        defined in this json file (ibm_channel, ibm_instance, ibm_token, ibm_url).
+        args (dict): Config dict passed to ``get_creds``.
 
     Returns:
-        QiskitRuntimeService: An instance of the QiskitRuntimeService class, initialized with the credentials from the qiskit-ibm.json file or the provided arguments.
+        QiskitRuntimeService: Authenticated service instance.
     """
     return QiskitRuntimeService(**get_creds(args))

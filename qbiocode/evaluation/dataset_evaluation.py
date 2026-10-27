@@ -1,4 +1,3 @@
-# ====== Base class imports ======
 import warnings
 
 import hfda
@@ -20,7 +19,6 @@ from sklearn.manifold import Isomap
 from sklearn.neighbors import KernelDensity
 
 
-# df = pd.DataFrame(X)
 def get_dimensions(df):
     """Get the number of features, samples, and feature-to-sample ratio from a DataFrame.
     Args:
@@ -48,18 +46,13 @@ def get_intrinsic_dim(df):
     Returns:
         float: Intrinsic dimension of the data
     """
-    # Intrinsic dimension, calculated via scikit-dimension's PCA method
-    pca = id.lPCA()  # Initialize the PCA estimator from skdim
-    pca.fit(df)  # Fit the estimator to your data
+    pca = id.lPCA()
+    pca.fit(df)
     return pca.dimension_
 
 
 def get_condition_number(df):
-    """Get the condition number of a matrix.
-
-    A high condition number indicates that the matrix is ill-conditioned and
-    can produce large output errors even for small input perturbations. A low
-    condition number indicates a more stable matrix.
+    """Get the condition number of the data matrix.
 
     Args:
         df (pandas.DataFrame): Dataset in pandas with observation in rows, features in columns
@@ -67,9 +60,6 @@ def get_condition_number(df):
     Returns:
         float: Condition number of the matrix represented in ``df``.
     """
-    # In general,
-    # meaning that it can produce large errors in its output even with small errors in its input.
-    # Conversely, a function with a low condition number is well-conditioned and more stable in terms of its output.
     return np.linalg.cond(df)
 
 
@@ -110,7 +100,7 @@ def get_fdr(df, y):
 
 
 def get_total_correlation(df):
-    """Calculate Total Correlation
+    """Calculate total correlation across all feature pairs.
 
     Args:
         df (pandas.DataFrame): Dataset in pandas with observation in rows, features in columns
@@ -118,8 +108,7 @@ def get_total_correlation(df):
     Returns:
         float: Total correlation
     """
-    corr_matrix = df.corr()  # correlation matrix
-    # total correlation by subtracting diagonal values to remove self-correlation
+    corr_matrix = df.corr()
     total_correlation = corr_matrix.abs().sum().sum() - len(df.columns)
 
     return total_correlation
@@ -212,7 +201,7 @@ def get_low_var_features(df, num_features):
 
 
 def get_log_density(df):
-    """Calculate the mean log density of the data
+    """Calculate the mean log kernel density of the data.
 
     Args:
         df (pandas.DataFrame): Dataset in pandas with observation in rows, features in columns
@@ -220,9 +209,7 @@ def get_log_density(df):
     Returns:
         float: mean log kernel density
     """
-    kde = KernelDensity(bandwidth=0.2, kernel="gaussian").fit(
-        df
-    )  # Create a KernelDensity estimator and fit the estimator to the data
+    kde = KernelDensity(bandwidth=0.2, kernel="gaussian").fit(df)
     log_density = kde.score_samples(df)
 
     return log_density.mean()
@@ -304,20 +291,16 @@ def get_volume(df):
 
 
 def get_complexity(df, n_neighbors=10, n_components=2):
-    """Measure the manifold complexity by fitting Isomap and analyzing the geodesic vs. Euclidean distances.
-    This function computes the reconstruction error of the Isomap algorithm, which serves as an indicator of the complexity of the manifold represented by the data.
+    """Measure manifold complexity via Isomap reconstruction error.
 
     Args:
         df (pandas.DataFrame): Dataset in pandas with observation in rows, features in columns
-        n_neighbors: Number of neighbors for the Isomap algorithm. Default value 10
-        n_components: Number of components (dimensions) for Isomap projection.  Default value 2
+        n_neighbors (int): Neighbors for Isomap. Default 10.
+        n_components (int): Isomap projection dimensions. Default 2.
 
     Returns:
-        - reconstruction_error: float
-            The reconstruction error of the Isomap model, which indicates the complexity of the manifold.
-        - reconstruction_error: The residual error of geodesic distances
+        float: Isomap reconstruction error.
     """
-
     isomap = Isomap(n_neighbors=10, n_components=2)
     isomap.fit(df.values)
 
@@ -328,126 +311,67 @@ def get_complexity(df, n_neighbors=10, n_components=2):
 
 
 def evaluate(df, y, file):
-    """This function evaluates a dataset and returns a transposed summary DataFrame with various statistical measures, derived from the dataset.
-    Using the functions defined above, it computes intrinsic dimension, condition number, Fisher Discriminant Ratio, total correlation, mutual information, variance, coefficient of variation,
-    data sparsity, low variance features, data density, fractal dimension, data distributions (skewness and kurtosis), entropy of the target variable, and manifold complexity.
-    The summary DataFrame is transposed for easier readability and contains the dataset name, number of features, number of samples, feature-to-sample ratio, and various statistical measures.
-    This function is useful for quickly summarizing the characteristics of a dataset, especially in the context of machine learning and data analysis, allowing you to correlate the dataset's
-    properties with its performance in predictive modeling tasks.
+    """Compute dataset complexity metrics and return a summary DataFrame.
+
+    Computes intrinsic dimension, condition number, Fisher Discriminant Ratio,
+    total correlation, mutual information, variance, coefficient of variation,
+    sparsity, low-variance features, kernel density, fractal dimension,
+    skewness, kurtosis, entropy, Isomap reconstruction error.
 
     Args:
-        df (pandas.DataFrame): Dataset in pandas with observation in rows, features in columns
-        y (int): supervised binary class label
-        file (str): Name of the dataset file for identification in the summary DataFrame
+        df (pandas.DataFrame): Dataset with observations in rows and features in columns.
+        y (array-like): Class labels.
+        file (str): Dataset name used as identifier in the summary.
 
     Returns:
-        transposed (pandas.DataFrame): Summary DataFrame containing various statistical measures of the dataset
+        pd.DataFrame: One-row DataFrame of complexity metrics.
     """
-    # Select only numeric columns from the DataFrame
     df_numeric = df.select_dtypes(include=[np.number])
 
-    # Calculate statistical measures
     n_features, n_samples, feature_sample_ratio = get_dimensions(df_numeric)
-
-    # get intrinsic dimension
     intrinsic_dim = get_intrinsic_dim(df_numeric)
-
-    # Condition number
     condition_number = get_condition_number(df_numeric)
-
-    # Class imbalance ratio via Fischer Discriminant
     fdr = get_fdr(df_numeric, y)
-
-    # Total correlation
     total_correlation = get_total_correlation(df_numeric)
-
-    # Mutual information
     mutual_info = get_mutual_information(df_numeric, y)
-
-    # Variance
     avg_var, std_var = get_variance(df_numeric)
-
-    # Coefficient of variance
     avg_co_of_v, std_co_of_v = get_coefficient_var(df_numeric)
-
-    # Data sparsity
     count_nonzero = get_nnz(df)
-
-    # Get the number of low variance features
     num_low_variance_features = get_low_var_features(df_numeric, n_features)
-
-    # Data density
     mean_log_density = get_log_density(df_numeric)
-
-    # Fractal Dimension
-    k_max = 5
-    fractal_dim = get_fractal_dim(df_numeric, k_max)
-
-    # Data distributions
+    fractal_dim = get_fractal_dim(df_numeric, k_max=5)
     avg_skew, std_skew, avg_kurt, std_kurt = get_moments(df_numeric)
-
-    # entropy
     avg_y_entropy, std_y_entropy = get_entropy(y)
-
-    # volume of data
-    # volume = get_volume(df_numeric)
-
-    # manifold complexity
     complexity = get_complexity(df_numeric)
 
-    # Create summary DataFrame
     summary_df = pd.DataFrame.from_dict(
         {
-            # Data set
             "Dataset": file,
-            # Dimensions
             "# Features": n_features,
             "# Samples": n_samples,
             "Feature_Samples_ratio": feature_sample_ratio,
-            # Intrinsic dimension
             "Intrinsic_Dimension": intrinsic_dim,
-            # Condition number
             "Condition number": condition_number,
-            # Class imbalance ratio
             "Fisher Discriminant Ratio": fdr,
-            # Feature Correlations
-            "Total Correlations": total_correlation,  # Total Correlations
-            "Mutual information": mutual_info,  # Mutual information
-            # Data sparsity
+            "Total Correlations": total_correlation,
+            "Mutual information": mutual_info,
             "# Non-zero entries": count_nonzero,
             "# Low variance features": num_low_variance_features,
-            #'Variation': variations,
             "Variation": avg_var,
             "std_var": std_var,
-            #'Coefficient of Variation %': co_of_v,
             "Coefficient of Variation %": avg_co_of_v,
             "std_co_of_v": std_co_of_v,
-            # Data distributions
-            #'Skewness': skew,
             "Skewness": avg_skew,
             "std_skew": std_skew,
-            #'Kurtosis': kurt,
             "Kurtosis": avg_kurt,
             "std_kurt": std_kurt,
-            # Data density
             "Mean Log Kernel Density": mean_log_density,
-            # volume of feature space
-            #'Volume': volume,
-            # Manifold complexity
             "Isomap Reconstruction Error": complexity,
-            # Fractal dimension
-            "Fractal dimension": fractal_dim,  # calculated via Higuchi Dimension
-            #'Entropy': y_entropy,
+            "Fractal dimension": fractal_dim,
             "Entropy": avg_y_entropy,
             "std_entropy": std_y_entropy,
         },
         orient="index",
     )
 
-    transposed = summary_df.T
-    # transposed.to_csv('DataSetEvaluation.csv', sep='\t', index=False)
-    # print(transposed)
-    return transposed
-
-
-# evaluate(df,y)
+    return summary_df.T

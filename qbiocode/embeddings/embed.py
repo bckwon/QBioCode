@@ -29,50 +29,37 @@ def pqk(
     reps=2,
 ):
     """
-    This function generates quantum circuits, computes projections of the data onto these circuits.
-    It uses a feature map to encode the data into quantum states and then measures the expectation values
-    of Pauli operators to obtain the features.
-    This function requires a quantum backend (simulator or real quantum hardware) for execution.
-    It supports various configurations such as encoding methods, entanglement strategies, and repetitions
-    of the feature map. Optionally the results are saved to files for training and test projections.
+    Compute Projected Quantum Kernel (PQK) feature projections.
+
+    Encodes data into quantum states via a feature map and measures Pauli
+    expectation values (X, Y, Z) on each qubit to produce a classical feature
+    representation.
 
     Args:
-        X_train (np.ndarray): Training data features.
-        X_test (np.ndarray): Test data features.
-        args (dict): Arguments containing backend and other configurations.
-        store (bool): If true projections are stored, using data_key as indefitier
-        data_key (str): Key for the dataset, default is ''.
-        encoding (str): Encoding method for the quantum circuit, default is 'Z'.
-        data_map (bool): If true ensures that all multiplicative factors of data features inside single qubit gates are 1.0. Not applicable for Hejsemberg feature maps
-        primitive (str): Primitive type to use, default is 'estimator'.
-        entanglement (str): Entanglement strategy, default is 'linear'.
-        reps (int): Number of repetitions for the feature map, default is 2.
+        X_train (np.ndarray): Training features.
+        X_test (np.ndarray): Test features.
+        args (dict): Config dict with ``backend`` and other runtime settings.
+        store (bool): Save projections to ``pqk_projections/`` if True.
+        data_key (str): Filename key when storing projections.
+        encoding (str): Feature map type — ``'Z'``, ``'ZZ'``, or ``'P'``.
+        data_map (bool): Normalize single-qubit gate coefficients to 1.0.
+        primitive (str): Primitive type (``'estimator'``).
+        entanglement (str): Entanglement strategy (``'linear'``).
+        reps (int): Feature map repetitions.
 
     Returns:
-        modeleval (dict): A dictionary containing evaluation metrics and model parameters.
+        tuple: ``(X_train_prj, X_test_prj)`` — projected feature arrays.
     """
 
     feat_dimension = X_train.shape[1]
 
     if data_map:
-        #  This function ensures that all multiplicative factors of data features inside single qubit gates are 1.0
         def data_map_func(x: np.ndarray) -> float:
-            """
-            Define a function map from R^n to R.
-
-            Args:
-                x: data
-
-            Returns:
-                float: the mapped value
-            """
             coeff = x[0] / 2 if len(x) == 1 else reduce(lambda m, n: (m * n) / 2, x)
             return float(coeff)
-
     else:
         data_map_func = None
 
-    # choose a method for mapping your features onto the circuit
     feature_map, _ = qutils.get_feature_map(
         feature_map=encoding,
         feat_dimension=X_train.shape[1],
@@ -81,15 +68,12 @@ def pqk(
         data_map_func=data_map_func,
     )
 
-    # Build quantum circuit
     circuit = QuantumCircuit(feature_map.num_qubits)
     circuit.compose(feature_map, inplace=True)
     num_qubits = circuit.num_qubits
 
-    #  Generate the backend, session and primitive
     backend, session, prim = qutils.get_backend_session(args, "estimator", num_qubits=num_qubits)
 
-    # Transpile
     if args["backend"] != "simulator":
         circuit = qutils.transpile_circuit(
             circuit, opt_level=3, backend=backend, PT=True, initial_layout=None
@@ -102,12 +86,8 @@ def pqk(
         else:
             dat = X_test.copy()
 
-        # Identity operator on all qubits
         id = "I" * feat_dimension
 
-        # We group all commuting observables
-        # These groups are the Pauli X, Y and Z operators on individual qubits
-        # Apply the circuit layout to the observable if mapped to device
         if args["backend"] != "simulator":
             observables_x = []
             observables_y = []
@@ -133,17 +113,11 @@ def pqk(
             observables_y = [Pauli(id[:i] + "Y" + id[(i + 1) :]) for i in range(feat_dimension)]
             observables_z = [Pauli(id[:i] + "Z" + id[(i + 1) :]) for i in range(feat_dimension)]
 
-        # projections[i][j][k] will be the expectation value of the j-th Pauli operator (0: X, 1: Y, 2: Z)
-        # of datapoint i on qubit k
         projections = []
 
         for i in range(len(dat)):
-
-            # Get training sample
             parameters = dat[i]
 
-            # We define the primitive unified blocs (PUBs) consisting of the embedding circuit,
-            # set of observables and the circuit parameters
             pub_x = (circuit, observables_x, parameters)
             pub_y = (circuit, observables_y, parameters)
             pub_z = (circuit, observables_z, parameters)
@@ -152,8 +126,6 @@ def pqk(
             job_result_x = job.result()[0].data.evs
             job_result_y = job.result()[1].data.evs
             job_result_z = job.result()[2].data.evs
-
-            # Record <X>, <Y> and <Z> on all qubits for the current datapoint
             projections.append([job_result_x, job_result_y, job_result_z])
 
         if store:
@@ -187,80 +159,49 @@ def get_embeddings(
     y_train=None,
     random_state: int = 42,
 ):
-    """Apply a dimensionality-reduction technique to training and test data.
+    """Apply a dimensionality-reduction method to training and test data.
 
-    The function is designed to produce a fixed-width representation that fits
-    within a quantum-simulator qubit budget (target: n_components ≤ 26, ideally
-    a power of 2 for QEnsemble compatibility).
+    All methods fit on training data only. ``tsne`` and ``spectral`` embed
+    train and test jointly (no ``transform()``); use for benchmarking only.
 
-    Classical models receive ``embed='none'`` (full fingerprint). Quantum models
-    receive one of the reduced representations below.  The distinction is made by
-    the caller (``qprofiler.py``) which loops over ``embeddings`` in the config.
-
-    Supported modes
-    ---------------
-    Linear / global structure
-      ``pca``        — Principal Component Analysis (linear, fast, deterministic)
-      ``svd``        — Truncated SVD / LSA (PCA without mean-centring; sparse-safe,
-                       ideal for binary fingerprints such as ECFP4 and MACCS)
-      ``nmf``        — Non-negative Matrix Factorisation (non-negative inputs only;
-                       suitable for fingerprints, not for PCA-output)
-
-    Non-linear / manifold
-      ``umap``       — Uniform Manifold Approximation and Projection
-                       (topology-preserving, fast, supports ``transform()``)
-      ``isomap``     — Isometric mapping (geodesic distances)
-      ``lle``        — Locally Linear Embedding
-      ``spectral``   — Laplacian Eigenmaps
-
-    Semi-supervised / discriminative
-      ``tsne``       — t-SNE via sklearn.  *Note:* sklearn t-SNE has no
-                       ``transform()`` — test data are embedded jointly with train.
-                       Results are valid for benchmarking (same random state) but
-                       the test split cannot be used for truly held-out inference.
-                       For production use, replace with openTSNE which supports
-                       ``transform()``.
-      ``mifsr``      — Mutual-Information Feature Selection + Ranking: selects the
-                       top-k original features ranked by MI(feature, label).
-                       Supervised, deterministic once ``y_train`` is supplied.
-                       Interpretable: each retained dimension is an original
-                       molecular descriptor.
-      ``varthresh``  — Variance-threshold feature selection: keeps the k highest-
-                       variance features after removing near-zero-variance columns.
-                       Unsupervised and deterministic.
-      ``kpca``       — Kernel PCA with an RBF kernel (non-linear, unsupervised).
+    Supported methods
+    -----------------
+    - ``none``      — no reduction
+    - ``pca``       — PCA (linear)
+    - ``svd``       — Truncated SVD (sparse-safe, no mean-centring)
+    - ``nmf``       — Non-negative Matrix Factorisation (requires non-negative input)
+    - ``umap``      — UMAP (topology-preserving)
+    - ``isomap``    — Isomap (geodesic distances)
+    - ``lle``       — Locally Linear Embedding
+    - ``spectral``  — Laplacian Eigenmaps
+    - ``tsne``      — t-SNE (joint embedding)
+    - ``mifsr``     — Mutual-Information Feature Selection + Ranking (supervised)
+    - ``varthresh`` — Variance-threshold feature selection
+    - ``kpca``      — Kernel PCA (RBF)
 
     Parameters
     ----------
     embedding : str
-        Name of the reduction method (case-insensitive).
-    X_train : array-like, shape (n_train, n_features)
+        Reduction method name (case-insensitive).
+    X_train : array-like of shape (n_train, n_features)
         Training feature matrix.
-    X_test : array-like, shape (n_test, n_features)
+    X_test : array-like of shape (n_test, n_features)
         Test feature matrix.
     n_neighbors : int, optional
-        Neighbour count used by UMAP, IsoMap and LLE (default: 30).
+        Neighbor count for UMAP, Isomap, LLE (default: 30).
     n_components : int, optional
-        Target number of components / features.  Must be ≤ ``X_train.shape[1]``.
-        Should be a power of 2 when QEnsemble is included (e.g. 8).
+        Output dimensionality. Must be ≤ ``X_train.shape[1]``.
     method : str, optional
-        Sub-method for LLE (``'modified'`` or ``None`` for standard).
+        LLE variant — ``'modified'`` or ``None`` (standard).
     y_train : array-like, optional
-        Class labels for supervised methods (``mifsr``).  Ignored by all others.
+        Training labels required by ``mifsr``.
     random_state : int, optional
-        Random seed for stochastic methods (UMAP, t-SNE, KernelPCA; default: 42).
+        Random seed for stochastic methods (default: 42).
 
     Returns
     -------
-    X_train_emb : np.ndarray, shape (n_train, n_components)
-    X_test_emb  : np.ndarray, shape (n_test,  n_components)
-
-    Notes
-    -----
-    All methods are **fit on training data only** and applied to test data via
-    ``transform()`` (or an equivalent held-out projection), preserving the
-    train/test boundary required for unbiased evaluation.  The only exception
-    is ``tsne`` — see the docstring note above.
+    X_train_emb : np.ndarray of shape (n_train, n_components)
+    X_test_emb  : np.ndarray of shape (n_test,  n_components)
     """
     embedding = embedding.lower()
     valid_modes = [
@@ -290,22 +231,17 @@ def get_embeddings(
     X_train = np.asarray(X_train, dtype=float)
     X_test  = np.asarray(X_test,  dtype=float)
 
-    # ── Linear / global ──────────────────────────────────────────────────────
     if embedding == "pca":
         model = PCA(n_components=n_components, random_state=random_state)
         X_train_emb = model.fit_transform(X_train)
         X_test_emb  = model.transform(X_test)
 
     elif embedding == "svd":
-        # TruncatedSVD does NOT centre the data — preserves sparsity and is
-        # better suited to binary fingerprints than PCA.
         model = TruncatedSVD(n_components=n_components, random_state=random_state)
         X_train_emb = model.fit_transform(X_train)
         X_test_emb  = model.transform(X_test)
 
     elif embedding == "nmf":
-        # NMF requires non-negative inputs. MinMaxScaler applied upstream in
-        # qprofiler.py ensures X ∈ [0, 1], satisfying this constraint.
         model = NMF(
             n_components=n_components,
             random_state=random_state,
@@ -314,7 +250,6 @@ def get_embeddings(
         X_train_emb = model.fit_transform(X_train)
         X_test_emb  = model.transform(X_test)
 
-    # ── Non-linear / manifold ────────────────────────────────────────────────
     elif embedding == "umap":
         model = UMAP(
             n_neighbors=n_neighbors,
@@ -347,20 +282,12 @@ def get_embeddings(
             random_state=random_state,
             eigen_solver="arpack",
         )
-        # SpectralEmbedding has no transform(); embed train+test jointly and
-        # split — valid for benchmarking, not for deployed inference.
         X_all = np.vstack([X_train, X_test])
         X_all_emb = model.fit_transform(X_all)
         X_train_emb = X_all_emb[:len(X_train)]
         X_test_emb  = X_all_emb[len(X_train):]
 
-    # ── Semi-supervised / discriminative ────────────────────────────────────
     elif embedding == "tsne":
-        # sklearn t-SNE: fit train+test jointly to enable test projection.
-        # Fixed random_state ensures reproducibility across embedding passes.
-        # Barnes-Hut approximation only supports n_components ≤ 3; for higher
-        # dimensions we fall back to the exact (brute-force) method, which is
-        # O(N²) but correct for any n_components ≥ 1.
         tsne_method = "exact" if n_components > 3 else "barnes_hut"
         model = TSNE(
             n_components=n_components,
@@ -377,9 +304,6 @@ def get_embeddings(
         X_test_emb  = X_all_emb[len(X_train):]
 
     elif embedding == "mifsr":
-        # Mutual-Information Feature Selection + Ranking.
-        # Supervised: fits on training labels only, then applies the same
-        # column mask to the test set — no label leakage.
         if y_train is None:
             raise ValueError(
                 "embedding='mifsr' requires y_train (training labels)."
@@ -392,21 +316,16 @@ def get_embeddings(
         X_test_emb  = selector.transform(X_test)
 
     elif embedding == "varthresh":
-        # Step 1: remove near-zero-variance features (threshold=0.0 keeps all
-        # non-constant columns for binary fingerprints).
         vt = VarianceThreshold(threshold=0.0)
         X_tr_vt = vt.fit_transform(X_train)
-        # If VarianceThreshold removed ALL features (all-constant dataset),
-        # fall back to the raw features so downstream code still runs.
         if X_tr_vt.shape[1] == 0:
             X_tr_vt = X_train
             X_te_vt = X_test
         else:
             X_te_vt = vt.transform(X_test)
-        # Step 2: keep the top-k by descending variance.
         variances = np.var(X_tr_vt, axis=0)
         top_k_idx = np.argsort(variances)[::-1][:n_components]
-        top_k_idx_sorted = np.sort(top_k_idx)  # preserve original feature order
+        top_k_idx_sorted = np.sort(top_k_idx)
         X_train_emb = X_tr_vt[:, top_k_idx_sorted]
         X_test_emb  = X_te_vt[:, top_k_idx_sorted]
 
